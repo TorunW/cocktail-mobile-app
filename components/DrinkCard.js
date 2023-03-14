@@ -6,9 +6,13 @@ import { COLORS, SIZES, SHADOWS, assets, FONTS } from '../constants';
 const ImageCard = ({ data }) => {
   const navigation = useNavigation();
 
-  let complexityDisplay;
-  if (data.complexity < 1.5) {
-    complexityDisplay = 'easy';
+  let complexteyRating;
+  if (data.complexity <= 1.5) {
+    complexteyRating = 'easy';
+  } else if (data.complexity > 1.5 || data.complexity <= 2.5) {
+    complexteyRating = 'medium';
+  } else if (data.complexity > 2.5) {
+    complexteyRating = 'hard';
   }
 
   return (
@@ -34,6 +38,7 @@ const ImageCard = ({ data }) => {
             position: 'absolute',
             width: '100%',
             height: '100%',
+            backgroundColor: 'rgba(15, 8, 5, 0.13)',
           }}
         >
           <Text
@@ -52,7 +57,7 @@ const ImageCard = ({ data }) => {
               fontWeight: '900',
             }}
           >
-            {data.complexity}
+            {complexteyRating}
           </Text>
         </View>
       </View>

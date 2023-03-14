@@ -11,22 +11,6 @@ import { COLORS } from '../constants';
 import { ImageCard, HomeHeader, FocusedStatusBar } from '../components';
 import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
 
-const Item = ({ drink_name, drink_image, drink_instructions }) => {
-  return (
-    <View style={styles.card}>
-      <View style={styles.cardHeader}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.userName}>{drink_name}</Text>
-        </View>
-      </View>
-      <Image style={styles.feedImage} source={{ uri: drink_image }} />
-      <View style={styles.cardFooter}>
-        <Text>{drink_instructions} </Text>
-      </View>
-    </View>
-  );
-};
-
 export const Home = () => {
   const [cocktailList, setCocktailList] = useState([]);
 
@@ -68,7 +52,12 @@ export const Home = () => {
             zIndex: -1,
           }}
         >
-          <View style={{ height: 300, backgroundColor: COLORS.primary }} />
+          <View
+            style={{
+              height: 300,
+              backgroundColor: COLORS.snow,
+            }}
+          />
           <View style={{ flex: 1, backgroundColor: COLORS.snow }} />
           <View />
         </View>

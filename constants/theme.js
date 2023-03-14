@@ -72,4 +72,13 @@ export const SHADOWS = {
 
     elevation: 14,
   },
+  text: {
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 4,
+  },
+  svg: {
+    // for android
+   
+  },
 };
