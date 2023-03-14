@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { COLORS } from '../constants';
 import { ImageCard, HomeHeader, FocusedStatusBar } from '../components';
+import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
 
 const Item = ({ drink_name, drink_image, drink_instructions }) => {
   return (
@@ -37,12 +38,13 @@ export const Home = () => {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
       .then((response) => response.json())
       .then((data) => {
-        setCocktailList(data.drinks);
+        setCocktailList(addComplexityScoreToDrinks(data.drinks));
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
@@ -50,13 +52,7 @@ export const Home = () => {
         <View style={{ zIndex: 0 }}>
           <FlatList
             data={cocktailList}
-            renderItem={({ item }) => (
-              <Item
-                drink_name={item.strDrink}
-                drink_image={item.strDrinkThumb}
-                drink_instructions={item.strInstructions}
-              />
-            )}
+            renderItem={({ item }) => <ImageCard data={item} />}
             keyExtractor={(item) => item.idDrink}
             ListHeaderComponent={<HomeHeader />}
           />
