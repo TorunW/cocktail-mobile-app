@@ -16,6 +16,16 @@ const theme = {
 };
 
 export default function App() {
+  const [loaded] = useFonts({
+    InterRegular: require('./assets/fonts/Outfit-Regular.ttf'),
+    InterSemiBold: require('./assets/fonts/Outfit-SemiBold.ttf'),
+    InterMedium: require('./assets/fonts/Outfit-Medium.ttf'),
+    InterBold: require('./assets/fonts/Outfit-Bold.ttf'),
+    InterLight: require('./assets/fonts/Outfit-Light.ttf'),
+  });
+
+  if (!loaded) return null;
+
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator
