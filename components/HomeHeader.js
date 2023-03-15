@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
-import { COLORS, FONTS, SHADOWS, SIZES } from '../constants';
+import { COLORS, FONTS, SHADOWS, SIZES, assets } from '../constants';
 
 const HomeHeader = () => {
   return (
@@ -15,7 +15,7 @@ const HomeHeader = () => {
           width: '100%',
           height: 650,
         }}
-        source={require('../assets/images/headerimg.jpg')}
+        source={assets.headerImg}
       />
 
       <View
@@ -33,7 +33,7 @@ const HomeHeader = () => {
             alignItems: 'center',
           }}
         >
-          <Image source={require('../assets/icons/menu.png')} />
+          <Image source={assets.menu} />
           <Text
             style={{
               position: 'absolute',
