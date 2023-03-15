@@ -1,7 +1,6 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
 import { COLORS, FONTS, SHADOWS, SIZES } from '../constants';
-import Menu from '../assets/icons/Menu.png';
 
 const HomeHeader = () => {
   return (
@@ -34,7 +33,7 @@ const HomeHeader = () => {
             alignItems: 'center',
           }}
         >
-          <Image source={require('../assets/icons/Menu.png')} />
+          <Image source={require('../assets/icons/menu.png')} />
           <Text
             style={{
               position: 'absolute',
