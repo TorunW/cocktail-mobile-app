@@ -1,7 +1,6 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from '../constants';
-
 const HomeHeader = () => {
   return (
     <View
@@ -40,7 +39,7 @@ const HomeHeader = () => {
               width: '100%',
               fontSize: SIZES.large,
               fontWeight: 900,
-              color: COLORS.snow,
+              color: COLORS.white,
               textTransform: 'uppercase',
               ...SHADOWS.text,
               textAlign: 'center',
@@ -55,12 +54,12 @@ const HomeHeader = () => {
             top: 72,
             fontSize: SIZES.extraLarge,
             fontWeight: 900,
-            color: COLORS.snow,
+            color: COLORS.white,
             textTransform: 'uppercase',
             ...SHADOWS.text,
           }}
         >
-          Hello <Text style={{ color: COLORS.compApricot }}>Torun</Text>
+          Hello <Text style={{ color: COLORS.secondary }}>Torun</Text>
           {'\n'}Let's make cocktails{' '}
         </Text>
       </View>
