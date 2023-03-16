@@ -1,64 +1,73 @@
 import { View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { COLORS, SIZES, SHADOWS, assets, FONTS } from '../constants';
+import { COLORS, SIZES, SHADOWS, assets, FONTS, SPACING } from '../constants';
+import { Heart } from './Button';
+import {
+  SubInfo,
+  Title,
+  Category,
+  Complexity,
+  User,
+  Likes,
+  Tags,
+} from './SubInfo';
 
 const ImageCard = ({ data }) => {
   const navigation = useNavigation();
 
-  let complexteyRating;
-  if (data.complexity <= 1.5) {
-    complexteyRating = 'easy';
-  } else if (data.complexity > 1.5 || data.complexity <= 2.5) {
-    complexteyRating = 'medium';
-  } else if (data.complexity > 2.5) {
-    complexteyRating = 'hard';
-  }
-
   return (
     <View
       style={{
-        backgroundColor: COLORS.apricot,
+        backgroundColor: COLORS.white,
         borderRadius: 10,
-        margin: 16,
+        margin: SPACING.s,
         ...SHADOWS.dark,
       }}
     >
       <View style={{ width: '100%', height: 250 }}>
         <Image
+          source={{ uri: data.strDrinkThumb }}
+          resizeMode='cover'
           style={{
             width: '100%',
             height: '100%',
-            borderRadius: 10,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
           }}
-          source={{ uri: data.strDrinkThumb }}
+        />
+
+        <Heart top={8} right={8} />
+      </View>
+      <View
+        style={{
+          width: '100%',
+          paddingHorizontal: SPACING.s,
+          marginTop: -SIZES.extraLarge,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Likes />
+        <User />
+        <Complexity complexity={data.complexity} />
+      </View>
+      <View style={{ width: '100%', padding: SPACING.m }}>
+        <Title
+          title={data.strDrink}
+          subTitle={'user'}
+          titleSize={SIZES.large}
+          subTitleSize={SIZES.small}
         />
         <View
           style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(15, 8, 5, 0.13)',
+            marginTop: SPACING.s,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
-          <Text
-            style={{
-              color: COLORS.snow,
-              fontSize: SIZES.extraLarge,
-              fontWeight: '900',
-            }}
-          >
-            {data.strDrink}
-          </Text>
-          <Text
-            style={{
-              color: COLORS.snow,
-              fontSize: SIZES.small,
-              fontWeight: '900',
-            }}
-          >
-            {complexteyRating}
-          </Text>
+          <Tags tags={data.strTags} />
         </View>
       </View>
     </View>

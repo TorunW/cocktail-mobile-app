@@ -3,26 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SHADOWS = exports.FONTS = exports.SIZES = exports.COLORS = void 0;
+exports.SHADOWS = exports.FONTS = exports.SPACING = exports.SIZES = exports.COLORS = void 0;
 var COLORS = {
-  primary: '#EFA4AF',
-  secondary: '#A4EFE4',
-  white: '#FFF',
-  gray: '#74858C',
-  //Color
-  cinnabar: '#ED5643',
-  apricot: '#F6BFAA',
-  cherryBlossomPink: '#EFA4AF',
-  sandyBrown: '#FDB17D',
-  //white
-  snow: '#F9F4F0',
-  //complimentary
-  compCinnabar: '#32D6EC',
-  compApricot: '#ACE1F6',
-  compCherryBlossomPink: '#A4EFE4',
-  compSandyBrown: '#7CCAFD',
-  //black
-  compSnow: '#0F0805'
+  primary: '#F7D1D7',
+  secondary: '#ACE1F6',
+  grad1: '#F0AAB5',
+  grad2: '#F5C4CC',
+  grad3: '#F9DEE3',
+  white: '#F9F4F0',
+  black: '#0F0805'
 };
 exports.COLORS = COLORS;
 var SIZES = {
@@ -33,7 +22,22 @@ var SIZES = {
   large: 18,
   extraLarge: 24
 };
+/* 12–24 pixels for a large button
+24–36 pixels for a medium button
+36–48 pixels for a small button */
+
 exports.SIZES = SIZES;
+var SPACING = {
+  xs: 8,
+  s: 16,
+  m: 24,
+  l: 32,
+  xl: 40,
+  btnSmall: 42,
+  btnMedium: 60,
+  btnLarge: 72
+};
+exports.SPACING = SPACING;
 var FONTS = {
   bold: 'InterBold',
   semiBold: 'InterSemiBold',

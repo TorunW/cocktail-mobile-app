@@ -55,10 +55,10 @@ export const Home = () => {
           <View
             style={{
               height: 300,
-              backgroundColor: COLORS.snow,
+              backgroundColor: COLORS.white,
             }}
           />
-          <View style={{ flex: 1, backgroundColor: COLORS.snow }} />
+          <View style={{ flex: 1, backgroundColor: COLORS.white }} />
           <View />
         </View>
       </View>
