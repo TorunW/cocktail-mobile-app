@@ -1,24 +1,9 @@
 export const COLORS = {
   primary: '#EFA4AF',
-  secondary: '#A4EFE4',
+  secondary: '#ACE1F6',
 
-  white: '#FFF',
-  gray: '#74858C',
-
-  //Color
-  cinnabar: '#ED5643',
-  apricot: '#F6BFAA',
-  cherryBlossomPink: '#EFA4AF',
-  sandyBrown: '#FDB17D',
-  //white
-  snow: '#F9F4F0',
-  //complimentary
-  compCinnabar: '#32D6EC',
-  compApricot: '#ACE1F6',
-  compCherryBlossomPink: '#A4EFE4',
-  compSandyBrown: '#7CCAFD',
-  //black
-  compSnow: '#0F0805',
+  white: '#F9F4F0',
+  black: '#0F0805',
 };
 
 export const SIZES = {
@@ -28,6 +13,21 @@ export const SIZES = {
   medium: 16,
   large: 18,
   extraLarge: 24,
+};
+
+/* 12–24 pixels for a large button
+24–36 pixels for a medium button
+36–48 pixels for a small button */
+export const SPACING = {
+  xs: 8,
+  s: 16,
+  m: 24,
+  l: 32,
+  xl: 40,
+
+  btnSmall: 42,
+  btnMedium: 60,
+  btnLarge: 72,
 };
 
 export const FONTS = {
@@ -79,6 +79,5 @@ export const SHADOWS = {
   },
   svg: {
     // for android
-   
   },
 };
