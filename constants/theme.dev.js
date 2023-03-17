@@ -5,7 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SHADOWS = exports.FONTS = exports.SPACING = exports.SIZES = exports.COLORS = void 0;
 var COLORS = {
-  primary: '#F7D1D7',
+  //primary: '#F7D1D7',
+  primary: '#F5C4CC',
   secondary: '#ACE1F6',
   grad1: '#F0AAB5',
   grad2: '#F5C4CC',
@@ -39,6 +40,7 @@ var SPACING = {
 };
 exports.SPACING = SPACING;
 var FONTS = {
+  extraBold: 'InterBlack',
   bold: 'InterBold',
   semiBold: 'InterSemiBold',
   medium: 'InterMedium',

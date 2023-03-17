@@ -1,44 +1,31 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TextInput, ImageBackground } from 'react-native';
 import React from 'react';
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from '../constants';
-const HomeHeader = () => {
+const HomeHeader = ({ onSearch }) => {
   return (
-    <View
-      style={{
-        width: '100%',
-        height: 500,
-      }}
-    >
-      <Image
-        style={{
-          width: '100%',
-          height: 650,
-        }}
+    <View>
+      <ImageBackground
         source={assets.headerImg}
-      />
-
-      <View
+        resizeMode='cover'
         style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          padding: 16,
+          flex: 1,
+          padding: SIZES.font,
+          height: 200,
         }}
       >
         <View
           style={{
-            display: 'flex',
             flexDirection: 'row',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            gap: SIZES.font,
           }}
         >
-          <Image source={assets.menu} />
+          <Image source={assets.menu} resizeMode='contain' />
           <Text
             style={{
-              position: 'absolute',
-              width: '100%',
+              fontFamily: FONTS.extraBold,
               fontSize: SIZES.large,
-              fontWeight: 900,
               color: COLORS.white,
               textTransform: 'uppercase',
               ...SHADOWS.text,
@@ -48,21 +35,58 @@ const HomeHeader = () => {
             LEMON SQUEEZY
           </Text>
         </View>
-
-        <Text
-          style={{
-            top: 72,
-            fontSize: SIZES.extraLarge,
-            fontWeight: 900,
-            color: COLORS.white,
-            textTransform: 'uppercase',
-            ...SHADOWS.text,
-          }}
-        >
-          Hello <Text style={{ color: COLORS.secondary }}>Torun</Text>
-          {'\n'}Let's make cocktails{' '}
-        </Text>
-      </View>
+        <View style={{ marginVertical: SIZES.font }}>
+          <Text
+            style={{
+              fontSize: SIZES.large,
+              fontFamily: FONTS.bold,
+              color: COLORS.white,
+              textTransform: 'uppercase',
+              ...SHADOWS.text,
+            }}
+          >
+            Hello
+            <Text
+              style={{
+                color: COLORS.secondary,
+              }}
+            >
+              Torun
+            </Text>{' '}
+          </Text>
+          <Text
+            style={{
+              fontSize: SIZES.extraLarge,
+              fontFamily: FONTS.extraBold,
+              color: COLORS.white,
+              textTransform: 'uppercase',
+              ...SHADOWS.text,
+              marginTop: SIZES.base / 2,
+            }}
+          >
+            Let's make cocktails
+          </Text>
+        </View>
+        <View style={{ marginTop: SIZES.font }}>
+          <View
+            style={{
+              width: '100%',
+              borderRadius: SIZES.font,
+              backgroundColor: COLORS.grad3,
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: SIZES.font,
+              paddingVertical: SIZES.small,
+            }}
+          >
+            <TextInput
+              placeholder='Search Cocktails'
+              style={{ flex: 1, fontFamily: FONTS.regular }}
+              onChangeText={onSearch}
+            />
+          </View>
+        </View>
+      </ImageBackground>
     </View>
   );
 };

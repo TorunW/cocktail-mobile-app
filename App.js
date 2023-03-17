@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Home } from './screens/Home';
-import { User } from './screens/User';
+import { DrinkPage } from './screens/DrinkPage';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +22,7 @@ export default function App() {
     InterMedium: require('./assets/fonts/Outfit-Medium.ttf'),
     InterBold: require('./assets/fonts/Outfit-Bold.ttf'),
     InterLight: require('./assets/fonts/Outfit-Light.ttf'),
+    InterBlack: require('./assets/fonts/Outfit-ExtraBold.ttf'),
   });
 
   if (!loaded) return null;
@@ -33,7 +34,7 @@ export default function App() {
         initalRouteName='Home'
       >
         <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='User' component={User} />
+        <Stack.Screen name='DrinkPage' component={DrinkPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

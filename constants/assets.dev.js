@@ -11,6 +11,8 @@ var _heartFilled = _interopRequireDefault(require("../assets/icons/heartFilled.p
 
 var _menu = _interopRequireDefault(require("../assets/icons/menu.png"));
 
+var _user = _interopRequireDefault(require("../assets/icons/user.png"));
+
 var _headerImg = _interopRequireDefault(require("../assets/images/headerImg.jpg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -21,6 +23,7 @@ var _default = {
   heart: _heart["default"],
   heartFilled: _heartFilled["default"],
   menu: _menu["default"],
-  headerImg: _headerImg["default"]
+  headerImg: _headerImg["default"],
+  user: _user["default"]
 };
 exports["default"] = _default;
