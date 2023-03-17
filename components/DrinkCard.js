@@ -2,7 +2,7 @@ import { View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { COLORS, SIZES, SHADOWS, assets, FONTS, SPACING } from '../constants';
-import { Heart } from './Button';
+import { Heart, ReadMoreBtn } from './Button';
 import {
   SubInfo,
   Title,
@@ -68,6 +68,11 @@ const ImageCard = ({ data }) => {
           }}
         >
           <Tags tags={data.strTags} />
+          <ReadMoreBtn
+            minWidth={120}
+            fontSize={SIZES.font}
+            handlePress={() => navigation.navigate('DrinkPage', { data })}
+          />
         </View>
       </View>
     </View>

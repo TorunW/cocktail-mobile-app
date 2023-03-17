@@ -30,8 +30,6 @@ export const ReadMoreBtn = ({ minWidth, fontSize, handlePress, ...props }) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: COLORS.primary,
-        borderRadius: SIZES.extraLarge,
         minWidth: minWidth,
         ...props,
       }}
@@ -40,8 +38,7 @@ export const ReadMoreBtn = ({ minWidth, fontSize, handlePress, ...props }) => {
       <LinearGradient
         colors={[COLORS.grad3, COLORS.grad2, COLORS.grad1]}
         style={{
-          backgroundColor: COLORS.primary,
-          padding: SPACING.s,
+          padding: SIZES.small,
           borderRadius: SIZES.extraLarge,
           minWidth: minWidth,
           ...props,
