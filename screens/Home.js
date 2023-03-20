@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  Image,
-  SafeAreaView,
-} from 'react-native';
+import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import { COLORS } from '../constants';
 import { ImageCard, HomeHeader, FocusedStatusBar } from '../components';
 import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
 
 export const Home = () => {
   const [cocktailList, setCocktailList] = useState([]);
+  const [searchResult, setSearch] = useState(cocktailList);
 
   useEffect(() => {
     getCocktailList();
@@ -29,16 +23,30 @@ export const Home = () => {
       });
   }
 
+  const handleSearch = (value) => {
+    if (!value.length) return setSearch(cocktailList);
+
+    const filteredData = cocktailList.filter((item) =>
+      item.strDrink.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length) {
+      setSearch(filteredData);
+    } else {
+      setSearch(cocktailList);
+    }
+  };
+  console.log(searchResult.length);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
       <View style={{ flex: 1 }}>
         <View style={{ zIndex: 0 }}>
           <FlatList
-            data={cocktailList}
+            data={searchResult.length === 0 ? cocktailList : searchResult}
             renderItem={({ item }) => <ImageCard data={item} />}
             keyExtractor={(item) => item.idDrink}
-            ListHeaderComponent={<HomeHeader />}
+            ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
           />
         </View>
 

@@ -9,6 +9,8 @@ export const COLORS = {
 
   white: '#F9F4F0',
   black: '#0F0805',
+
+  shadow: '#1F2687',
 };
 
 export const SIZES = {
@@ -83,7 +85,14 @@ export const SHADOWS = {
     textShadowOffset: { width: 0, height: 4 },
     textShadowRadius: 4,
   },
-  svg: {
-    // for android
+  blur: {
+    // for background blur
+  },
+  box: {
+    shadowColor: COLORS.black,
+    textShadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.37,
+    textShadowRadius: 32,
+    elevation: 32,
   },
 };

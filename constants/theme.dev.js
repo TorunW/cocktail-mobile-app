@@ -12,7 +12,8 @@ var COLORS = {
   grad2: '#F5C4CC',
   grad3: '#F9DEE3',
   white: '#F9F4F0',
-  black: '#0F0805'
+  black: '#0F0805',
+  shadow: '#1F2687'
 };
 exports.COLORS = COLORS;
 var SIZES = {
@@ -87,7 +88,17 @@ var SHADOWS = {
     },
     textShadowRadius: 4
   },
-  svg: {// for android
+  blur: {// for background blur
+  },
+  box: {
+    shadowColor: COLORS.black,
+    textShadowOffset: {
+      width: 0,
+      height: 8
+    },
+    shadowOpacity: 0.37,
+    textShadowRadius: 32,
+    elevation: 32
   }
 };
 exports.SHADOWS = SHADOWS;
