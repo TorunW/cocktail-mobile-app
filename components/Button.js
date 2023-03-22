@@ -1,16 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { COLORS, SHADOWS, SIZES, SPACING, FONTS, assets } from '../constants';
-import Menu from '../assets/icons/menu.svg';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export const Heart = ({ imgUrl, handlePress, ...props }) => {
+export const LikeBtn = ({ imgUrl, handlePress, ...props }) => {
   return (
     <TouchableOpacity
       style={{
         width: 40,
         height: 40,
-        backgroundColor: COLORS.primary,
         position: 'absolute',
         borderRadius: 50,
         alignItems: 'center',
@@ -21,7 +19,7 @@ export const Heart = ({ imgUrl, handlePress, ...props }) => {
       }}
       onPress={handlePress}
     >
-      <Menu fill={COLORS.black} style={{ height: 40, width: 40 }} />
+      <Image source={assets.heartFilled} style={{ height: 40, width: 40 }} />
     </TouchableOpacity>
   );
 };
@@ -55,6 +53,27 @@ export const ReadMoreBtn = ({ minWidth, fontSize, handlePress, ...props }) => {
           Read more...
         </Text>
       </LinearGradient>
+    </TouchableOpacity>
+  );
+};
+
+export const BackBtn = ({ handlePress, ...props }) => {
+  return (
+    <TouchableOpacity
+      style={{
+        width: 40,
+        height: 40,
+        position: 'absolute',
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        ...SHADOWS.text,
+        elevation: 10,
+        ...props,
+      }}
+      onPress={handlePress}
+    >
+      <Text style={{ color: COLORS.white }}>Back</Text>
     </TouchableOpacity>
   );
 };

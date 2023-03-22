@@ -127,22 +127,25 @@ export const Complexity = ({ complexity }) => {
   );
 };
 
-export const Category = () => {
+export const Category = ({ category }) => {
   return (
     <View>
-      <Text>Category</Text>
+      <Text>{category}</Text>
     </View>
   );
 };
 
-export const Tags = ({ tags }) => {
+export const Tags = ({ tags, justifyContent, width }) => {
   const tagsArr = tags ? tags.split(',') : '';
 
   return (
-    <View>
+    <View style={{ justifyContent: justifyContent, width: width }}>
       {tags
         ? tagsArr.map((tag) => (
-            <Text style={{ fontFamily: FONTS.medium, fontSize: SIZES.font }}>
+            <Text
+              key={tag}
+              style={{ fontFamily: FONTS.medium, fontSize: SIZES.font }}
+            >
               # {tag}
             </Text>
           ))
@@ -151,10 +154,19 @@ export const Tags = ({ tags }) => {
   );
 };
 
-export const Alcoholic = () => {
+export const Alcoholic = ({ alcoholic }) => {
+  console.log(alcoholic);
+  let alcDisplay;
+  if (alcoholic === 'Alcoholic') {
+    alcDisplay = 'Yes';
+  } else if (alcoholic === 'Non alcoholic') {
+    alcDisplay = 'No';
+  } else if (alcoholic === 'Optional alcohol') {
+    alcDisplay = 'Optional';
+  }
   return (
     <View>
-      <Text>Alcoholic</Text>
+      <Text>Alcohol: {alcDisplay}</Text>
     </View>
   );
 };
@@ -166,17 +178,17 @@ export const Instructions = () => {
     </View>
   );
 };
-export const Ingredients = () => {
+export const Ingredients = ({ ingredient }) => {
   return (
     <View>
-      <Text>Ingredients</Text>
+      <Text> {ingredient} </Text>
     </View>
   );
 };
-export const Measures = () => {
+export const Measures = ({ measure }) => {
   return (
     <View>
-      <Text>Measures</Text>
+      <Text>{measure}</Text>
     </View>
   );
 };

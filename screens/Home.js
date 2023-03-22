@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import { COLORS } from '../constants';
-import { ImageCard, HomeHeader, FocusedStatusBar } from '../components';
+import { DrinkCard, HomeHeader, FocusedStatusBar } from '../components';
 import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
+import getIngredientsArr from '../helpers/getIngredientsArr';
 
 export const Home = () => {
   const [cocktailList, setCocktailList] = useState([]);
@@ -44,7 +45,7 @@ export const Home = () => {
         <View style={{ zIndex: 0 }}>
           <FlatList
             data={searchResult.length === 0 ? cocktailList : searchResult}
-            renderItem={({ item }) => <ImageCard data={item} />}
+            renderItem={({ item }) => <DrinkCard data={item} />}
             keyExtractor={(item) => item.idDrink}
             ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
           />
@@ -73,42 +74,3 @@ export const Home = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ddd',
-  },
-  card: {
-    backgroundColor: '#fff',
-    padding: 10,
-    margin: 10,
-    borderRadius: 10,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  headerLeft: {
-    flexDirection: 'row',
-  },
-  userImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50 / 2,
-  },
-  userName: {
-    marginLeft: 10,
-    marginTop: 15,
-  },
-  feedImage: {
-    width: '100%',
-    height: 300,
-    marginTop: 10,
-  },
-  cardFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-});

@@ -1,19 +1,11 @@
-import { View, Text, Image } from 'react-native';
+import { View, Image, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { COLORS, SIZES, SHADOWS, assets, FONTS, SPACING } from '../constants';
-import { Heart, ReadMoreBtn } from './Button';
-import {
-  SubInfo,
-  Title,
-  Category,
-  Complexity,
-  User,
-  Likes,
-  Tags,
-} from './SubInfo';
+import { COLORS, SIZES, SHADOWS, SPACING } from '../constants';
+import { LikeBtn, ReadMoreBtn } from './Button';
+import { Title, Complexity, User, Likes, Tags } from './SubInfo';
 
-const ImageCard = ({ data }) => {
+const DrinkCard = ({ data }) => {
   const navigation = useNavigation();
 
   return (
@@ -26,18 +18,38 @@ const ImageCard = ({ data }) => {
       }}
     >
       <View style={{ width: '100%', height: 250 }}>
-        <Image
+        <ImageBackground
           source={{ uri: data.strDrinkThumb }}
           resizeMode='cover'
           style={{
             width: '100%',
             height: '100%',
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
+            borderRadius: 10,
           }}
-        />
+          blurRadius={10}
+        >
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0,0,0,0.2)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Image
+              source={{ uri: data.strDrinkThumb }}
+              resizeMode='cover'
+              style={{
+                width: '75%',
+                height: '75%',
+                borderRadius: 10,
+              }}
+            />
+          </View>
+        </ImageBackground>
 
-        <Heart top={8} right={8} />
+        <LikeBtn top={8} right={8} />
       </View>
       <View
         style={{
@@ -79,4 +91,4 @@ const ImageCard = ({ data }) => {
   );
 };
 
-export default ImageCard;
+export default DrinkCard;
