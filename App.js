@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Home } from './screens/Home';
 import { DrinkPage } from './screens/DrinkPage';
-
-const Stack = createStackNavigator();
+import Menu from './components/Menu.js';
+import { COLORS, SHADOWS } from './constants';
+const Drawer = createDrawerNavigator();
 
 const theme = {
   ...DefaultTheme,
@@ -29,13 +30,23 @@ export default function App() {
 
   return (
     <NavigationContainer theme={theme}>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initalRouteName='Home'
+      <Drawer.Navigator
+        initialRouteName='Home'
+        screenOptions={{
+          headerShown: false,
+          drawerStyle: {
+            width: '80%',
+            backgroundColor: COLORS.transparent,
+            ...SHADOWS.box,
+            elevation: 1,
+          },
+          overlayColor: 'transparent',
+        }}
+        drawerContent={(props) => <Menu {...props} />}
       >
-        <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='DrinkPage' component={DrinkPage} />
-      </Stack.Navigator>
+        <Drawer.Screen name='Home' component={Home} />
+        <Drawer.Screen name='DrinkPage' component={DrinkPage} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }

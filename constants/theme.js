@@ -2,6 +2,7 @@ export const COLORS = {
   //primary: '#F7D1D7',
   primary: '#F5C4CC',
   secondary: '#ACE1F6',
+  transparent: 'rgba(255,255,255,0.25)',
 
   grad1: '#F0AAB5',
   grad2: '#F5C4CC',

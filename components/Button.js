@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { COLORS, SHADOWS, SIZES, SPACING, FONTS, assets } from '../constants';
 import { LinearGradient } from 'expo-linear-gradient';
+import MenuIcon from '../assets/icons/Menu.svg';
+import Close from '../assets/icons/Cross.svg';
 
 export const LikeBtn = ({ imgUrl, handlePress, ...props }) => {
   return (
@@ -13,13 +15,22 @@ export const LikeBtn = ({ imgUrl, handlePress, ...props }) => {
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        ...SHADOWS.text,
-        elevation: 10,
         ...props,
       }}
       onPress={handlePress}
     >
-      <Image source={assets.heartFilled} style={{ height: 40, width: 40 }} />
+      {/*       <Image source={assets.heartFilled} style={{ height: 40, width: 40 }} />
+       */}
+      <Text
+        style={{
+          color: COLORS.grad1,
+          fontSize: 30,
+          fontFamily: FONTS.extraBold,
+          ...SHADOWS.text,
+        }}
+      >
+        ♡
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -74,6 +85,22 @@ export const BackBtn = ({ handlePress, ...props }) => {
       onPress={handlePress}
     >
       <Text style={{ color: COLORS.white }}>Back</Text>
+    </TouchableOpacity>
+  );
+};
+
+export const MenuBtn = ({ handlePress }) => {
+  return (
+    <TouchableOpacity
+      style={{
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      onPress={handlePress}
+    >
+      <MenuIcon />
     </TouchableOpacity>
   );
 };

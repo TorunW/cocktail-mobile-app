@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, SafeAreaView } from 'react-native';
-import { COLORS } from '../constants';
-import { DrinkCard, HomeHeader, FocusedStatusBar } from '../components';
+import { View, StyleSheet, FlatList, SafeAreaView, Text } from 'react-native';
+import { COLORS, FONTS, SIZES, SHADOWS } from '../constants';
+import {
+  DrinkCard,
+  HomeHeader,
+  FocusedStatusBar,
+  StaticHeader,
+} from '../components';
 import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
-import getIngredientsArr from '../helpers/getIngredientsArr';
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
   const [cocktailList, setCocktailList] = useState([]);
   const [searchResult, setSearch] = useState(cocktailList);
 
@@ -37,11 +41,12 @@ export const Home = () => {
       setSearch(cocktailList);
     }
   };
-  console.log(searchResult.length);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
       <View style={{ flex: 1 }}>
+        <StaticHeader handlePress={() => navigation.toggleDrawer()} />
         <View style={{ zIndex: 0 }}>
           <FlatList
             data={searchResult.length === 0 ? cocktailList : searchResult}
@@ -61,12 +66,6 @@ export const Home = () => {
             zIndex: -1,
           }}
         >
-          <View
-            style={{
-              height: 300,
-              backgroundColor: COLORS.white,
-            }}
-          />
           <View style={{ flex: 1, backgroundColor: COLORS.white }} />
           <View />
         </View>

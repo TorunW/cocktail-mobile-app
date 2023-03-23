@@ -5,17 +5,10 @@ import {
   Image,
   StatusBar,
   FlatList,
-  ImageBackground,
 } from 'react-native';
 import React from 'react';
 import { COLORS, FONTS, SIZES, SPACING, SHADOWS, assets } from '../constants';
-import {
-  Heart,
-  BackBtn,
-  SubInfo,
-  FocusedStatusBar,
-  DrinkDetails,
-} from '../components';
+import { Heart, BackBtn, FocusedStatusBar } from '../components';
 import {
   Alcoholic,
   Category,
@@ -83,7 +76,6 @@ export const DrinkPage = ({ route, navigation }) => {
             position: 'absolute',
             bottom: 0,
             height: '60%',
-            alignItems: 'center',
             backgroundColor: COLORS.white,
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15,
@@ -95,18 +87,6 @@ export const DrinkPage = ({ route, navigation }) => {
         >
           <View
             style={{
-              marginTop: -SIZES.extraLarge * 2,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}
-          >
-            <Likes />
-            <User />
-            <Complexity complexity={data.complexity} />
-          </View>
-          <View
-            style={{
               width: '100%',
               flexDirection: 'column',
               marginVertical: SIZES.font,
@@ -116,8 +96,20 @@ export const DrinkPage = ({ route, navigation }) => {
             <Text style={{ fontFamily: FONTS.bold, fontSize: SIZES.large }}>
               {data.strDrink}
             </Text>
+
             <Category category={data.strCategory} />
             <Alcoholic alcoholic={data.strAlcoholic} />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}
+          >
+            <Likes />
+            <User />
+            <Complexity complexity={data.complexity} />
           </View>
           <Tags
             justifyContent={'flex-start'}
