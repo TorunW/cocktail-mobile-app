@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from '../constants';
 
-const HomeHeader = ({ onSearch }) => {
+const HomeHeader = ({ isOpen }) => {
   const windowHeight = Dimensions.get('window').height;
 
   return (
@@ -23,6 +23,7 @@ const HomeHeader = ({ onSearch }) => {
           marginBottom: -250,
           paddingTop: 64,
         }}
+        blurRadius={!isOpen ? 0 : 4}
       >
         <>
           <View style={{ marginVertical: SIZES.font }}>
@@ -56,25 +57,6 @@ const HomeHeader = ({ onSearch }) => {
             >
               Let's make cocktails
             </Text>
-          </View>
-          <View style={{ marginTop: SIZES.font }}>
-            <View
-              style={{
-                width: '100%',
-                borderRadius: SIZES.font,
-                backgroundColor: COLORS.grad3,
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingHorizontal: SIZES.font,
-                paddingVertical: SIZES.small,
-              }}
-            >
-              <TextInput
-                placeholder='Search Cocktails'
-                style={{ flex: 1, fontFamily: FONTS.regular }}
-                onChangeText={onSearch}
-              />
-            </View>
           </View>
         </>
       </ImageBackground>

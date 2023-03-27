@@ -12,10 +12,16 @@ import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
 export const Home = ({ navigation }) => {
   const [cocktailList, setCocktailList] = useState([]);
   const [searchResult, setSearch] = useState(cocktailList);
+  const [isOpen, setIsOpen] = useState(false);
+  const state = navigation.getState().history;
 
   useEffect(() => {
     getCocktailList();
   }, []);
+
+  useEffect(() => {
+    console.log(state && state.status === 'open' ? 'open' : 'closed');
+  }, [handlePress]);
 
   function getCocktailList() {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
@@ -28,31 +34,21 @@ export const Home = ({ navigation }) => {
       });
   }
 
-  const handleSearch = (value) => {
-    if (!value.length) return setSearch(cocktailList);
-
-    const filteredData = cocktailList.filter((item) =>
-      item.strDrink.toLowerCase().includes(value.toLowerCase())
-    );
-
-    if (filteredData.length) {
-      setSearch(filteredData);
-    } else {
-      setSearch(cocktailList);
-    }
+  const handlePress = () => {
+    navigation.toggleDrawer();
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
       <View style={{ flex: 1 }}>
-        <StaticHeader handlePress={() => navigation.toggleDrawer()} />
+        <StaticHeader handlePress={handlePress} />
         <View style={{ zIndex: 0 }}>
           <FlatList
             data={searchResult.length === 0 ? cocktailList : searchResult}
             renderItem={({ item }) => <DrinkCard data={item} />}
             keyExtractor={(item) => item.idDrink}
-            ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
+            ListHeaderComponent={<HomeHeader isOpen={isOpen} />}
           />
         </View>
 

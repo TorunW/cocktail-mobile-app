@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -27,7 +26,6 @@ export default function App() {
   });
 
   if (!loaded) return null;
-
   return (
     <NavigationContainer theme={theme}>
       <Drawer.Navigator
@@ -36,7 +34,7 @@ export default function App() {
           headerShown: false,
           drawerStyle: {
             width: '80%',
-            backgroundColor: COLORS.transparent,
+            // backgroundColor: COLORS.transparent,
             ...SHADOWS.box,
             elevation: 1,
           },

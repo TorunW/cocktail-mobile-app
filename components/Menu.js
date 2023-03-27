@@ -1,6 +1,7 @@
 import { View, Text, Dimensions, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { COLORS, FONTS, SIZES } from '../constants';
+import Search from './Search';
 
 const Menu = (props) => {
   return (
@@ -11,7 +12,7 @@ const Menu = (props) => {
         paddingHorizontal: SIZES.font,
       }}
     >
-      <View>
+      <View style={{ width: '70%' }}>
         <Text style={{ fontFamily: FONTS.medium, fontSize: SIZES.medium }}>
           Username
         </Text>
@@ -19,9 +20,11 @@ const Menu = (props) => {
           user.name@gmail.com
         </Text>
       </View>
-      <View>
+      <View style={{ width: '20%' }}>
         <Image source={require('../assets/icons/user.png')} borderRadius={10} />
       </View>
+
+      <Search />
     </View>
   );
 };
