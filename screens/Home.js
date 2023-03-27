@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, SafeAreaView, Text } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { COLORS, FONTS, SIZES, SHADOWS } from '../constants';
 import {
   DrinkCard,
@@ -8,20 +15,20 @@ import {
   StaticHeader,
 } from '../components';
 import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import MenuIcon from '../assets/icons/Menu.svg';
+import { useNavigationState } from '@react-navigation/native';
 
 export const Home = ({ navigation }) => {
   const [cocktailList, setCocktailList] = useState([]);
   const [searchResult, setSearch] = useState(cocktailList);
-  const [isOpen, setIsOpen] = useState(false);
-  const state = navigation.getState().history;
+  const navState = useNavigationState((state) => state);
+  const state = useStoreState((state) => state);
+  const action = useStoreActions((actions) => actions);
 
   useEffect(() => {
     getCocktailList();
   }, []);
-
-  useEffect(() => {
-    console.log(state && state.status === 'open' ? 'open' : 'closed');
-  }, [handlePress]);
 
   function getCocktailList() {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
@@ -38,6 +45,14 @@ export const Home = ({ navigation }) => {
     navigation.toggleDrawer();
   };
 
+  useEffect(() => {
+    if (navState.history.find((item, index) => item.status === 'open')) {
+      action.menu.openMenu();
+    } else {
+      action.menu.closeMenu();
+    }
+  }, [navState]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
@@ -48,10 +63,9 @@ export const Home = ({ navigation }) => {
             data={searchResult.length === 0 ? cocktailList : searchResult}
             renderItem={({ item }) => <DrinkCard data={item} />}
             keyExtractor={(item) => item.idDrink}
-            ListHeaderComponent={<HomeHeader isOpen={isOpen} />}
+            ListHeaderComponent={<HomeHeader />}
           />
         </View>
-
         <View
           style={{
             position: 'absolute',

@@ -1,10 +1,19 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+
+//Assets
 import { useFonts } from 'expo-font';
+import { COLORS, SHADOWS } from './constants';
+
+//Screens
 import { Home } from './screens/Home';
 import { DrinkPage } from './screens/DrinkPage';
 import Menu from './components/Menu.js';
-import { COLORS, SHADOWS } from './constants';
+
+//Store
+import { StoreProvider } from 'easy-peasy';
+import { store } from './store.js';
+
 const Drawer = createDrawerNavigator();
 
 const theme = {
@@ -26,25 +35,28 @@ export default function App() {
   });
 
   if (!loaded) return null;
+
   return (
-    <NavigationContainer theme={theme}>
-      <Drawer.Navigator
-        initialRouteName='Home'
-        screenOptions={{
-          headerShown: false,
-          drawerStyle: {
-            width: '80%',
-            // backgroundColor: COLORS.transparent,
-            ...SHADOWS.box,
-            elevation: 1,
-          },
-          overlayColor: 'transparent',
-        }}
-        drawerContent={(props) => <Menu {...props} />}
-      >
-        <Drawer.Screen name='Home' component={Home} />
-        <Drawer.Screen name='DrinkPage' component={DrinkPage} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <StoreProvider store={store}>
+      <NavigationContainer theme={theme}>
+        <Drawer.Navigator
+          initialRouteName='Home'
+          screenOptions={{
+            headerShown: false,
+            drawerStyle: {
+              width: '80%',
+              // backgroundColor: COLORS.transparent,
+              ...SHADOWS.box,
+              elevation: 1,
+            },
+            overlayColor: 'transparent',
+          }}
+          drawerContent={(props) => <Menu {...props} />}
+        >
+          <Drawer.Screen name='Home' component={Home} />
+          <Drawer.Screen name='DrinkPage' component={DrinkPage} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </StoreProvider>
   );
 }

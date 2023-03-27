@@ -155,7 +155,6 @@ export const Tags = ({ tags, justifyContent, width }) => {
 };
 
 export const Alcoholic = ({ alcoholic }) => {
-  console.log(alcoholic);
   let alcDisplay;
   if (alcoholic === 'Alcoholic') {
     alcDisplay = 'Yes';

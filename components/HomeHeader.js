@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from '../constants';
 
-const HomeHeader = ({ isOpen }) => {
+const HomeHeader = () => {
   const windowHeight = Dimensions.get('window').height;
 
   return (
@@ -23,7 +23,7 @@ const HomeHeader = ({ isOpen }) => {
           marginBottom: -250,
           paddingTop: 64,
         }}
-        blurRadius={!isOpen ? 0 : 4}
+        blurRadius={0}
       >
         <>
           <View style={{ marginVertical: SIZES.font }}>
