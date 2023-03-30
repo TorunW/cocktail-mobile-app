@@ -1,4 +1,7 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  useDrawerProgress,
+} from '@react-navigation/drawer';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 //Assets
@@ -45,7 +48,7 @@ export default function App() {
             headerShown: false,
             drawerStyle: {
               width: '80%',
-              // backgroundColor: COLORS.transparent,
+              backgroundColor: COLORS.transparent,
               ...SHADOWS.box,
               elevation: 1,
             },

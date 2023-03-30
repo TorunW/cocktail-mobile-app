@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import { COLORS, FONTS, SIZES, SHADOWS } from '../constants';
+import { View, FlatList, SafeAreaView } from 'react-native';
+import { COLORS } from '../constants';
 import {
   DrinkCard,
   HomeHeader,
@@ -16,25 +9,25 @@ import {
 } from '../components';
 import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import MenuIcon from '../assets/icons/Menu.svg';
 import { useNavigationState } from '@react-navigation/native';
 
-export const Home = ({ navigation }) => {
-  const [cocktailList, setCocktailList] = useState([]);
-  const [searchResult, setSearch] = useState(cocktailList);
+export const Home = ({ navigation, props }) => {
   const navState = useNavigationState((state) => state);
-  const state = useStoreState((state) => state);
   const action = useStoreActions((actions) => actions);
+  const state = useStoreState((state) => state);
+  const cocktailList = state.cocktails.cocktailList;
+  const term = state.cocktails.term;
 
   useEffect(() => {
     getCocktailList();
-  }, []);
+  }, [term]);
 
   function getCocktailList() {
-    fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${term}`)
       .then((response) => response.json())
       .then((data) => {
-        setCocktailList(addComplexityScoreToDrinks(data.drinks));
+        const list = data.drinks;
+        action.cocktails.setCocktailList(list);
       })
       .catch((error) => {
         console.log(error);
@@ -43,6 +36,7 @@ export const Home = ({ navigation }) => {
 
   const handlePress = () => {
     navigation.toggleDrawer();
+    action.menu.openMenu();
   };
 
   useEffect(() => {
@@ -60,7 +54,7 @@ export const Home = ({ navigation }) => {
         <StaticHeader handlePress={handlePress} />
         <View style={{ zIndex: 0 }}>
           <FlatList
-            data={searchResult.length === 0 ? cocktailList : searchResult}
+            data={cocktailList}
             renderItem={({ item }) => <DrinkCard data={item} />}
             keyExtractor={(item) => item.idDrink}
             ListHeaderComponent={<HomeHeader />}

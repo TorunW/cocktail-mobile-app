@@ -2,10 +2,8 @@ import { View, Text, Dimensions } from 'react-native';
 import { COLORS, FONTS, SIZES, SHADOWS } from '../constants';
 import React from 'react';
 import { MenuBtn } from './Button';
-import { useStoreState } from 'easy-peasy';
 
 const StaticHeader = ({ handlePress }) => {
-  const isOpen = useStoreState((state) => state.menu.isOpen);
   const windowWidth = Dimensions.get('window').width;
 
   return (
@@ -18,7 +16,7 @@ const StaticHeader = ({ handlePress }) => {
         padding: SIZES.font,
       }}
     >
-      {!isOpen ? <MenuBtn handlePress={handlePress} /> : <Text> </Text>}
+        <MenuBtn handlePress={handlePress}  />
       <Text
         style={{
           left: windowWidth / 5,

@@ -7,8 +7,10 @@ import {
 } from 'react-native';
 import React from 'react';
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from '../constants';
+import { useStoreState } from 'easy-peasy';
 
 const HomeHeader = () => {
+  const isOpen = useStoreState((state) => state.menu.isOpen);
   const windowHeight = Dimensions.get('window').height;
 
   return (
@@ -23,7 +25,7 @@ const HomeHeader = () => {
           marginBottom: -250,
           paddingTop: 64,
         }}
-        blurRadius={0}
+        blurRadius={!isOpen ? 0 : 4}
       >
         <>
           <View style={{ marginVertical: SIZES.font }}>

@@ -1,9 +1,17 @@
-import { View, Text, Dimensions, Image } from 'react-native';
-import React, { useState } from 'react';
-import { COLORS, FONTS, SIZES } from '../constants';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
+import { FONTS, SIZES } from '../constants';
 import Search from './Search';
+import { useStoreActions } from 'easy-peasy';
 
-const Menu = (props) => {
+const Menu = ({ navigation }) => {
+  const action = useStoreActions((actions) => actions);
+
+  const handleClose = () => {
+    navigation.toggleDrawer();
+    action.menu.closeMenu;
+  };
+
   return (
     <View
       style={{
@@ -25,6 +33,13 @@ const Menu = (props) => {
       </View>
 
       <Search />
+
+      <TouchableOpacity
+        style={{ width: '100%', alignItems: 'center', margin: 20 }}
+        onPress={handleClose}
+      >
+        <Text>CLOSE</Text>
+      </TouchableOpacity>
     </View>
   );
 };

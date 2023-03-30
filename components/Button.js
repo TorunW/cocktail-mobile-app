@@ -4,6 +4,7 @@ import { COLORS, SHADOWS, SIZES, SPACING, FONTS, assets } from '../constants';
 import { LinearGradient } from 'expo-linear-gradient';
 import MenuIcon from '../assets/icons/Menu.svg';
 import Close from '../assets/icons/Cross.svg';
+import { useStoreState } from 'easy-peasy';
 
 export const LikeBtn = ({ imgUrl, handlePress, ...props }) => {
   return (
@@ -90,6 +91,8 @@ export const BackBtn = ({ handlePress, ...props }) => {
 };
 
 export const MenuBtn = ({ handlePress }) => {
+  const isOpen = useStoreState((state) => state.menu.isOpen);
+
   return (
     <TouchableOpacity
       style={{
@@ -100,7 +103,7 @@ export const MenuBtn = ({ handlePress }) => {
       }}
       onPress={handlePress}
     >
-      <MenuIcon />
+      <MenuIcon fill={!isOpen ? COLORS.white : 'none'} />
     </TouchableOpacity>
   );
 };
