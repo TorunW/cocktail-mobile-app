@@ -22,4 +22,10 @@ export const store = createStore({
       state.isOpen = false;
     }),
   },
+  usersList: {
+    users: [],
+    setUsers: action((state, payload) => {
+      state.users = payload;
+    }),
+  },
 });

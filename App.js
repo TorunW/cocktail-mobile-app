@@ -17,6 +17,10 @@ import Menu from './components/Menu.js';
 import { StoreProvider } from 'easy-peasy';
 import { store } from './store.js';
 
+//db
+import * as SQLite from 'expo-sqlite';
+import { useEffect, useState } from 'react';
+
 const Drawer = createDrawerNavigator();
 
 const theme = {
