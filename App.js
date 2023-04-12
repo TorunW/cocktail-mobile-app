@@ -1,7 +1,4 @@
-import {
-  createDrawerNavigator,
-  useDrawerProgress,
-} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 //Assets
@@ -15,11 +12,9 @@ import Menu from './components/Menu.js';
 
 //Store
 import { StoreProvider } from 'easy-peasy';
-import { store } from './store.js';
-
-//db
-import * as SQLite from 'expo-sqlite';
-import { useEffect, useState } from 'react';
+import { store } from './store/store.js';
+import { AddRecipe } from './screens/AddRecipe';
+import Login from './screens/Login';
 
 const Drawer = createDrawerNavigator();
 
@@ -47,7 +42,7 @@ export default function App() {
     <StoreProvider store={store}>
       <NavigationContainer theme={theme}>
         <Drawer.Navigator
-          initialRouteName='Home'
+          initialRouteName='Login'
           screenOptions={{
             headerShown: false,
             drawerStyle: {
@@ -61,7 +56,9 @@ export default function App() {
           drawerContent={(props) => <Menu {...props} />}
         >
           <Drawer.Screen name='Home' component={Home} />
+          <Drawer.Screen name='Login' component={Login} />
           <Drawer.Screen name='DrinkPage' component={DrinkPage} />
+          <Drawer.Screen name='AddRecipe' component={AddRecipe} />
         </Drawer.Navigator>
       </NavigationContainer>
     </StoreProvider>
