@@ -1,8 +1,8 @@
 export const COLORS = {
   //primary: '#F7D1D7',
-  primary: '#F5C4CC',
-  secondary: '#ACE1F6',
-  transparent: 'rgba(255,255,255,0.25)',
+  primary: 'rgba(245, 196, 204, 1)',
+  secondary: 'rgba(172, 225, 246, 1)',
+  transparent: 'rgba(255,255,255,0.75)',
 
   grad1: '#F0AAB5',
   grad2: '#F5C4CC',
