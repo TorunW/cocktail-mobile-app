@@ -16,97 +16,41 @@ import {
 } from '../components';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useNavigationState } from '@react-navigation/native';
-import * as SQLite from 'expo-sqlite';
-
-const db = SQLite.openDatabase('lemonSqueezy.db');
-
-/* const db = SQLite.openDatabase(
-  {
-    name: 'lemonSqueezy.db',
-    location: 'default',
-  },
-  () => {},
-  (error) => {
-    console.log(error);
-  }
-); */
+import { db } from '../firebaseConfig';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 export const Home = ({ navigation }) => {
   const navState = useNavigationState((state) => state);
   const action = useStoreActions((actions) => actions);
   const state = useStoreState((state) => state);
-  const cocktailList = state.cocktails.cocktailList;
-  const term = state.cocktails.term;
-
-  const [users, setUsers] = useState([]);
-  const [userName, setUserName] = useState(undefined);
-  const [userEmail, setUserEmail] = useState(undefined);
-
-  // console.log(users);
-  // console.log(db);
+  const cocktailsData = state.cocktails.cocktailList;
 
   useEffect(() => {
-    createTable();
-    getData();
+    getDrinks();
   }, []);
 
-  const createTable = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS users (ID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT)',
-        []
-      );
+  const getDrinks = async () => {
+    const querySnapshot = await getDocs(collection(db, 'cocktails'));
+    const ingSnapshort = await getDocs(collection(db, 'ingredients'));
+    const ingredients = ingSnapshort.docs.map((doc, index) => ({
+      id: doc.id,
+      name: doc.data().name,
+    }));
+    action.cocktails.setIngredients(ingredients);
+    const drinks = querySnapshot.docs.map((doc, index) => {
+      return {
+        id: doc.id,
+        title: doc.data().title,
+        image: doc.data().image,
+        instructions: doc.data().instructions,
+        alcoholic: doc.data().alcoholic,
+        creator: doc.data().creator,
+        complexity: doc.data().complexity,
+        ingr: doc.data().ingr,
+      };
     });
-  };
 
-  const getData = () => {
-    console.log('GET DATA');
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT * FROM users',
-        null,
-        (txObj, resultSet) => setUsers(resultSet.rows._array),
-        (txObj, error) => console.log(error)
-      );
-    });
-  };
-
-  const addUser = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'INSERT INTO users (name,email) VALUES (?,?)',
-        [userName, userEmail],
-        (txObj, resultSet) => {
-          console.log('foruth');
-          let existingNames = [...users];
-          existingNames.push({
-            id: resultSet.insertId,
-            name: userName,
-            email: userEmail,
-          });
-          setUsers(existingNames);
-          setUserName('');
-          setUserEmail('');
-        },
-        (txObj, error) => console.log(error)
-      );
-    });
-  };
-
-  useEffect(() => {
-    getCocktailList();
-  }, [term]);
-
-  const getCocktailList = () => {
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${term}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const list = data.drinks;
-        action.cocktails.setCocktailList(list);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    action.cocktails.setCocktailList(drinks);
   };
 
   const handlePress = () => {
@@ -122,58 +66,35 @@ export const Home = ({ navigation }) => {
     }
   }, [navState]);
 
-  const showUsers = () => {
-    return users.map((user, index) => {
-      return (
-        <View
-          key={index}
-          style={{
-            width: '100%',
-            minHeight: 50,
-            backgroundColor: COLORS.grad1,
-          }}
-        >
-          <Text>{user.name}</Text>
-          <Text>{user.email}</Text>
-          <Text>{user.id}</Text>
-        </View>
-      );
-    });
-  };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
       <View style={{ flex: 1 }}>
         <StaticHeader handlePress={handlePress} />
-        <View
-          style={{
-            position: 'absolute',
-            zIndex: 10,
-            top: 150,
-            width: '100%',
-            padding: 20,
-          }}
-        >
-          <TextInput
-            value={userName}
-            placeholder='name'
-            onChangeText={setUserName}
-          />
-          <TextInput
-            value={userEmail}
-            placeholder='email'
-            onChangeText={setUserEmail}
-          />
-          <Button title='Add user' onPress={addUser} />
-          {showUsers()}
-        </View>
 
         <View style={{ zIndex: 0 }}>
+          {/*       <FlatList
+            data={cocktailsData}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  borderColor: COLORS.black,
+                  borderStyle: 'solid',
+                  borderWidth: 1,
+                  padding: 5,
+                  borderRadius: 5,
+                }}
+              >
+                <Text>{item.title} </Text>
+                <Text>{item.complexity} </Text>
+              </View>
+            )}
+            keyExtractor={(item) => item.id}
+          /> */}
           <FlatList
-            data={cocktailList}
+            data={cocktailsData}
             renderItem={({ item }) => <DrinkCard data={item} />}
-            keyExtractor={(item) => item.idDrink}
+            keyExtractor={(item) => item.id}
             ListHeaderComponent={<HomeHeader />}
           />
         </View>

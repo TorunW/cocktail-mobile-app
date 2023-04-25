@@ -42,7 +42,7 @@ export default function App() {
     <StoreProvider store={store}>
       <NavigationContainer theme={theme}>
         <Drawer.Navigator
-          initialRouteName='Login'
+          initialRouteName='Home'
           screenOptions={{
             headerShown: false,
             drawerStyle: {

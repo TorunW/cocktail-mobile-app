@@ -21,9 +21,13 @@ import {
 } from '../components/SubInfo';
 import getIngredientsArr from '../helpers/getIngredientsArr';
 import getMeasurmentsArr from '../helpers/getMeasurmentsArr';
+import { useStoreState } from 'easy-peasy';
 
 export const DrinkPage = ({ route, navigation }) => {
   const { data } = route.params;
+  const state = useStoreState((state) => state);
+
+  const ingredientData = state.cocktails.ingredients;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -50,7 +54,7 @@ export const DrinkPage = ({ route, navigation }) => {
             position: 'absolute',
             top: 0,
           }}
-          source={{ uri: data.strDrinkThumb }}
+          source={{ uri: data.image }}
           resizeMode='cover'
           blurRadius={10}
         />
@@ -62,7 +66,7 @@ export const DrinkPage = ({ route, navigation }) => {
             borderRadius: 10,
             marginTop: 50,
           }}
-          source={{ uri: data.strDrinkThumb }}
+          source={{ uri: data.image }}
           resizeMode='cover'
         />
         <Heart right={15} top={StatusBar.currentHeight + 10} />
@@ -94,11 +98,11 @@ export const DrinkPage = ({ route, navigation }) => {
             }}
           >
             <Text style={{ fontFamily: FONTS.bold, fontSize: SIZES.large }}>
-              {data.strDrink}
+              {data.title}
             </Text>
 
             <Category category={data.strCategory} />
-            <Alcoholic alcoholic={data.strAlcoholic} />
+            <Alcoholic alcoholic={data.alcoholic} />
           </View>
           <View
             style={{
@@ -108,14 +112,10 @@ export const DrinkPage = ({ route, navigation }) => {
             }}
           >
             <Likes />
-            <User />
+            <User user={data.creator} />
             <Complexity complexity={data.complexity} />
           </View>
-          <Tags
-            justifyContent={'flex-start'}
-            width={'100%'}
-            tags={data.strTags}
-          />
+          <Tags justifyContent={'flex-start'} width={'100%'} tags={'tags'} />
 
           <Text
             style={{
@@ -133,11 +133,25 @@ export const DrinkPage = ({ route, navigation }) => {
             }}
           >
             <View style={{ width: '50%' }}>
-              <FlatList
-                data={getIngredientsArr(data)}
-                renderItem={({ item }) => <Ingredients ingredient={item} />}
-                showsVerticalScrollIndicator={false}
-              />
+              {data.ingr !== undefined ? (
+                <FlatList
+                  data={data.ingr}
+                  renderItem={({ item }) => {
+                    const ingredientName = ingredientData.find((ing) =>
+                      ing.id === item.id ? ing.name : ''
+                    );
+                    console.log(ingredientName.name);
+                    return (
+                      <View>
+                        <Text>{ingredientName.name} </Text>
+                      </View>
+                    );
+                  }}
+                  keyExtractor={(item) => item.id}
+                />
+              ) : (
+                <Text>No ingred</Text>
+              )}
             </View>
             <View style={{ width: '50%' }}>
               <FlatList
@@ -157,7 +171,7 @@ export const DrinkPage = ({ route, navigation }) => {
             Instructions
           </Text>
           <View>
-            <Text>{data.strInstructions}</Text>
+            <Text>{data.instructions}</Text>
           </View>
         </View>
       </View>

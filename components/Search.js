@@ -14,7 +14,6 @@ const Search = () => {
 
   const handleSearch = (searchValue) => {
     if (!searchValue.length) return action.cocktails.searchTerm('');
-    console.log(searchValue.length, 'value');
 
     if (searchValue.length) {
       action.cocktails.searchTerm(searchValue);

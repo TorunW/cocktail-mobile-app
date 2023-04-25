@@ -1,12 +1,15 @@
-import { View, Image, ImageBackground } from 'react-native';
+import { View, Image, ImageBackground, FlatList, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { COLORS, SIZES, SHADOWS, SPACING } from '../constants';
 import { LikeBtn, ReadMoreBtn } from './Button';
 import { Title, Complexity, User, Likes, Tags } from './SubInfo';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const DrinkCard = ({ data }) => {
   const navigation = useNavigation();
+
+  console.log(data);
 
   return (
     <View
@@ -18,36 +21,25 @@ const DrinkCard = ({ data }) => {
       }}
     >
       <View style={{ width: '100%', height: 250 }}>
-        <ImageBackground
-          source={{ uri: data.strDrinkThumb }}
-          resizeMode='cover'
+        <View
           style={{
             width: '100%',
             height: '100%',
-            borderRadius: 10,
+            backgroundColor: 'rgba(0,0,0,0.2)',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
-          blurRadius={10}
         >
-          <View
+          {/*  <Image
+            source={{ uri: data.strDrinkThumb }}
+            resizeMode='cover'
             style={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(0,0,0,0.2)',
-              justifyContent: 'center',
-              alignItems: 'center',
+              width: '75%',
+              height: '75%',
+              borderRadius: 10,
             }}
-          >
-            <Image
-              source={{ uri: data.strDrinkThumb }}
-              resizeMode='cover'
-              style={{
-                width: '75%',
-                height: '75%',
-                borderRadius: 10,
-              }}
-            />
-          </View>
-        </ImageBackground>
+          /> */}
+        </View>
 
         <LikeBtn top={8} right={8} />
       </View>
@@ -66,8 +58,8 @@ const DrinkCard = ({ data }) => {
       </View>
       <View style={{ width: '100%', padding: SPACING.m }}>
         <Title
-          title={data.strDrink}
-          subTitle={'user'}
+          title={data.title}
+          subTitle={data.creator}
           titleSize={SIZES.large}
           subTitleSize={SIZES.small}
         />
@@ -79,7 +71,8 @@ const DrinkCard = ({ data }) => {
             alignItems: 'center',
           }}
         >
-          <Tags tags={data.strTags} />
+          <Tags tags={'tags'} />
+
           <ReadMoreBtn
             minWidth={120}
             fontSize={SIZES.font}

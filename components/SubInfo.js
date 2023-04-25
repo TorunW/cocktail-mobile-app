@@ -28,7 +28,7 @@ export const Title = ({ title, subTitle, titleSize, subTitleSize }) => {
   );
 };
 
-export const User = () => {
+export const User = ({ user }) => {
   return (
     <View
       style={{
@@ -59,7 +59,7 @@ export const User = () => {
           color: COLORS.black,
         }}
       >
-        User
+        {user}
       </Text>
     </View>
   );
