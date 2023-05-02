@@ -15,12 +15,9 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 import Dropdown from 'react-native-input-select';
 import { db } from '../firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
+import ImageUploader from '../components/ImageUploader';
 
 export const AddRecipe = () => {
-  const state = useStoreState((state) => state);
-  const cocktailsData = state.cocktails.cocktailList;
-  const ingredientData = state.cocktails.ingredients;
-
   const {
     control,
     handleSubmit,
@@ -72,7 +69,7 @@ export const AddRecipe = () => {
         }}
       >
         <Text>ADD NEW</Text>
-
+        <ImageUploader />
         <Controller
           control={control}
           rules={{ required: true }}

@@ -56,79 +56,68 @@ const Login = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground
-        source={require('../assets/images/loginBg.jpg')}
-        resizeMode='cover'
+      <LinearGradient
+        colors={[COLORS.secondary, COLORS.grad3]}
         style={{
+          margin: 30,
+          padding: 20,
           justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          height: '100%',
+          gap: 15,
+          borderRadius: 10,
+          height: 600,
+          width: 300,
         }}
       >
-        <LinearGradient
-          colors={[COLORS.secondary, COLORS.grad3]}
-          style={{
-            margin: 30,
-            padding: 20,
-            justifyContent: 'center',
-            gap: 15,
-            borderRadius: 10,
-            height: 600,
-            width: 300,
-          }}
-        >
-          <Controller
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                placeholder='Name'
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name='name'
-          />
+        <Controller
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder='Name'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='name'
+        />
 
-          <Controller
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                placeholder='Email'
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name='email'
-          />
-          <Button title='Register' onPress={handleSubmit(registerUser)} />
+        <Controller
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder='Email'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='email'
+        />
+        <Button title='Register' onPress={handleSubmit(registerUser)} />
 
-          <Text>Exsisting users:</Text>
-          <FlatList
-            data={users}
-            renderItem={({ item }) => (
-              <View
-                style={{
-                  borderColor: COLORS.black,
-                  borderStyle: 'solid',
-                  borderWidth: 1,
-                  padding: 5,
-                  borderRadius: 5,
-                }}
-              >
-                <Text>{item.name} </Text>
-                <Text>{item.email} </Text>
-                <Text>{item.id} </Text>
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-          />
-        </LinearGradient>
-      </ImageBackground>
+        <Text>Exsisting users:</Text>
+        <FlatList
+          data={users}
+          renderItem={({ item }) => (
+            <View
+              style={{
+                borderColor: COLORS.black,
+                borderStyle: 'solid',
+                borderWidth: 1,
+                padding: 5,
+                borderRadius: 5,
+              }}
+            >
+              <Text>{item.name} </Text>
+              <Text>{item.email} </Text>
+              <Text>{item.id} </Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      </LinearGradient>
     </SafeAreaView>
   );
 };

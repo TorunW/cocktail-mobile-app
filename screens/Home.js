@@ -73,24 +73,6 @@ export const Home = ({ navigation }) => {
         <StaticHeader handlePress={handlePress} />
 
         <View style={{ zIndex: 0 }}>
-          {/*       <FlatList
-            data={cocktailsData}
-            renderItem={({ item }) => (
-              <View
-                style={{
-                  borderColor: COLORS.black,
-                  borderStyle: 'solid',
-                  borderWidth: 1,
-                  padding: 5,
-                  borderRadius: 5,
-                }}
-              >
-                <Text>{item.title} </Text>
-                <Text>{item.complexity} </Text>
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-          /> */}
           <FlatList
             data={cocktailsData}
             renderItem={({ item }) => <DrinkCard data={item} />}
@@ -108,7 +90,7 @@ export const Home = ({ navigation }) => {
             zIndex: -1,
           }}
         >
-          <View style={{ flex: 1, backgroundColor: COLORS.white }} />
+          <View style={{ flex: 1, backgroundColor: COLORS.grad3 }} />
           <View />
         </View>
       </View>

@@ -1,15 +1,12 @@
-import { View, Image, ImageBackground, FlatList, Text } from 'react-native';
+import { View, Image, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { COLORS, SIZES, SHADOWS, SPACING } from '../constants';
 import { LikeBtn, ReadMoreBtn } from './Button';
 import { Title, Complexity, User, Likes, Tags } from './SubInfo';
-import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const DrinkCard = ({ data }) => {
   const navigation = useNavigation();
-
-  console.log(data);
 
   return (
     <View
