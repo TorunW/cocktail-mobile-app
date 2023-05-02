@@ -44,7 +44,6 @@ export const Home = ({ navigation }) => {
         image: doc.data().image,
         instructions: doc.data().instructions,
         alcoholic: doc.data().alcoholic,
-        creator: doc.data().creator,
         complexity: doc.data().complexity,
         ingr: doc.data().ingr,
       };

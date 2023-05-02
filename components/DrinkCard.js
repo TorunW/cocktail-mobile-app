@@ -8,6 +8,8 @@ import { Title, Complexity, User, Likes, Tags } from './SubInfo';
 const DrinkCard = ({ data }) => {
   const navigation = useNavigation();
 
+  console.log(data.image);
+
   return (
     <View
       style={{
@@ -22,20 +24,20 @@ const DrinkCard = ({ data }) => {
           style={{
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0,0,0,0.2)',
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
-          {/*  <Image
-            source={{ uri: data.strDrinkThumb }}
+          <Image
+            source={{ uri: data.image }}
             resizeMode='cover'
             style={{
-              width: '75%',
-              height: '75%',
-              borderRadius: 10,
+              width: '100%',
+              height: '100%',
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
             }}
-          /> */}
+          />
         </View>
 
         <LikeBtn top={8} right={8} />
@@ -50,13 +52,11 @@ const DrinkCard = ({ data }) => {
         }}
       >
         <Likes />
-        <User />
         <Complexity complexity={data.complexity} />
       </View>
       <View style={{ width: '100%', padding: SPACING.m }}>
         <Title
           title={data.title}
-          subTitle={data.creator}
           titleSize={SIZES.large}
           subTitleSize={SIZES.small}
         />

@@ -17,7 +17,6 @@ import {
   Likes,
   Measures,
   Tags,
-  User,
 } from '../components/SubInfo';
 import getIngredientsArr from '../helpers/getIngredientsArr';
 import getMeasurmentsArr from '../helpers/getMeasurmentsArr';
@@ -112,7 +111,6 @@ export const DrinkPage = ({ route, navigation }) => {
             }}
           >
             <Likes />
-            <User user={data.creator} />
             <Complexity complexity={data.complexity} />
           </View>
           <Tags justifyContent={'flex-start'} width={'100%'} tags={'tags'} />

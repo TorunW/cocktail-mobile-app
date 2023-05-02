@@ -3,11 +3,13 @@ import { View, Image, Text, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { storage } from '../firebaseConfig';
 import { COLORS } from '../constants';
-import { uploadBytes, ref, listAll } from 'firebase/storage';
+import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import { useStoreActions } from 'easy-peasy';
 
 const ImageUploader = () => {
-  const [image, setImage] = useState(null);
+  const action = useStoreActions((actions) => actions);
 
+  const [image, setImage] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
 
   const pickImage = async () => {
@@ -20,7 +22,6 @@ const ImageUploader = () => {
     });
 
     const source = { uri: result.assets[0].uri };
-
     setImage(source);
   };
 
@@ -40,21 +41,31 @@ const ImageUploader = () => {
       xhr.send(null);
     });
     const filename = image.uri.substring(image.uri.lastIndexOf('/') + 1);
-
     const fileType = filename.split('.')[filename.split('.').length - 1];
-
     var storageRef = ref(storage, `images/${filename}`);
     const metadata = {
       contentType: `image/${fileType}`,
     };
     uploadBytes(storageRef, blob, metadata)
       .then((snapshot) => {
-        // console.log(snapshot, ' SNAPSHOT');
         setIsUploading(false);
+        getUrl(filename);
       })
       .catch((err) => {
         console.log(err);
         setIsUploading(false);
+      });
+  };
+
+  const getUrl = (filename) => {
+    getDownloadURL(ref(storage, `images/${filename}`))
+      .then((url) => {
+        // `url` is the download URL for 'images/stars.jpg'
+        action.cocktails.setImage(url);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.log(error.message);
       });
   };
 

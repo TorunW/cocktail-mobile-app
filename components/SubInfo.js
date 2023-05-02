@@ -28,42 +28,6 @@ export const Title = ({ title, subTitle, titleSize, subTitleSize }) => {
   );
 };
 
-export const User = ({ user }) => {
-  return (
-    <View
-      style={{
-        paddingHorizontal: SIZES.font,
-        paddingVertical: SIZES.base,
-        backgroundColor: COLORS.primary,
-        justifyContent: 'center',
-        alignItems: 'center',
-        ...SHADOWS.light,
-        elevation: 1,
-        maxWidth: '50%',
-        borderRadius: 10,
-      }}
-    >
-      <Text
-        style={{
-          fontFamily: FONTS.regular,
-          fontSize: SIZES.small,
-          color: COLORS.black,
-        }}
-      >
-        Recipie by:
-      </Text>
-      <Text
-        style={{
-          fontFamily: FONTS.regular,
-          fontSize: SIZES.medium,
-          color: COLORS.black,
-        }}
-      >
-        {user}
-      </Text>
-    </View>
-  );
-};
 export const Likes = () => {
   return (
     <View

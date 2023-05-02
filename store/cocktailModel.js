@@ -9,7 +9,10 @@ export default cocktails = {
   setIngredients: action((state, payload) => {
     state.ingredients = payload;
   }),
-
+  image: '',
+  setImage: action((state, payload) => {
+    state.image = payload;
+  }),
   term: '',
   searchTerm: action((state, payload) => {
     state.term = payload;

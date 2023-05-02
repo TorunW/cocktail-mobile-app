@@ -5,19 +5,21 @@ import {
   Text,
   Button,
   TextInput,
-  FlatList,
+  Image,
 } from 'react-native';
 import { COLORS } from '../constants';
 import { FocusedStatusBar } from '../components';
 import { useForm, Controller } from 'react-hook-form';
-import CheckBox from 'expo-checkbox';
-import { useStoreActions, useStoreState } from 'easy-peasy';
 import Dropdown from 'react-native-input-select';
 import { db } from '../firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import ImageUploader from '../components/ImageUploader';
-
+import { action, useStoreState } from 'easy-peasy';
 export const AddRecipe = () => {
+  const image = useStoreState((state) => state.cocktails.image);
+
+  console.log(image, 'imaeg');
+
   const {
     control,
     handleSubmit,
@@ -25,16 +27,12 @@ export const AddRecipe = () => {
   } = useForm({
     defaultValues: {
       title: '',
-      image: '',
       instructions: '',
       alcoholic: undefined,
-      creator: 'Torun',
     },
   });
 
   const addCocktail = async (data) => {
-    //set creator = to logged in user
-    //calculate complexity
     let complexity;
     if (data.instructions.length <= 5) {
       complexity = 1;
@@ -50,9 +48,8 @@ export const AddRecipe = () => {
       title: data.title,
       instructions: data.instructions,
       alcoholic: alcoholic,
-      creator: data.creator,
       complexity: complexity,
-      image: data.image,
+      image: image,
     });
     console.log('Document written with ID: ', docRef.id);
   };
@@ -69,6 +66,7 @@ export const AddRecipe = () => {
         }}
       >
         <Text>ADD NEW</Text>
+
         <ImageUploader />
         <Controller
           control={control}
@@ -90,7 +88,6 @@ export const AddRecipe = () => {
           )}
           name='alcoholic'
         />
-
         <Controller
           control={control}
           rules={{ required: true }}
@@ -110,19 +107,6 @@ export const AddRecipe = () => {
           rules={{ required: true }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              placeholder='Image'
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name='image'
-        />
-        <Controller
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
               placeholder='Instructions'
               onBlur={onBlur}
               onChangeText={onChange}
@@ -130,20 +114,6 @@ export const AddRecipe = () => {
             />
           )}
           name='instructions'
-        />
-
-        <Controller
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder='Creator'
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name='creator'
         />
         <Button title='Add cocktail' onPress={handleSubmit(addCocktail)} />
       </View>
