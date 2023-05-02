@@ -4,10 +4,12 @@ import {
   TextInput,
   ImageBackground,
   Dimensions,
+  Image,
 } from 'react-native';
 import React from 'react';
 import { COLORS, FONTS, SHADOWS, SIZES, assets } from '../constants';
 import { useStoreState } from 'easy-peasy';
+import divider from '../assets/images/divider.png';
 
 const HomeHeader = () => {
   const isOpen = useStoreState((state) => state.menu.isOpen);
@@ -16,16 +18,14 @@ const HomeHeader = () => {
   return (
     <View>
       <ImageBackground
-        source={assets.headerImg}
+        source={divider}
         resizeMode='cover'
         style={{
           flex: 1,
           padding: SIZES.font,
-          height: windowHeight,
-          marginBottom: -250,
           paddingTop: 64,
+          height: 310,
         }}
-        blurRadius={!isOpen ? 0 : 4}
       >
         <>
           <View style={{ marginVertical: SIZES.font }}>
@@ -59,6 +59,11 @@ const HomeHeader = () => {
             >
               Let's make cocktails
             </Text>
+            <Image
+              resizeMode='cover'
+              style={{ width: 50, height: 70, position: 'absolute', right: 10 }}
+              source={require('../assets/images/martini.png')}
+            />
           </View>
         </>
       </ImageBackground>
