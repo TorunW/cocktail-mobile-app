@@ -6,7 +6,7 @@ import {
   StatusBar,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { COLORS, FONTS, SIZES, SPACING, SHADOWS, assets } from '../constants';
 import { Heart, BackBtn, FocusedStatusBar } from '../components';
 import {
@@ -21,12 +21,13 @@ import {
 import getIngredientsArr from '../helpers/getIngredientsArr';
 import getMeasurmentsArr from '../helpers/getMeasurmentsArr';
 import { useStoreState } from 'easy-peasy';
+import { getIngredients } from '../transactions/getIngredientsData';
 
 export const DrinkPage = ({ route, navigation }) => {
   const { data } = route.params;
   const state = useStoreState((state) => state);
 
-  const ingredientData = state.cocktails.ingredients;
+  const ingredientData = state.drinks.ingredients;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -138,7 +139,6 @@ export const DrinkPage = ({ route, navigation }) => {
                     const ingredientName = ingredientData.find((ing) =>
                       ing.id === item.id ? ing.name : ''
                     );
-                    console.log(ingredientName.name);
                     return (
                       <View>
                         <Text>{ingredientName.name} </Text>

@@ -9,17 +9,23 @@ import {
 } from 'react-native';
 import { COLORS } from '../constants';
 import { FocusedStatusBar } from '../components';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, FormProvider } from 'react-hook-form';
 import Dropdown from 'react-native-input-select';
 import { db } from '../firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import ImageUploader from '../components/ImageUploader';
-import { action, useStoreState } from 'easy-peasy';
+import { useStore, useStoreState } from 'easy-peasy';
+import IngredientsForm from '../components/IngredientsForm';
+
 export const AddRecipe = () => {
-  const image = useStoreState((state) => state.cocktails.image);
-
-  console.log(image, 'imaeg');
-
+  const image = useStoreState((state) => state.drinks.image);
+  const ingredients = useStoreState((state) => state.drinks.ingredientsToDrink);
+  const existingIngredients = useStoreState(
+    (state) => state.drinks.ingredients
+  );
+  console.log(ingredients, 'submittet ingred');
+  console.log(existingIngredients, 'exsisisis');
+  const findIngredient = () => {};
   const {
     control,
     handleSubmit,
@@ -29,10 +35,11 @@ export const AddRecipe = () => {
       title: '',
       instructions: '',
       alcoholic: undefined,
+      ingredients: '',
     },
   });
 
-  const addCocktail = async (data) => {
+  const addDrink = async (data) => {
     let complexity;
     if (data.instructions.length <= 5) {
       complexity = 1;
@@ -57,6 +64,7 @@ export const AddRecipe = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
+      <IngredientsForm />
       <View
         style={{
           zIndex: 10,
@@ -66,7 +74,6 @@ export const AddRecipe = () => {
         }}
       >
         <Text>ADD NEW</Text>
-
         <ImageUploader />
         <Controller
           control={control}
@@ -101,7 +108,6 @@ export const AddRecipe = () => {
           )}
           name='title'
         />
-
         <Controller
           control={control}
           rules={{ required: true }}
@@ -115,7 +121,7 @@ export const AddRecipe = () => {
           )}
           name='instructions'
         />
-        <Button title='Add cocktail' onPress={handleSubmit(addCocktail)} />
+        <Button title='Add drink' onPress={handleSubmit(addDrink)} />
       </View>
     </SafeAreaView>
   );
