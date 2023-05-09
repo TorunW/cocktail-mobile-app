@@ -1,10 +1,10 @@
 import { createStore, action } from 'easy-peasy';
 import addComplexityScoreToDrinks from '../helpers/addComplexityScore';
-import cocktailModel from './cocktailModel';
+import drinkModel from './drinkModel';
 import userModel from './userModel';
 
 export const store = createStore({
-  cocktails: cocktailModel,
+  drinks: drinkModel,
   users: userModel,
   menu: {
     isOpen: false,

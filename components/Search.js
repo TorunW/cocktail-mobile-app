@@ -10,13 +10,13 @@ import ArrowDown from '../assets/icons/ArrowDown.svg';
 const Search = () => {
   const state = useStoreState((state) => state);
   const action = useStoreActions((actions) => actions);
-  const cocktailList = state.cocktails.cocktailList;
+  const drinkList = state.drinks.drinkList;
 
   const handleSearch = (searchValue) => {
-    if (!searchValue.length) return action.cocktails.searchTerm('');
+    if (!searchValue.length) return action.drinks.searchTerm('');
 
     if (searchValue.length) {
-      action.cocktails.searchTerm(searchValue);
+      action.drinks.searchTerm(searchValue);
     }
   };
 
@@ -34,7 +34,7 @@ const Search = () => {
       >
         <SearchIcon />
         <TextInput
-          placeholder='Search Cocktails'
+          placeholder='Search for Drinks'
           style={{ flex: 1, fontFamily: FONTS.regular }}
           onChangeText={handleSearch}
         />

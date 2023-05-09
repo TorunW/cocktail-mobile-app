@@ -8,7 +8,6 @@ import { Title, Complexity, User, Likes, Tags } from './SubInfo';
 const DrinkCard = ({ data }) => {
   const navigation = useNavigation();
 
-  console.log(data.image);
 
   return (
     <View

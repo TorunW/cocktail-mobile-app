@@ -61,7 +61,7 @@ const ImageUploader = () => {
     getDownloadURL(ref(storage, `images/${filename}`))
       .then((url) => {
         // `url` is the download URL for 'images/stars.jpg'
-        action.cocktails.setImage(url);
+        action.drinks.setImage(url);
       })
       .catch((error) => {
         // Handle any errors

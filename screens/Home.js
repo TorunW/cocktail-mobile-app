@@ -1,12 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  FlatList,
-  SafeAreaView,
-  Text,
-  Button,
-  TextInput,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { View, FlatList, SafeAreaView } from 'react-native';
 import { COLORS } from '../constants';
 import {
   DrinkCard,
@@ -16,40 +9,22 @@ import {
 } from '../components';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useNavigationState } from '@react-navigation/native';
-import { db } from '../firebaseConfig';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import getDrinksData from '../transactions/getDrinksData';
+import getIngredientsData from '../transactions/getIngredientsData';
 
 export const Home = ({ navigation }) => {
   const navState = useNavigationState((state) => state);
   const action = useStoreActions((actions) => actions);
   const state = useStoreState((state) => state);
-  const cocktailsData = state.cocktails.cocktailList;
+  const drinksData = state.drinks.drinkList;
 
   useEffect(() => {
-    getDrinks();
+    getData();
   }, []);
 
-  const getDrinks = async () => {
-    const querySnapshot = await getDocs(collection(db, 'cocktails'));
-    const ingSnapshort = await getDocs(collection(db, 'ingredients'));
-    const ingredients = ingSnapshort.docs.map((doc, index) => ({
-      id: doc.id,
-      name: doc.data().name,
-    }));
-    action.cocktails.setIngredients(ingredients);
-    const drinks = querySnapshot.docs.map((doc, index) => {
-      return {
-        id: doc.id,
-        title: doc.data().title,
-        image: doc.data().image,
-        instructions: doc.data().instructions,
-        alcoholic: doc.data().alcoholic,
-        complexity: doc.data().complexity,
-        ingr: doc.data().ingr,
-      };
-    });
-
-    action.cocktails.setCocktailList(drinks);
+  const getData = async () => {
+    action.drinks.setDrinkList(await getDrinksData());
+    action.drinks.setIngredients(await getIngredientsData());
   };
 
   const handlePress = () => {
@@ -73,7 +48,7 @@ export const Home = ({ navigation }) => {
 
         <View style={{ zIndex: 0 }}>
           <FlatList
-            data={cocktailsData}
+            data={drinksData}
             renderItem={({ item }) => <DrinkCard data={item} />}
             keyExtractor={(item) => item.id}
             ListHeaderComponent={<HomeHeader />}
