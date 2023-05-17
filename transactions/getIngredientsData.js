@@ -8,6 +8,5 @@ export default getIngredientsData = async () => {
     id: doc.id,
     name: doc.data().name,
   }));
-  console.log(ingredients, 'INGREDIENTS');
   return ingredients;
 };

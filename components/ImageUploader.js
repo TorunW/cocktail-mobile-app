@@ -60,7 +60,6 @@ const ImageUploader = () => {
   const getUrl = (filename) => {
     getDownloadURL(ref(storage, `images/${filename}`))
       .then((url) => {
-        // `url` is the download URL for 'images/stars.jpg'
         action.drinks.setImage(url);
       })
       .catch((error) => {
@@ -72,7 +71,7 @@ const ImageUploader = () => {
   return (
     <View
       style={{
-        height: 400,
+        height: 100,
         backgroundColor: COLORS.grad3,
         borderRadius: 5,
         elevation: 1,
@@ -99,7 +98,7 @@ const ImageUploader = () => {
         {image && (
           <Image
             source={{ uri: image.uri }}
-            style={{ width: 250, height: 250, marginBottom: 20 }}
+            style={{ width: 250, height: 50, marginBottom: 20 }}
           />
         )}
         <TouchableOpacity

@@ -11,6 +11,8 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useNavigationState } from '@react-navigation/native';
 import getDrinksData from '../transactions/getDrinksData';
 import getIngredientsData from '../transactions/getIngredientsData';
+import { QuerySnapshot, collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
 export const Home = ({ navigation }) => {
   const navState = useNavigationState((state) => state);

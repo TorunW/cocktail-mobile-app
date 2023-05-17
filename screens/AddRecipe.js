@@ -1,31 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  SafeAreaView,
-  Text,
-  Button,
-  TextInput,
-  Image,
-} from 'react-native';
+import { View, SafeAreaView, Text, Button, TextInput } from 'react-native';
 import { COLORS } from '../constants';
 import { FocusedStatusBar } from '../components';
-import { useForm, Controller, FormProvider } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import Dropdown from 'react-native-input-select';
 import { db } from '../firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, getDoc, doc, addDoc } from 'firebase/firestore';
 import ImageUploader from '../components/ImageUploader';
-import { useStore, useStoreState } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import IngredientsForm from '../components/IngredientsForm';
 
 export const AddRecipe = () => {
   const image = useStoreState((state) => state.drinks.image);
-  const ingredients = useStoreState((state) => state.drinks.ingredientsToDrink);
+  const submittedFormIngredients = useStoreState(
+    (state) => state.drinks.ingredientsToDrink
+  );
   const existingIngredients = useStoreState(
     (state) => state.drinks.ingredients
   );
-  console.log(ingredients, 'submittet ingred');
-  console.log(existingIngredients, 'exsisisis');
-  const findIngredient = () => {};
+  const [ingredientRefsWithMeasures, setIngredientRefsWithMeasures] = useState(
+    []
+  );
+
+  useEffect(() => {
+    getIngredientId();
+  }, []);
+
+  const getIngredientId = () => {
+    const ingredientArr = existingIngredients.filter((existingIngredient) =>
+      submittedFormIngredients.some(
+        (submittedFormIngredient) =>
+          existingIngredient.name.toLowerCase() ===
+          submittedFormIngredient.ingredient.toLowerCase()
+      )
+    );
+
+    const referenceArr = ingredientArr.map((item, index) => {
+      let measure = submittedFormIngredients.map((m) => m.measure);
+      const ingredientRef = doc(db, 'ingredients', item.id);
+      return {
+        ingredient: ingredientRef,
+        measure: measure[index],
+      };
+    });
+
+    setIngredientRefsWithMeasures(referenceArr);
+  };
+
   const {
     control,
     handleSubmit,
@@ -35,7 +56,7 @@ export const AddRecipe = () => {
       title: '',
       instructions: '',
       alcoholic: undefined,
-      ingredients: '',
+      ingredients: [],
     },
   });
 
@@ -57,6 +78,7 @@ export const AddRecipe = () => {
       alcoholic: alcoholic,
       complexity: complexity,
       image: image,
+      ingredients: ingredientRefsWithMeasures,
     });
     console.log('Document written with ID: ', docRef.id);
   };

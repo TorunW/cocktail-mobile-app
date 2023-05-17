@@ -6,28 +6,19 @@ import {
   StatusBar,
   FlatList,
 } from 'react-native';
-import React, { useEffect } from 'react';
-import { COLORS, FONTS, SIZES, SPACING, SHADOWS, assets } from '../constants';
+import React from 'react';
+import { COLORS, FONTS, SIZES, SHADOWS } from '../constants';
 import { Heart, BackBtn, FocusedStatusBar } from '../components';
 import {
   Alcoholic,
   Category,
   Complexity,
-  Ingredients,
   Likes,
-  Measures,
   Tags,
 } from '../components/SubInfo';
-import getIngredientsArr from '../helpers/getIngredientsArr';
-import getMeasurmentsArr from '../helpers/getMeasurmentsArr';
-import { useStoreState } from 'easy-peasy';
-import { getIngredients } from '../transactions/getIngredientsData';
 
 export const DrinkPage = ({ route, navigation }) => {
   const { data } = route.params;
-  const state = useStoreState((state) => state);
-
-  const ingredientData = state.drinks.ingredients;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -132,16 +123,19 @@ export const DrinkPage = ({ route, navigation }) => {
             }}
           >
             <View style={{ width: '50%' }}>
-              {data.ingr !== undefined ? (
+              {data.ingredients !== undefined ? (
                 <FlatList
-                  data={data.ingr}
+                  data={data.ingredients}
                   renderItem={({ item }) => {
-                    const ingredientName = ingredientData.find((ing) =>
-                      ing.id === item.id ? ing.name : ''
-                    );
                     return (
-                      <View>
-                        <Text>{ingredientName.name} </Text>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <Text>{item.ingredient}</Text>
+                        <Text>{item.measure}</Text>
                       </View>
                     );
                   }}
@@ -150,12 +144,6 @@ export const DrinkPage = ({ route, navigation }) => {
               ) : (
                 <Text>No ingred</Text>
               )}
-            </View>
-            <View style={{ width: '50%' }}>
-              <FlatList
-                data={getMeasurmentsArr(data)}
-                renderItem={({ item }) => <Measures measure={item} />}
-              />
             </View>
           </View>
 

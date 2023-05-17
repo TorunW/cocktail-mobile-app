@@ -5,6 +5,7 @@ import { COLORS, FONTS, SIZES } from '../constants';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import getIngredientsData from '../transactions/getIngredientsData';
 
 const IngredientsForm = () => {
   const existingIngredients = useStoreState(
@@ -29,11 +30,9 @@ const IngredientsForm = () => {
           (obj2) => obj.ingredient.toLowerCase() == obj2.name.toLowerCase()
         )
     );
-    console.log(toBeAddedInFirebase, 'filtered array');
 
     if (toBeAddedInFirebase.length > 0) {
       toBeAddedInFirebase.forEach(async (element) => {
-        console.log(element.ingredient, 'should only be filtered');
         const docRef = await addDoc(collection(db, 'ingredients'), {
           name: element.ingredient,
         });
@@ -41,6 +40,11 @@ const IngredientsForm = () => {
       });
     }
     action.drinks.setIngredientsToDrink(data.ingredients);
+    getData();
+  };
+
+  const getData = async () => {
+    action.drinks.setIngredients(await getIngredientsData());
   };
 
   return (
