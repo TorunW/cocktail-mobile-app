@@ -22,8 +22,7 @@ const RegisterForm = () => {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user, 'ser');
-        navigation.navigate('Home');
+        navigation.navigate('Root');
       }
     });
   }, []);

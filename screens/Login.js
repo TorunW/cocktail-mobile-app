@@ -3,14 +3,16 @@ import React, { useEffect } from 'react';
 import { COLORS } from '../constants';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { auth, db } from '../firebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const action = useStoreActions((actions) => actions);
   const state = useStoreState((state) => state);
+  const navigation = useNavigation();
 
   useEffect(() => {
     getUsers();
