@@ -16,9 +16,12 @@ import {
   Likes,
   Tags,
 } from '../components/SubInfo';
+import { useStoreState } from 'easy-peasy';
 
 export const DrinkPage = ({ route, navigation }) => {
   const { data } = route.params;
+  const state = useStoreState((state) => state);
+  const ingredientData = state.drinks.ingredients;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -126,19 +129,7 @@ export const DrinkPage = ({ route, navigation }) => {
               {data.ingredients !== undefined ? (
                 <FlatList
                   data={data.ingredients}
-                  renderItem={({ item }) => {
-                    return (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <Text>{item.ingredient}</Text>
-                        <Text>{item.measure}</Text>
-                      </View>
-                    );
-                  }}
+                  renderItem={({ item }) => {}}
                   keyExtractor={(item) => item.id}
                 />
               ) : (
