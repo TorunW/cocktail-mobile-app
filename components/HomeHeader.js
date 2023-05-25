@@ -12,9 +12,6 @@ import { useStoreState } from 'easy-peasy';
 import divider from '../assets/images/divider.png';
 
 const HomeHeader = () => {
-  const isOpen = useStoreState((state) => state.menu.isOpen);
-  const windowHeight = Dimensions.get('window').height;
-
   return (
     <View>
       <ImageBackground

@@ -29,11 +29,6 @@ export const Home = ({ navigation }) => {
     action.drinks.setIngredients(await getIngredientsData());
   };
 
-  const handlePress = () => {
-    navigation.toggleDrawer();
-    action.menu.openMenu();
-  };
-
   useEffect(() => {
     if (navState.history.find((item, index) => item.status === 'open')) {
       action.menu.openMenu();
@@ -46,7 +41,7 @@ export const Home = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
       <View style={{ flex: 1 }}>
-        <StaticHeader handlePress={handlePress} />
+        <StaticHeader />
 
         <View style={{ zIndex: 0 }}>
           <FlatList

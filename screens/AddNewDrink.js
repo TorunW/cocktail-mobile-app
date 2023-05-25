@@ -10,7 +10,7 @@ import ImageUploader from '../components/ImageUploader';
 import { useStoreState } from 'easy-peasy';
 import IngredientsForm from '../components/IngredientsForm';
 
-export const AddRecipe = () => {
+export const AddNewDrink = () => {
   const image = useStoreState((state) => state.drinks.image);
   const submittedFormIngredients = useStoreState(
     (state) => state.drinks.ingredientsToDrink

@@ -16,10 +16,8 @@ const StaticHeader = ({ handlePress }) => {
         padding: SIZES.font,
       }}
     >
-        <MenuBtn handlePress={handlePress}  />
       <Text
         style={{
-          left: windowWidth / 5,
           top: 10,
           fontFamily: FONTS.extraBold,
           fontSize: SIZES.large,

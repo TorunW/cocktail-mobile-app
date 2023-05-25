@@ -21,7 +21,8 @@ const LoginForm = () => {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate('Home');
+        navigation.navigate('Root');
+
         console.log(user.email);
       }
     });

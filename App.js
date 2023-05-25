@@ -1,22 +1,24 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 //Assets
 import { useFonts } from 'expo-font';
-import { COLORS, SHADOWS } from './constants';
 
 //Screens
 import { Home } from './screens/Home';
 import { DrinkPage } from './screens/DrinkPage';
-import Menu from './components/Menu.js';
 
 //Store
 import { StoreProvider } from 'easy-peasy';
 import { store } from './store/store.js';
-import { AddRecipe } from './screens/AddRecipe';
 import Login from './screens/Login';
+import Profile from './screens/Profile';
+import Settings from './screens/Settings';
+import SearchScreen from './screens/SearchScreen';
+import { AddNewDrink } from './screens/AddNewDrink';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const theme = {
   ...DefaultTheme,
@@ -24,6 +26,17 @@ const theme = {
     ...DefaultTheme.colors,
     background: 'transparent',
   },
+};
+
+const Root = () => {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name='Home' component={Home} />
+      <Tab.Screen name='Profile' component={Profile} />
+      <Tab.Screen name='SearchScreen' component={SearchScreen} />
+      <Tab.Screen name='AddDrink' component={AddNewDrink} />
+    </Tab.Navigator>
+  );
 };
 
 export default function App() {
@@ -41,25 +54,16 @@ export default function App() {
   return (
     <StoreProvider store={store}>
       <NavigationContainer theme={theme}>
-        <Drawer.Navigator
-          initialRouteName='Login'
-          screenOptions={{
-            headerShown: false,
-            drawerStyle: {
-              width: '80%',
-              backgroundColor: COLORS.transparent,
-              ...SHADOWS.box,
-              elevation: 1,
-            },
-            overlayColor: 'transparent',
-          }}
-          drawerContent={(props) => <Menu {...props} />}
-        >
-          <Drawer.Screen name='Home' component={Home} />
-          <Drawer.Screen name='Login' component={Login} />
-          <Drawer.Screen name='DrinkPage' component={DrinkPage} />
-          <Drawer.Screen name='AddRecipe' component={AddRecipe} />
-        </Drawer.Navigator>
+        <Stack.Navigator initialRouteName='Login'>
+          <Stack.Screen
+            name='Root'
+            component={Root}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name='Login' component={Login} />
+          <Stack.Screen name='DrinkPage' component={DrinkPage} />
+          <Stack.Screen name='Settings' component={Settings} />
+        </Stack.Navigator>
       </NavigationContainer>
     </StoreProvider>
   );

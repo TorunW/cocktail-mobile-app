@@ -13,7 +13,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
-const RegisterForm = (getUsers) => {
+const RegisterForm = () => {
   const action = useStoreActions((actions) => actions);
   const state = useStoreState((state) => state);
   const users = state.users.userList;
@@ -55,13 +55,7 @@ const RegisterForm = (getUsers) => {
           const user = userCredentials.user;
           action.users.setLoggedinUser(user.email);
         })
-        .catch((err) =>
-          setPasswordError(
-            err.message
-              .replace('Firebase: ', '')
-              .replace(' (auth/weak-password)', '')
-          )
-        );
+        .catch((err) => console.log(err.message));
 
       console.log('Document written with ID: ', docRef.id);
     }
