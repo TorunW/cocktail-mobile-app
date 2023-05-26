@@ -4,13 +4,13 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { auth } from '../firebaseConfig';
 import { TextInput } from 'react-native-gesture-handler';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/core';
 
 const LoginForm = () => {
   const action = useStoreActions((actions) => actions);
@@ -18,12 +18,13 @@ const LoginForm = () => {
   const users = state.users.userList;
   const navigation = useNavigation();
 
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  console.log(isPasswordVisible);
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate('Root');
-
-        console.log(user.email);
+        navigation.replace('Root');
       }
     });
   }, []);
@@ -57,7 +58,7 @@ const LoginForm = () => {
   };
 
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView style={{ gap: 15 }}>
       <Text>LOGIN</Text>
 
       <Controller
@@ -106,7 +107,7 @@ const LoginForm = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              secureTextEntry
+              secureTextEntry={isPasswordVisible === false ? true : false}
             />
             {errors.password ? (
               <Text style={{ color: 'red' }}>
@@ -118,6 +119,15 @@ const LoginForm = () => {
           </>
         )}
         name='password'
+      />
+
+      <Button
+        title='View Password'
+        onPress={() =>
+          isPasswordVisible === false
+            ? setIsPasswordVisible(true)
+            : setIsPasswordVisible(false)
+        }
       />
 
       <Button title='Login' onPress={handleSubmit(loginUser)} />
