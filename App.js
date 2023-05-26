@@ -16,6 +16,8 @@ import Profile from './screens/Profile';
 import Settings from './screens/Settings';
 import SearchScreen from './screens/SearchScreen';
 import { AddNewDrink } from './screens/AddNewDrink';
+import { useEffect } from 'react';
+import { auth } from './firebaseConfig';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

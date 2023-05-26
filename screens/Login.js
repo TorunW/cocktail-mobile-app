@@ -1,9 +1,9 @@
-import { Text, KeyboardAvoidingView } from 'react-native';
-import React, { useEffect } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { COLORS } from '../constants';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { auth, db } from '../firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 import { LinearGradient } from 'expo-linear-gradient';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';

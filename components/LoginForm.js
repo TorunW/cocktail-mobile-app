@@ -3,13 +3,17 @@ import {
   Button,
   KeyboardAvoidingView,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { auth } from '../firebaseConfig';
 import { TextInput } from 'react-native-gesture-handler';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 
 const LoginForm = () => {
@@ -19,7 +23,10 @@ const LoginForm = () => {
   const navigation = useNavigation();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  console.log(isPasswordVisible);
+  const [isEmailErrorVisible, setIsEmailErrorVisible] = useState(false);
+  const [isPasswordErrorVisible, setIsPasswordErrorVisible] = useState(false);
+  const [isTooManyRequestErrorVisible, setIsTooManyRequestErrorVisible] =
+    useState(false);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -45,22 +52,49 @@ const LoginForm = () => {
     const password = data.password;
     const exsitingUserEmail = users.some((item) => item.email === email);
 
-    if (exsitingUserEmail === true) {
-      signInWithEmailAndPassword(auth, email, password).then(
-        (userCredentials) => {
-          const user = userCredentials.user;
-          action.users.setLoggedinUser(user.email);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        action.users.setLoggedinUser(user.email);
+      })
+      .catch((err) => {
+        if (err.code === 'auth/wrong-password') {
+          setIsPasswordErrorVisible(true);
         }
-      );
-    } else {
-      action.users.setToggleForm('register');
-    }
+        if (
+          err.code === 'auth/invalid-email' ||
+          err.code === 'auth/user-not-found'
+        ) {
+          setIsEmailErrorVisible(true);
+        }
+        if (err.code === 'auth/too-many-requests') {
+          setIsTooManyRequestErrorVisible(true);
+        }
+        console.log(err);
+      });
+  };
+
+  const handleResetPassword = () => {
+    console.log('open email');
+
+    sendPasswordResetEmail(auth, 'torun.wikstrom@gmail.com')
+      .then(() => {
+        alert('Password reset  eiaml sent');
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <KeyboardAvoidingView style={{ gap: 15 }}>
       <Text>LOGIN</Text>
-
+      {isTooManyRequestErrorVisible === true ? (
+        <Text>
+          Too many failed login attempts have been made, reset your password or
+          try again later.
+        </Text>
+      ) : (
+        ''
+      )}
       <Controller
         control={control}
         rules={{
@@ -131,13 +165,27 @@ const LoginForm = () => {
       />
 
       <Button title='Login' onPress={handleSubmit(loginUser)} />
-      <TouchableOpacity onPress={() => action.users.setToggleForm('register')}>
-        <Text
-          style={{ marginVertical: 15, width: '100%', textAlign: 'center' }}
+
+      <View style={{ alignItems: 'center' }}>
+        {isEmailErrorVisible === true ? (
+          <Text>Invalid email, try again or</Text>
+        ) : (
+          ''
+        )}
+        {isPasswordErrorVisible === true ? <Text>Password incorrect</Text> : ''}
+        <TouchableOpacity
+          onPress={() => action.users.setToggleForm('register')}
         >
-          Create new user
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={{ marginVertical: 15, width: '100%', textAlign: 'center' }}
+          >
+            Create user
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleResetPassword}>
+          <Text>Reset password</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 };

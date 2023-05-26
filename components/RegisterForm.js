@@ -4,7 +4,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { collection, addDoc } from 'firebase/firestore';
@@ -19,10 +19,12 @@ const RegisterForm = () => {
   const users = state.users.userList;
   const navigation = useNavigation();
 
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate('Root');
+        navigation.replace('Root');
       }
     });
   }, []);
@@ -54,7 +56,9 @@ const RegisterForm = () => {
           const user = userCredentials.user;
           action.users.setLoggedinUser(user.email);
         })
-        .catch((err) => console.log(err.message));
+        .catch((err) => {
+          console.log(err);
+        });
 
       console.log('Document written with ID: ', docRef.id);
     }
@@ -109,7 +113,7 @@ const RegisterForm = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              secureTextEntry
+              secureTextEntry={isPasswordVisible === false ? true : false}
             />
             {errors.password ? (
               <Text style={{ color: 'red' }}>
@@ -122,7 +126,14 @@ const RegisterForm = () => {
         )}
         name='password'
       />
-
+      <Button
+        title='View Password'
+        onPress={() =>
+          isPasswordVisible === false
+            ? setIsPasswordVisible(true)
+            : setIsPasswordVisible(false)
+        }
+      />
       <Button title='Register' onPress={handleSubmit(registerUser)} />
       <TouchableOpacity onPress={() => action.users.setToggleForm('login')}>
         <Text
