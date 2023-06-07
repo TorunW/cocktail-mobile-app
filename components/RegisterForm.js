@@ -12,6 +12,7 @@ import { auth, db } from '../firebaseConfig';
 import { TextInput } from 'react-native-gesture-handler';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterForm = () => {
   const action = useStoreActions((actions) => actions);
@@ -52,9 +53,17 @@ const RegisterForm = () => {
         email: email,
       });
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredentials) => {
+        .then(async (userCredentials) => {
           const user = userCredentials.user;
-          action.users.setLoggedinUser(user.email);
+          await AsyncStorage.setItem('@email_key', user.email);
+          await AsyncStorage.setItem('@token_key', user.accessToken);
+          await AsyncStorage.setItem('@id_key', user.id);
+
+          action.users.setStorageData({
+            token: user.accessToken,
+            email: user.email,
+            id: user.id,
+          });
         })
         .catch((err) => {
           console.log(err);

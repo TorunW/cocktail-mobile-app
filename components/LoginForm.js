@@ -29,17 +29,6 @@ const LoginForm = () => {
     useState(false);
 
   useEffect(() => {
-    getStorageData();
-  }, []);
-
-  const getStorageData = async () => {
-    const storageToken = await AsyncStorage.getItem('@token_key');
-    action.users.setStorageData({
-      token: storageToken,
-    });
-  };
-
-  useEffect(() => {
     if (
       state.users.storageData &&
       typeof state.users.storageData.token === 'string'
@@ -71,10 +60,16 @@ const LoginForm = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredentials) => {
         const user = userCredentials.user;
-        action.users.setLoggedinUser(user.email);
 
+        await AsyncStorage.setItem('@email_key', user.email);
         await AsyncStorage.setItem('@token_key', user.accessToken);
-        action.users.setStorageData({ token: user.accessToken });
+        await AsyncStorage.setItem('@id_key', user.id);
+
+        action.users.setStorageData({
+          token: user.accessToken,
+          email: user.email,
+          id: user.id,
+        });
       })
       .catch((err) => {
         if (err.code === 'auth/wrong-password') {

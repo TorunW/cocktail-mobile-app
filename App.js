@@ -1,23 +1,22 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useEffect } from 'react';
 //Assets
 import { useFonts } from 'expo-font';
 
 //Screens
 import { Home } from './screens/Home';
 import { DrinkPage } from './screens/DrinkPage';
-
-//Store
-import { StoreProvider, useStoreActions, useStoreState } from 'easy-peasy';
-import { store } from './store/store.js';
 import Login from './screens/Login';
 import Profile from './screens/Profile';
 import Settings from './screens/Settings';
 import SearchScreen from './screens/SearchScreen';
 import { AddNewDrink } from './screens/AddNewDrink';
-import { useEffect } from 'react';
 
+//Store / Storage
+import { StoreProvider, useStoreActions, useStoreState } from 'easy-peasy';
+import { store } from './store/store.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
@@ -44,8 +43,26 @@ const Root = () => {
 
 const StackScreens = () => {
   const state = useStoreState((state) => state);
+  const action = useStoreActions((actions) => actions);
 
-  const intialScreen = state.users.storageData !== null ? 'Home' : 'Login';
+  useEffect(() => {
+    getStorageData();
+  }, []);
+
+  const getStorageData = async () => {
+    const storageToken = await AsyncStorage.getItem('@token_key');
+    const storageEmail = await AsyncStorage.getItem('@email_key');
+    const storageId = await AsyncStorage.getItem('@id_key');
+
+    action.users.setStorageData({
+      token: storageToken,
+      email: storageEmail,
+      id: storageId,
+    });
+  };
+
+  const intialScreen =
+    state.users.storageData.token !== null ? 'Home' : 'Login';
 
   return (
     <Stack.Navigator initialRouteName={intialScreen}>
@@ -54,6 +71,7 @@ const StackScreens = () => {
         component={Root}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='Login' component={Login} />
       <Stack.Screen name='DrinkPage' component={DrinkPage} />
       <Stack.Screen name='Settings' component={Settings} />
