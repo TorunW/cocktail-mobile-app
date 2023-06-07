@@ -4,12 +4,14 @@ import { auth } from '../firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import AlertModal from '../components/AlertModal';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Settings = () => {
   const navigation = useNavigation();
+  const action = useStoreActions((actions) => actions);
+  const user = useStoreState((state) => state.users.storageData);
   const [isAlertVisible, setAlertVisible] = useState(false);
-  const [alertTitle, setAlertTitle] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
 
   const closeModal = () => {
     setAlertVisible(false);
@@ -22,14 +24,19 @@ const Settings = () => {
   const handleLogout = () => {
     auth
       .signOut()
-      .then(() => {
+      .then(async () => {
+        await AsyncStorage.removeItem('@token_key');
+        await AsyncStorage.removeItem('@email_key');
+        await AsyncStorage.removeItem('@id_key');
+
+        action.users.setStorageData({ token: null, email: null, id: null });
         navigation.replace('Login');
       })
       .catch((err) => alert(err.message));
   };
 
   const handleResetPassword = () => {
-    sendPasswordResetEmail(auth, auth.currentUser?.email)
+    sendPasswordResetEmail(auth, user.email)
       .then(() => {
         alert('Password reset email sent');
       })
@@ -39,7 +46,7 @@ const Settings = () => {
   return (
     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       <View style={{ gap: 10 }}>
-        <Text>{auth.currentUser?.email}</Text>
+        <Text>{user.email}</Text>
 
         <TouchableOpacity onPress={openModal}>
           <Text>Report issue</Text>
