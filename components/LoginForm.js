@@ -15,11 +15,11 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginForm = () => {
   const action = useStoreActions((actions) => actions);
   const state = useStoreState((state) => state);
-  const users = state.users.userList;
   const navigation = useNavigation();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -29,12 +29,29 @@ const LoginForm = () => {
     useState(false);
 
   useEffect(() => {
+    getStorageData();
+  }, []);
+
+  const getStorageData = async () => {
+    const storageToken = await AsyncStorage.getItem('@token_key');
+    action.users.setStorageData({
+      token: storageToken,
+    });
+  };
+
+  useEffect(() => {
+    if (
+      state.users.storageData &&
+      typeof state.users.storageData.token === 'string'
+    ) {
+      navigation.replace('Root');
+    }
     auth.onAuthStateChanged((user) => {
       if (user) {
         navigation.replace('Root');
       }
     });
-  }, []);
+  }, [state.users.storageData]);
 
   const {
     control,
@@ -50,12 +67,14 @@ const LoginForm = () => {
   const loginUser = async (data) => {
     const email = data.email.replace(/^\s+|\s+$/gm, '').toLowerCase();
     const password = data.password;
-    const exsitingUserEmail = users.some((item) => item.email === email);
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
+      .then(async (userCredentials) => {
         const user = userCredentials.user;
         action.users.setLoggedinUser(user.email);
+
+        await AsyncStorage.setItem('@token_key', user.accessToken);
+        action.users.setStorageData({ token: user.accessToken });
       })
       .catch((err) => {
         if (err.code === 'auth/wrong-password') {
@@ -75,11 +94,9 @@ const LoginForm = () => {
   };
 
   const handleResetPassword = () => {
-    console.log('open email');
-
     sendPasswordResetEmail(auth, 'torun.wikstrom@gmail.com')
       .then(() => {
-        alert('Password reset  eiaml sent');
+        alert('Password reset  email sent');
       })
       .catch((err) => console.log(err));
   };

@@ -9,7 +9,7 @@ import { Home } from './screens/Home';
 import { DrinkPage } from './screens/DrinkPage';
 
 //Store
-import { StoreProvider } from 'easy-peasy';
+import { StoreProvider, useStoreActions, useStoreState } from 'easy-peasy';
 import { store } from './store/store.js';
 import Login from './screens/Login';
 import Profile from './screens/Profile';
@@ -17,7 +17,8 @@ import Settings from './screens/Settings';
 import SearchScreen from './screens/SearchScreen';
 import { AddNewDrink } from './screens/AddNewDrink';
 import { useEffect } from 'react';
-import { auth } from './firebaseConfig';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,6 +42,25 @@ const Root = () => {
   );
 };
 
+const StackScreens = () => {
+  const state = useStoreState((state) => state);
+
+  const intialScreen = state.users.storageData !== null ? 'Home' : 'Login';
+
+  return (
+    <Stack.Navigator initialRouteName={intialScreen}>
+      <Stack.Screen
+        name='Root'
+        component={Root}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name='Login' component={Login} />
+      <Stack.Screen name='DrinkPage' component={DrinkPage} />
+      <Stack.Screen name='Settings' component={Settings} />
+    </Stack.Navigator>
+  );
+};
+
 export default function App() {
   const [loaded] = useFonts({
     InterRegular: require('./assets/fonts/Outfit-Regular.ttf'),
@@ -56,16 +76,7 @@ export default function App() {
   return (
     <StoreProvider store={store}>
       <NavigationContainer theme={theme}>
-        <Stack.Navigator initialRouteName='Login'>
-          <Stack.Screen
-            name='Root'
-            component={Root}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name='Login' component={Login} />
-          <Stack.Screen name='DrinkPage' component={DrinkPage} />
-          <Stack.Screen name='Settings' component={Settings} />
-        </Stack.Navigator>
+        <StackScreens />
       </NavigationContainer>
     </StoreProvider>
   );

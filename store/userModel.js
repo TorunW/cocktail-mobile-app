@@ -13,4 +13,8 @@ export default users = {
   setToggleForm: action((state, payload) => {
     state.toggleForm = payload;
   }),
+  storageData: { token: null },
+  setStorageData: action((state, payload) => {
+    state.storageData = payload;
+  }),
 };
