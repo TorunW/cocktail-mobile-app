@@ -6,7 +6,7 @@ import MenuIcon from '../assets/icons/Menu.svg';
 import Close from '../assets/icons/Cross.svg';
 import { useStoreState } from 'easy-peasy';
 
-export const LikeBtn = ({ imgUrl, handlePress, ...props }) => {
+export const LikeBtn = ({ imgUrl, handlePress, drinkId, ...props }) => {
   return (
     <TouchableOpacity
       style={{

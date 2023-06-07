@@ -1,6 +1,6 @@
 import calculateDrinkComplexity from './calculateComplexity';
 
-function addComplexityScoreToDrinks(drinks) {
+export const addComplexityScoreToDrinks = (drinks) => {
   let highestInstructionLength = 0;
   drinks.forEach((drink, index) => {
     if (
@@ -18,6 +18,4 @@ function addComplexityScoreToDrinks(drinks) {
   }));
 
   return newDrinks;
-}
-
-export default addComplexityScoreToDrinks;
+};

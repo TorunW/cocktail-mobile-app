@@ -16,12 +16,17 @@ import {
   Likes,
   Tags,
 } from '../components/SubInfo';
+import { handlePressLike } from '../helpers/handleLikes';
 import { useStoreState } from 'easy-peasy';
 
 export const DrinkPage = ({ route, navigation }) => {
   const { data } = route.params;
   const state = useStoreState((state) => state);
-  const ingredientData = state.drinks.ingredients;
+
+  const itemData = {
+    drinkId: data.id,
+    userId: state.users.storageData.id,
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -63,7 +68,11 @@ export const DrinkPage = ({ route, navigation }) => {
           source={{ uri: data.image }}
           resizeMode='cover'
         />
-        <Heart right={15} top={StatusBar.currentHeight + 10} />
+        <Heart
+          right={15}
+          top={StatusBar.currentHeight + 10}
+          handlePress={() => handlePressLike(itemData)}
+        />
         <BackBtn
           left={15}
           top={StatusBar.currentHeight + 10}

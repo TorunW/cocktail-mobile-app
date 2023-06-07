@@ -5,7 +5,7 @@ import { FocusedStatusBar } from '../components';
 import { useForm, Controller } from 'react-hook-form';
 import Dropdown from 'react-native-input-select';
 import { db } from '../firebaseConfig';
-import { collection, getDoc, doc, addDoc } from 'firebase/firestore';
+import { collection, doc, addDoc } from 'firebase/firestore';
 import ImageUploader from '../components/ImageUploader';
 import { useStoreState } from 'easy-peasy';
 import IngredientsForm from '../components/IngredientsForm';

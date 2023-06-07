@@ -1,4 +1,4 @@
-function calculateDrinkComplexity(drink) {
+export const calculateDrinkComplexity = (drink) => {
   const objectKeys = Object.keys(drink);
   const objectValues = Object.values(drink);
 
@@ -33,6 +33,4 @@ function calculateDrinkComplexity(drink) {
   }
 
   return ingredientScore + instructionScore / 2;
-}
-
-export default calculateDrinkComplexity;
+};
