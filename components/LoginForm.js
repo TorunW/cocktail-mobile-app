@@ -63,12 +63,10 @@ const LoginForm = () => {
 
         await AsyncStorage.setItem('@email_key', user.email);
         await AsyncStorage.setItem('@token_key', user.accessToken);
-        await AsyncStorage.setItem('@id_key', user.id);
 
         action.users.setStorageData({
           token: user.accessToken,
           email: user.email,
-          id: user.id,
         });
       })
       .catch((err) => {

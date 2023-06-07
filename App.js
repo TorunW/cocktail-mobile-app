@@ -44,7 +44,6 @@ const Root = () => {
 const StackScreens = () => {
   const state = useStoreState((state) => state);
   const action = useStoreActions((actions) => actions);
-
   useEffect(() => {
     getStorageData();
   }, []);
@@ -52,6 +51,12 @@ const StackScreens = () => {
   const getStorageData = async () => {
     const storageToken = await AsyncStorage.getItem('@token_key');
     const storageEmail = await AsyncStorage.getItem('@email_key');
+    const userId = state.users.userList.find(async (item) =>
+      item.email === storageEmail
+        ? await AsyncStorage.setItem('@id_key', userId.id)
+        : null
+    );
+
     const storageId = await AsyncStorage.getItem('@id_key');
 
     action.users.setStorageData({
