@@ -12,6 +12,20 @@ export const handlePressLike = async (itemData, action) => {
     (item) => item.id === drinkId
   );
 
+  const updateAsyncStorage = async () => {
+    const storageToken = await AsyncStorage.getItem('@token_key');
+    const storageEmail = await AsyncStorage.getItem('@email_key');
+    const storageId = await AsyncStorage.getItem('@id_key');
+    const newLikesArr = await AsyncStorage.getItem('@likes_key');
+
+    action.users.setCurrentUser({
+      token: storageToken,
+      email: storageEmail,
+      id: storageId,
+      likes: JSON.parse(newLikesArr),
+    });
+  };
+
   const addToFirebase = async () => {
     await updateDoc(userRef, {
       likes: arrayUnion(drinkRef),
@@ -26,17 +40,7 @@ export const handlePressLike = async (itemData, action) => {
     ];
     await AsyncStorage.setItem('@likes_key', JSON.stringify(updateLikesArr));
 
-    const storageToken = await AsyncStorage.getItem('@token_key');
-    const storageEmail = await AsyncStorage.getItem('@email_key');
-    const storageId = await AsyncStorage.getItem('@id_key');
-    const newLikesArr = await AsyncStorage.getItem('@likes_key');
-
-    action.users.setCurrentUser({
-      token: storageToken,
-      email: storageEmail,
-      id: storageId,
-      likes: JSON.parse(newLikesArr),
-    });
+    updateAsyncStorage();
   };
 
   const removeFromFirebase = async () => {
@@ -52,17 +56,7 @@ export const handlePressLike = async (itemData, action) => {
     );
     await AsyncStorage.setItem('@likes_key', JSON.stringify(updatedLikesArr));
 
-    const storageToken = await AsyncStorage.getItem('@token_key');
-    const storageEmail = await AsyncStorage.getItem('@email_key');
-    const storageId = await AsyncStorage.getItem('@id_key');
-    const newLikesArr = await AsyncStorage.getItem('@likes_key');
-
-    action.users.setCurrentUser({
-      token: storageToken,
-      email: storageEmail,
-      id: storageId,
-      likes: JSON.parse(newLikesArr),
-    });
+    updateAsyncStorage();
   };
 
   if (filteredDrinkId && filteredDrinkId.id === drinkId) {
