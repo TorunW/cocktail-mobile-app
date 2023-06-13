@@ -16,7 +16,7 @@ import {
   Likes,
   Tags,
 } from '../components/SubInfo';
-import { handlePressLike } from '../helpers/handleLikes';
+import { handlePressLike } from '../helpers/handlePressLike';
 import { useStoreState } from 'easy-peasy';
 
 export const DrinkPage = ({ route, navigation }) => {
@@ -25,7 +25,7 @@ export const DrinkPage = ({ route, navigation }) => {
 
   const itemData = {
     drinkId: data.id,
-    userId: state.users.storageData.id,
+    userId: state.users.currentUser.id,
   };
 
   return (
@@ -138,11 +138,16 @@ export const DrinkPage = ({ route, navigation }) => {
               {data.ingredients !== undefined ? (
                 <FlatList
                   data={data.ingredients}
-                  renderItem={({ item }) => {}}
+                  renderItem={({ item }) => (
+                    <View>
+                      <Text>{item.ingredient}</Text>
+                      <Text>{item.measure}</Text>
+                    </View>
+                  )}
                   keyExtractor={(item) => item.id}
                 />
               ) : (
-                <Text>No ingred</Text>
+                <Text>error</Text>
               )}
             </View>
           </View>

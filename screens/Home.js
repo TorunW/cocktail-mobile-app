@@ -7,35 +7,11 @@ import {
   FocusedStatusBar,
   StaticHeader,
 } from '../components';
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import { useNavigationState } from '@react-navigation/native';
-import getDrinksData from '../transactions/getDrinksData';
-import getIngredientsData from '../transactions/getIngredientsData';
-import { QuerySnapshot, collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { useStoreState } from 'easy-peasy';
 
-export const Home = ({ navigation }) => {
-  const navState = useNavigationState((state) => state);
-  const action = useStoreActions((actions) => actions);
+export const Home = () => {
   const state = useStoreState((state) => state);
   const drinksData = state.drinks.drinkList;
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    action.drinks.setDrinkList(await getDrinksData());
-    action.drinks.setIngredients(await getIngredientsData());
-  };
-
-  useEffect(() => {
-    if (navState.history.find((item, index) => item.status === 'open')) {
-      action.menu.openMenu();
-    } else {
-      action.menu.closeMenu();
-    }
-  }, [navState]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

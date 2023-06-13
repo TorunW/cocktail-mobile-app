@@ -18,6 +18,9 @@ import { AddNewDrink } from './screens/AddNewDrink';
 import { StoreProvider, useStoreActions, useStoreState } from 'easy-peasy';
 import { store } from './store/store.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import getDrinksData from './transactions/getDrinksData';
+import getIngredientsData from './transactions/getIngredientsData';
+import { getUsersData } from './transactions/getUsersData';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,30 +47,43 @@ const Root = () => {
 const StackScreens = () => {
   const state = useStoreState((state) => state);
   const action = useStoreActions((actions) => actions);
+
   useEffect(() => {
-    getStorageData();
+    getData();
   }, []);
 
-  const getStorageData = async () => {
+  const getData = async () => {
+    const [drinksData, ingredientsData, usersData] = await Promise.all([
+      await getDrinksData(),
+      await getIngredientsData(),
+      await getUsersData(),
+    ]);
+
+    action.drinks.setDrinkList(drinksData);
+    action.drinks.setIngredients(ingredientsData);
+    action.users.setUserList(usersData);
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  const getCurrentUser = async () => {
     const storageToken = await AsyncStorage.getItem('@token_key');
     const storageEmail = await AsyncStorage.getItem('@email_key');
-    const userId = state.users.userList.find(async (item) =>
-      item.email === storageEmail
-        ? await AsyncStorage.setItem('@id_key', userId.id)
-        : null
-    );
-
     const storageId = await AsyncStorage.getItem('@id_key');
+    const storageLikes = await AsyncStorage.getItem('@likes_key');
 
-    action.users.setStorageData({
+    action.users.setCurrentUser({
       token: storageToken,
       email: storageEmail,
       id: storageId,
+      likes: JSON.parse(storageLikes),
     });
   };
 
   const intialScreen =
-    state.users.storageData.token !== null ? 'Home' : 'Login';
+    state.users.currentUser.token !== null ? 'Home' : 'Login';
 
   return (
     <Stack.Navigator initialRouteName={intialScreen}>

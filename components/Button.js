@@ -6,7 +6,7 @@ import MenuIcon from '../assets/icons/Menu.svg';
 import Close from '../assets/icons/Cross.svg';
 import { useStoreState } from 'easy-peasy';
 
-export const LikeBtn = ({ imgUrl, handlePress, drinkId, ...props }) => {
+export const LikeBtn = ({ imgUrl, handlePress, drinkId, color, ...props }) => {
   return (
     <TouchableOpacity
       style={{
@@ -24,7 +24,7 @@ export const LikeBtn = ({ imgUrl, handlePress, drinkId, ...props }) => {
        */}
       <Text
         style={{
-          color: COLORS.grad1,
+          color: color,
           fontSize: 30,
           fontFamily: FONTS.extraBold,
           ...SHADOWS.text,

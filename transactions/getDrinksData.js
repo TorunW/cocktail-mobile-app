@@ -1,5 +1,5 @@
 import { db } from '../firebaseConfig';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, getDoc } from 'firebase/firestore';
 
 export default getDrinksData = async () => {
   const querySnapshot = await getDocs(collection(db, 'cocktails'));
@@ -22,7 +22,5 @@ export default getDrinksData = async () => {
       ),
     }))
   );
-
-  console.log(drinks);
   return drinks;
 };

@@ -1,19 +1,23 @@
 import { View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { COLORS, SIZES, SHADOWS, SPACING } from '../constants';
 import { LikeBtn, ReadMoreBtn } from './Button';
 import { Title, Complexity, Likes, Tags } from './SubInfo';
-import { handlePressLike } from '../helpers/handleLikes';
-import { useStoreState } from 'easy-peasy';
+import { handlePressLike } from '../helpers/handlePressLike';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const DrinkCard = ({ data }) => {
   const navigation = useNavigation();
   const state = useStoreState((state) => state);
+  const action = useStoreActions((actions) => actions);
 
+  console.log(state.users.currentUser.likes);
   const itemData = {
     drinkId: data.id,
-    userId: state.users.storageData.id,
+    drinkName: data.title,
+    userId: state.users.currentUser.id,
+    likesArr: state.users.currentUser.likes,
   };
 
   return (
@@ -49,7 +53,8 @@ const DrinkCard = ({ data }) => {
         <LikeBtn
           top={8}
           right={8}
-          handlePress={() => handlePressLike(itemData)}
+          //color={color}
+          handlePress={() => handlePressLike(itemData, action)}
         />
       </View>
       <View

@@ -11,7 +11,6 @@ import React, { useState } from 'react';
 import { COLORS, SIZES, SHADOWS, SPACING, FONTS } from '../constants';
 
 const AlertModal = ({ message, title, visible, closeModal, textInput }) => {
-  console.log(textInput);
   return (
     <Modal
       animationType='fade'

@@ -1,4 +1,3 @@
-import { useStoreActions } from 'easy-peasy';
 import { db } from '../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 

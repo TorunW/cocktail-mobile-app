@@ -2,15 +2,19 @@ import { action } from 'easy-peasy';
 
 export default users = {
   userList: [],
-  setUsers: action((state, payload) => {
+  setUserList: action((state, payload) => {
     state.userList = payload;
   }),
   toggleForm: 'login',
   setToggleForm: action((state, payload) => {
     state.toggleForm = payload;
   }),
-  storageData: { token: null, email: null, id: null },
-  setStorageData: action((state, payload) => {
-    state.storageData = payload;
+  currentUser: { token: null, email: null, id: null, likes: null },
+  setCurrentUser: action((state, payload) => {
+    state.currentUser = payload;
+  }),
+  toggleLike: false,
+  setToggleLike: action((state, payload) => {
+    state.toggleLike = payload;
   }),
 };

@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Settings = () => {
   const navigation = useNavigation();
   const action = useStoreActions((actions) => actions);
-  const user = useStoreState((state) => state.users.storageData);
+  const user = useStoreState((state) => state.users.currentUser);
   const [isAlertVisible, setAlertVisible] = useState(false);
 
   const closeModal = () => {
@@ -25,11 +25,13 @@ const Settings = () => {
     auth
       .signOut()
       .then(async () => {
-        await AsyncStorage.removeItem('@token_key');
-        await AsyncStorage.removeItem('@email_key');
-        await AsyncStorage.removeItem('@id_key');
-
-        action.users.setStorageData({ token: null, email: null, id: null });
+        await AsyncStorage.clear();
+        action.users.setCurrentUser({
+          token: null,
+          email: null,
+          id: null,
+          likes: null,
+        });
         navigation.replace('Login');
       })
       .catch((err) => alert(err.message));

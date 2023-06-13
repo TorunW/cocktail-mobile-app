@@ -58,7 +58,7 @@ const RegisterForm = () => {
           await AsyncStorage.setItem('@email_key', user.email);
           await AsyncStorage.setItem('@token_key', user.accessToken);
 
-          action.users.setStorageData({
+          action.users.setCurrentUser({
             token: user.accessToken,
             email: user.email,
           });

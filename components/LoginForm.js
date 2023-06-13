@@ -30,8 +30,8 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (
-      state.users.storageData &&
-      typeof state.users.storageData.token === 'string'
+      state.users.currentUser &&
+      typeof state.users.currentUser.token === 'string'
     ) {
       navigation.replace('Root');
     }
@@ -40,7 +40,7 @@ const LoginForm = () => {
         navigation.replace('Root');
       }
     });
-  }, [state.users.storageData]);
+  }, [state.users.currentUser]);
 
   const {
     control,
@@ -64,9 +64,24 @@ const LoginForm = () => {
         await AsyncStorage.setItem('@email_key', user.email);
         await AsyncStorage.setItem('@token_key', user.accessToken);
 
-        action.users.setStorageData({
+        const currentUser = state.users.userList.find(
+          (item) => item.email === email
+        );
+
+        await AsyncStorage.setItem('@id_key', currentUser.id);
+        await AsyncStorage.setItem(
+          '@likes_key',
+          JSON.stringify(currentUser.likes)
+        );
+
+        const storageId = await AsyncStorage.getItem('@id_key');
+        const storageLikes = await AsyncStorage.getItem('@likes_key');
+
+        action.users.setCurrentUser({
           token: user.accessToken,
           email: user.email,
+          id: storageId,
+          likes: JSON.parse(storageLikes),
         });
       })
       .catch((err) => {
