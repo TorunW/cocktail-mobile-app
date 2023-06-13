@@ -1,5 +1,13 @@
 import { db } from '../firebaseConfig';
-import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  increment,
+  decrement,
+} from 'firebase/firestore';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const handlePressLike = async (itemData, action) => {
@@ -32,11 +40,11 @@ export const handlePressLike = async (itemData, action) => {
     await updateDoc(userRef, {
       likes: arrayUnion(drinkRef),
     });
-    /*    const currentLikes = 0;
-    //add like count to drink
+
     await updateDoc(drinkRef, {
-      likesCount: 1,
-    }); */
+      likesCount: increment(1),
+    });
+
     const exsistingLikesArr = JSON.parse(
       await AsyncStorage.getItem('@likes_key')
     );
@@ -57,6 +65,10 @@ export const handlePressLike = async (itemData, action) => {
   const removeFromFirebase = async () => {
     await updateDoc(userRef, {
       likes: arrayRemove(drinkRef),
+    });
+
+    await updateDoc(drinkRef, {
+      likesCount: increment(-1),
     });
 
     const exsistingLikesArr = JSON.parse(
