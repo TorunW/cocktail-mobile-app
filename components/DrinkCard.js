@@ -10,14 +10,29 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 const DrinkCard = ({ data }) => {
   const navigation = useNavigation();
   const state = useStoreState((state) => state);
+  const currentUser = state.users.currentUser;
   const action = useStoreActions((actions) => actions);
+  const [isLiked, setIsLiked] = useState(false);
 
-  console.log(state.users.currentUser.likes);
+  useEffect(() => {
+    getLikes();
+  }, [state]);
+
   const itemData = {
     drinkId: data.id,
     drinkName: data.title,
-    userId: state.users.currentUser.id,
-    likesArr: state.users.currentUser.likes,
+    userId: currentUser.id,
+    likesArr: currentUser.likes,
+  };
+
+  const getLikes = () => {
+    const filteredDrinkId = currentUser.likes.find(
+      (item) => item.id === data.id
+    );
+
+    filteredDrinkId && filteredDrinkId.id === data.id
+      ? setIsLiked(true)
+      : setIsLiked(false);
   };
 
   return (
@@ -53,7 +68,7 @@ const DrinkCard = ({ data }) => {
         <LikeBtn
           top={8}
           right={8}
-          //color={color}
+          color={isLiked === true ? COLORS.grad1 : COLORS.black}
           handlePress={() => handlePressLike(itemData, action)}
         />
       </View>
