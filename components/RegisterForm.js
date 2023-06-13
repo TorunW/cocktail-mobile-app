@@ -21,14 +21,22 @@ const RegisterForm = () => {
   const navigation = useNavigation();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isEmailErrorVisible, setIsEmailErrorVisible] = useState(false);
+  const [isPasswordErrorVisible, setIsPasswordErrorVisible] = useState(false);
 
   useEffect(() => {
+    if (
+      state.users.currentUser &&
+      typeof state.users.currentUser.token === 'string'
+    ) {
+      navigation.replace('Root');
+    }
     auth.onAuthStateChanged((user) => {
       if (user) {
         navigation.replace('Root');
       }
     });
-  }, []);
+  }, [state.users.currentUser]);
 
   const {
     control,
@@ -57,16 +65,18 @@ const RegisterForm = () => {
           const user = userCredentials.user;
           await AsyncStorage.setItem('@email_key', user.email);
           await AsyncStorage.setItem('@token_key', user.accessToken);
+          await AsyncStorage.setItem('@id_key', docRef.id);
 
           action.users.setCurrentUser({
             token: user.accessToken,
             email: user.email,
+            id: docRef.id,
+            likes: null,
           });
         })
         .catch((err) => {
           console.log(err);
         });
-
       console.log('Document written with ID: ', docRef.id);
     }
   };

@@ -6,11 +6,13 @@ export const handlePressLike = async (itemData, action) => {
   const drinkId = itemData.drinkId;
   const userRef = doc(db, 'users', itemData.userId);
   const drinkRef = doc(db, 'cocktails', drinkId);
+
   const currentUsersLikesArr = itemData.likesArr;
 
-  const filteredDrinkId = currentUsersLikesArr.find(
-    (item) => item.id === drinkId
-  );
+  const filteredDrinkId =
+    currentUsersLikesArr !== null
+      ? currentUsersLikesArr.find((item) => item.id === drinkId)
+      : null;
 
   const updateAsyncStorage = async () => {
     const storageToken = await AsyncStorage.getItem('@token_key');
@@ -30,14 +32,23 @@ export const handlePressLike = async (itemData, action) => {
     await updateDoc(userRef, {
       likes: arrayUnion(drinkRef),
     });
-
+    /*    const currentLikes = 0;
+    //add like count to drink
+    await updateDoc(drinkRef, {
+      likesCount: 1,
+    }); */
     const exsistingLikesArr = JSON.parse(
       await AsyncStorage.getItem('@likes_key')
     );
-    const updateLikesArr = [
-      ...exsistingLikesArr,
-      { id: itemData.drinkId, title: itemData.drinkName },
-    ];
+
+    const updateLikesArr =
+      exsistingLikesArr !== null
+        ? [
+            ...exsistingLikesArr,
+            { id: itemData.drinkId, title: itemData.drinkName },
+          ]
+        : [{ id: itemData.drinkId, title: itemData.drinkName }];
+
     await AsyncStorage.setItem('@likes_key', JSON.stringify(updateLikesArr));
 
     updateAsyncStorage();

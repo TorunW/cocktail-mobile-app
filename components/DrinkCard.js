@@ -15,8 +15,10 @@ const DrinkCard = ({ data }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
-    getLikes();
-  }, [state]);
+    if (currentUser && currentUser.likes !== null) {
+      getLikes();
+    }
+  }, [currentUser]);
 
   const itemData = {
     drinkId: data.id,
