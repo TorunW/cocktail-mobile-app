@@ -72,13 +72,13 @@ const StackScreens = () => {
     const storageToken = await AsyncStorage.getItem('@token_key');
     const storageEmail = await AsyncStorage.getItem('@email_key');
     const storageId = await AsyncStorage.getItem('@id_key');
-    const storageLikes = await AsyncStorage.getItem('@likes_key');
+    const storageSavedRecipe = await AsyncStorage.getItem('@savedRecipe_key');
 
     action.users.setCurrentUser({
       token: storageToken,
       email: storageEmail,
       id: storageId,
-      likes: JSON.parse(storageLikes),
+      savedRecipe: JSON.parse(storageSavedRecipe),
     });
   };
 

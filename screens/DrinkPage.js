@@ -13,10 +13,10 @@ import {
   Alcoholic,
   Category,
   Complexity,
-  Likes,
+  SavedRecipe,
   Tags,
 } from '../components/SubInfo';
-import { handlePressLike } from '../helpers/handlePressLike';
+import { handlePressSavedRecipe } from '../helpers/handlePressSavedRecipe';
 import { useStoreState } from 'easy-peasy';
 
 export const DrinkPage = ({ route, navigation }) => {
@@ -71,7 +71,7 @@ export const DrinkPage = ({ route, navigation }) => {
         <Heart
           right={15}
           top={StatusBar.currentHeight + 10}
-          handlePress={() => handlePressLike(itemData)}
+          handlePress={() => handlePressSavedRecipe(itemData)}
         />
         <BackBtn
           left={15}
@@ -114,7 +114,7 @@ export const DrinkPage = ({ route, navigation }) => {
               width: '100%',
             }}
           >
-            <Likes />
+            <SavedRecipe />
             <Complexity complexity={data.complexity} />
           </View>
           <Tags justifyContent={'flex-start'} width={'100%'} tags={'tags'} />

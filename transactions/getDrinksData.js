@@ -12,6 +12,7 @@ export default getDrinksData = async () => {
       instructions: doc.data().instructions,
       alcoholic: doc.data().alcoholic,
       complexity: doc.data().complexity,
+      savedRecipeCount: doc.data().savedRecipeCount,
       ingredients: await Promise.all(
         doc.data().ingredients.map(async (item) => {
           return {

@@ -71,7 +71,7 @@ const RegisterForm = () => {
             token: user.accessToken,
             email: user.email,
             id: docRef.id,
-            likes: null,
+            savedRecipe: null,
           });
         })
         .catch((err) => {

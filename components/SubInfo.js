@@ -28,7 +28,7 @@ export const Title = ({ title, subTitle, titleSize, subTitleSize }) => {
   );
 };
 
-export const Likes = () => {
+export const SavedRecipe = ({ savedRecipe }) => {
   return (
     <View
       style={{
@@ -50,7 +50,7 @@ export const Likes = () => {
           color: COLORS.black,
         }}
       >
-        2345
+        {savedRecipe}
       </Text>
     </View>
   );

@@ -70,18 +70,20 @@ const LoginForm = () => {
 
         await AsyncStorage.setItem('@id_key', currentUser.id);
         await AsyncStorage.setItem(
-          '@likes_key',
-          JSON.stringify(currentUser.likes)
+          '@savedRecipe_key',
+          JSON.stringify(currentUser.savedRecipe)
         );
 
         const storageId = await AsyncStorage.getItem('@id_key');
-        const storageLikes = await AsyncStorage.getItem('@likes_key');
+        const storageSavedRecipe = await AsyncStorage.getItem(
+          '@savedRecipe_key'
+        );
 
         action.users.setCurrentUser({
           token: user.accessToken,
           email: user.email,
           id: storageId,
-          likes: JSON.parse(storageLikes),
+          savedRecipe: JSON.parse(storageSavedRecipe),
         });
       })
       .catch((err) => {

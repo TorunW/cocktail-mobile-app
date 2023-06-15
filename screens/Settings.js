@@ -30,7 +30,7 @@ const Settings = () => {
           token: null,
           email: null,
           id: null,
-          likes: null,
+          savedRecipe: null,
         });
         navigation.replace('Login');
       })

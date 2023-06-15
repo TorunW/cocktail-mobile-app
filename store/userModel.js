@@ -9,12 +9,12 @@ export default users = {
   setToggleForm: action((state, payload) => {
     state.toggleForm = payload;
   }),
-  currentUser: { token: null, email: null, id: null, likes: null },
+  currentUser: { token: null, email: null, id: null, savedRecipe: null },
   setCurrentUser: action((state, payload) => {
     state.currentUser = payload;
   }),
-  toggleLike: false,
-  setToggleLike: action((state, payload) => {
-    state.toggleLike = payload;
+  toggleSavedRecipe: false,
+  setToggleSavedRecipe: action((state, payload) => {
+    state.toggleSavedRecipe = payload;
   }),
 };

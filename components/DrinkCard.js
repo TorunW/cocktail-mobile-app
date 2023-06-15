@@ -2,9 +2,9 @@ import { View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { COLORS, SIZES, SHADOWS, SPACING } from '../constants';
-import { LikeBtn, ReadMoreBtn } from './Button';
-import { Title, Complexity, Likes, Tags } from './SubInfo';
-import { handlePressLike } from '../helpers/handlePressLike';
+import { SavedRecipeBtn, ReadMoreBtn } from './Button';
+import { Title, Complexity, SavedRecipe, Tags } from './SubInfo';
+import { handlePressSavedRecipe } from '../helpers/handlePressSavedRecipe';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const DrinkCard = ({ data }) => {
@@ -12,11 +12,11 @@ const DrinkCard = ({ data }) => {
   const state = useStoreState((state) => state);
   const currentUser = state.users.currentUser;
   const action = useStoreActions((actions) => actions);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    if (currentUser && currentUser.likes !== null) {
-      getLikes();
+    if (currentUser && currentUser.savedRecipe !== null) {
+      getSavedRecipe();
     }
   }, [currentUser]);
 
@@ -24,17 +24,17 @@ const DrinkCard = ({ data }) => {
     drinkId: data.id,
     drinkName: data.title,
     userId: currentUser.id,
-    likesArr: currentUser.likes,
+    savedRecipeArr: currentUser.savedRecipe,
   };
 
-  const getLikes = () => {
-    const filteredDrinkId = currentUser.likes.find(
+  const getSavedRecipe = () => {
+    const filteredDrinkId = currentUser.savedRecipe.find(
       (item) => item.id === data.id
     );
 
     filteredDrinkId && filteredDrinkId.id === data.id
-      ? setIsLiked(true)
-      : setIsLiked(false);
+      ? setIsSaved(true)
+      : setIsSaved(false);
   };
 
   return (
@@ -67,11 +67,11 @@ const DrinkCard = ({ data }) => {
           />
         </View>
 
-        <LikeBtn
+        <SavedRecipeBtn
           top={8}
           right={8}
-          color={isLiked === true ? COLORS.grad1 : COLORS.black}
-          handlePress={() => handlePressLike(itemData, action)}
+          color={isSaved === true ? COLORS.grad1 : COLORS.black}
+          handlePress={() => handlePressSavedRecipe(itemData, action)}
         />
       </View>
       <View
@@ -83,7 +83,8 @@ const DrinkCard = ({ data }) => {
           justifyContent: 'space-between',
         }}
       >
-        <Likes />
+        <SavedRecipe savedRecipe={data.savedRecipeCount} />
+
         <Complexity complexity={data.complexity} />
       </View>
       <View style={{ width: '100%', padding: SPACING.m }}>
@@ -101,7 +102,6 @@ const DrinkCard = ({ data }) => {
           }}
         >
           <Tags tags={'tags'} />
-
           <ReadMoreBtn
             minWidth={120}
             fontSize={SIZES.font}

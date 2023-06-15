@@ -6,7 +6,13 @@ import MenuIcon from '../assets/icons/Menu.svg';
 import Close from '../assets/icons/Cross.svg';
 import { useStoreState } from 'easy-peasy';
 
-export const LikeBtn = ({ imgUrl, handlePress, drinkId, color, ...props }) => {
+export const SavedRecipeBtn = ({
+  imgUrl,
+  handlePress,
+  drinkId,
+  color,
+  ...props
+}) => {
   return (
     <TouchableOpacity
       style={{
@@ -20,8 +26,6 @@ export const LikeBtn = ({ imgUrl, handlePress, drinkId, color, ...props }) => {
       }}
       onPress={handlePress}
     >
-      {/*       <Image source={assets.heartFilled} style={{ height: 40, width: 40 }} />
-       */}
       <Text
         style={{
           color: color,
