@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import MenuIcon from '../assets/icons/Menu.svg';
 import Close from '../assets/icons/Cross.svg';
 import { useStoreState } from 'easy-peasy';
+import { RatingInput } from 'react-native-stock-star-rating';
 
 export const SavedRecipeBtn = ({
   imgUrl,

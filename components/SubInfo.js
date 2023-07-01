@@ -55,6 +55,43 @@ export const SavedRecipe = ({ savedRecipe }) => {
     </View>
   );
 };
+
+export const AverageRating = ({ totalPoints, totalVoters }) => {
+  console.log(totalPoints);
+  const calcTotal =
+    totalPoints.one * 1 +
+    totalPoints.two * 2 +
+    totalPoints.three * 3 +
+    totalPoints.four * 4 +
+    totalPoints.five * 5;
+
+  const calcAverage = calcTotal / totalVoters;
+  return (
+    <View
+      style={{
+        paddingHorizontal: SIZES.font,
+        paddingVertical: SIZES.base,
+        backgroundColor: COLORS.primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        ...SHADOWS.light,
+        elevation: 1,
+        maxWidth: '50%',
+        borderRadius: 10,
+      }}
+    >
+      <Text
+        style={{
+          fontFamily: FONTS.regular,
+          fontSize: SIZES.small,
+          color: COLORS.black,
+        }}
+      >
+        {calcAverage}
+      </Text>
+    </View>
+  );
+};
 export const Complexity = ({ complexity }) => {
   let complexteyRating;
   if (complexity <= 1.5) {

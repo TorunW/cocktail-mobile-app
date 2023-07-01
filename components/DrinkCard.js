@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { COLORS, SIZES, SHADOWS, SPACING } from '../constants';
 import { SavedRecipeBtn, ReadMoreBtn } from './Button';
-import { Title, Complexity, SavedRecipe, Tags } from './SubInfo';
+import { Title, Complexity, SavedRecipe, Tags, AverageRating } from './SubInfo';
 import { handlePressSavedRecipe } from '../helpers/handlePressSavedRecipe';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
@@ -28,7 +28,7 @@ const DrinkCard = ({ data }) => {
   };
 
   const getSavedRecipe = () => {
-    const filteredDrinkId = currentUser.savedRecipe.find(
+    const filteredDrinkId = currentUser.savedRecipe?.find(
       (item) => item.id === data.id
     );
 
@@ -84,7 +84,10 @@ const DrinkCard = ({ data }) => {
         }}
       >
         <SavedRecipe savedRecipe={data.savedRecipeCount} />
-
+        <AverageRating
+          totalPoints={data.totalPoints}
+          totalVoters={data.totalVoters}
+        />
         <Complexity complexity={data.complexity} />
       </View>
       <View style={{ width: '100%', padding: SPACING.m }}>

@@ -18,6 +18,16 @@ export const getUsersData = async () => {
     querySnapshot.docs.map(async (doc, index) => ({
       id: doc.id,
       email: doc.data().email,
+      ratedDrinks: await Promise.all(
+        doc.data().ratedDrinks
+          ? doc.data().ratedDrinks.map(async (item) => {
+              return {
+                drink: (await getDoc(item.drink)).id,
+                rating: item.rating,
+              };
+            })
+          : []
+      ),
       savedRecipe: doc.data().savedRecipe
         ? await Promise.all(
             doc

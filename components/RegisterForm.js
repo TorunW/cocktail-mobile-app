@@ -72,6 +72,7 @@ const RegisterForm = () => {
             email: user.email,
             id: docRef.id,
             savedRecipe: null,
+            ratedDrinks: null,
           });
         })
         .catch((err) => {

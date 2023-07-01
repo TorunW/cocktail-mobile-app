@@ -25,12 +25,18 @@ const Settings = () => {
     auth
       .signOut()
       .then(async () => {
-        await AsyncStorage.clear();
+        await AsyncStorage.removeItem('@token_key');
+        await AsyncStorage.removeItem('@email_key');
+        await AsyncStorage.removeItem('@id_key');
+        await AsyncStorage.removeItem('@savedRecipe_key');
+        await AsyncStorage.removeItem('@ratedDrinks_key');
+
         action.users.setCurrentUser({
           token: null,
           email: null,
           id: null,
           savedRecipe: null,
+          ratedDrinks: null,
         });
         navigation.replace('Login');
       })

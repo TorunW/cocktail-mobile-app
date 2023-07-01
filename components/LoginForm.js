@@ -73,10 +73,17 @@ const LoginForm = () => {
           '@savedRecipe_key',
           JSON.stringify(currentUser.savedRecipe)
         );
+        await AsyncStorage.setItem(
+          '@ratedDrinks_key',
+          JSON.stringify(currentUser.ratedDrinks)
+        );
 
         const storageId = await AsyncStorage.getItem('@id_key');
         const storageSavedRecipe = await AsyncStorage.getItem(
           '@savedRecipe_key'
+        );
+        const storageRatedDrinks = await AsyncStorage.getItem(
+          '@ratedDrinks_key'
         );
 
         action.users.setCurrentUser({
@@ -84,6 +91,7 @@ const LoginForm = () => {
           email: user.email,
           id: storageId,
           savedRecipe: JSON.parse(storageSavedRecipe),
+          ratedDrinks: JSON.parse(storageRatedDrinks),
         });
       })
       .catch((err) => {

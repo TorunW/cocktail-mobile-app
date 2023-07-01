@@ -21,4 +21,12 @@ export default drinks = {
   searchTerm: action((state, payload) => {
     state.term = payload;
   }),
+  rating: null,
+  setRating: action((state, payload) => {
+    state.rating = payload;
+  }),
+  initalStarCount: 0,
+  setInitalStarCount: action((state, payload) => {
+    state.initalStarCount = payload;
+  }),
 };

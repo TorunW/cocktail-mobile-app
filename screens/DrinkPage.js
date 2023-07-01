@@ -11,22 +11,17 @@ import { COLORS, FONTS, SIZES, SHADOWS } from '../constants';
 import { Heart, BackBtn, FocusedStatusBar } from '../components';
 import {
   Alcoholic,
+  AverageRating,
   Category,
   Complexity,
   SavedRecipe,
   Tags,
 } from '../components/SubInfo';
 import { handlePressSavedRecipe } from '../helpers/handlePressSavedRecipe';
-import { useStoreState } from 'easy-peasy';
+import RateDrink from '../components/RateDrink';
 
 export const DrinkPage = ({ route, navigation }) => {
   const { data } = route.params;
-  const state = useStoreState((state) => state);
-
-  const itemData = {
-    drinkId: data.id,
-    userId: state.users.currentUser.id,
-  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -40,23 +35,10 @@ export const DrinkPage = ({ route, navigation }) => {
           width: '100%',
           height: '100%',
           position: 'absolute',
-
           backgroundColor: COLORS.white,
           alignItems: 'center',
         }}
       >
-        <Image
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: COLORS.white,
-            position: 'absolute',
-            top: 0,
-          }}
-          source={{ uri: data.image }}
-          resizeMode='cover'
-          blurRadius={10}
-        />
         <Image
           style={{
             width: '80%',
@@ -103,7 +85,12 @@ export const DrinkPage = ({ route, navigation }) => {
             <Text style={{ fontFamily: FONTS.bold, fontSize: SIZES.large }}>
               {data.title}
             </Text>
+            <AverageRating
+              totalPoints={data.totalPoints}
+              totalVoters={data.totalVoters}
+            />
 
+            <RateDrink data={data} />
             <Category category={data.strCategory} />
             <Alcoholic alcoholic={data.alcoholic} />
           </View>
@@ -118,7 +105,6 @@ export const DrinkPage = ({ route, navigation }) => {
             <Complexity complexity={data.complexity} />
           </View>
           <Tags justifyContent={'flex-start'} width={'100%'} tags={'tags'} />
-
           <Text
             style={{
               marginVertical: SIZES.font,
@@ -138,20 +124,21 @@ export const DrinkPage = ({ route, navigation }) => {
               {data.ingredients !== undefined ? (
                 <FlatList
                   data={data.ingredients}
-                  renderItem={({ item }) => (
-                    <View>
-                      <Text>{item.ingredient}</Text>
-                      <Text>{item.measure}</Text>
-                    </View>
-                  )}
-                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => {
+                    return (
+                      <View>
+                        <Text>{item.ingredient}</Text>
+                        <Text>{item.measure}</Text>
+                      </View>
+                    );
+                  }}
+                  keyExtractor={(item) => item.ingredient}
                 />
               ) : (
                 <Text>error</Text>
               )}
             </View>
           </View>
-
           <Text
             style={{
               marginVertical: SIZES.font,

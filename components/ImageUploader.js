@@ -8,7 +8,6 @@ import { useStoreActions } from 'easy-peasy';
 
 const ImageUploader = () => {
   const action = useStoreActions((actions) => actions);
-
   const [image, setImage] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
 

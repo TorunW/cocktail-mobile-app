@@ -5,7 +5,6 @@ import {
   arrayUnion,
   arrayRemove,
   increment,
-  decrement,
 } from 'firebase/firestore';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -38,7 +37,7 @@ export const handlePressSavedRecipe = async (itemData, action) => {
 
   const addToFirebase = async () => {
     await updateDoc(userRef, {
-      SavedRecipe: arrayUnion(drinkRef),
+      savedRecipe: arrayUnion(drinkRef),
     });
 
     await updateDoc(drinkRef, {

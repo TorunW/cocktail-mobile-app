@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import getDrinksData from './transactions/getDrinksData';
 import getIngredientsData from './transactions/getIngredientsData';
 import { getUsersData } from './transactions/getUsersData';
+import { COLORS } from './constants';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,12 +74,14 @@ const StackScreens = () => {
     const storageEmail = await AsyncStorage.getItem('@email_key');
     const storageId = await AsyncStorage.getItem('@id_key');
     const storageSavedRecipe = await AsyncStorage.getItem('@savedRecipe_key');
+    const storageRatedDrinks = await AsyncStorage.getItem('@ratedDrinks_key');
 
     action.users.setCurrentUser({
       token: storageToken,
       email: storageEmail,
       id: storageId,
       savedRecipe: JSON.parse(storageSavedRecipe),
+      ratedDrinks: JSON.parse(storageRatedDrinks),
     });
   };
 
@@ -86,7 +89,10 @@ const StackScreens = () => {
     state.users.currentUser.token !== null ? 'Home' : 'Login';
 
   return (
-    <Stack.Navigator initialRouteName={intialScreen}>
+    <Stack.Navigator
+      initialRouteName={intialScreen}
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen
         name='Root'
         component={Root}
