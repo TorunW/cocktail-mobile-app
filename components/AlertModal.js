@@ -39,7 +39,6 @@ const AlertModal = ({
   });
 
   const handleSendEmail = async (data) => {
-    console.log(data);
     const docRef = await addDoc(collection(db, 'mail'), {
       title: data === 'delete' ? 'Delete' : title,
       message: data === 'delete' ? state.users.currentUser : data.input,

@@ -28,7 +28,6 @@ const SettingsMenu = () => {
   const isOpen = useStoreState((state) => state.users.settingsIsOpen);
   const [isAlertVisible, setAlertVisible] = useState(false);
   const [alertType, setAlertType] = useState('');
-  console.log(isAlertVisible);
 
   const openModal = (type) => {
     if (type === 'issue') {

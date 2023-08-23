@@ -71,7 +71,7 @@ export const Complexity = ({ complexity, textStyle }) => {
 
   return (
     <View style={{ flexDirection: 'column', gap: SPACING.xs }}>
-      <Text>{complexity}</Text>
+      {complexityRating}
     </View>
   );
 };
