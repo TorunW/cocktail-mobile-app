@@ -45,10 +45,33 @@ export const Alcoholic = ({ alcoholic, size, textStyle, color }) => {
 };
 
 export const Complexity = ({ complexity, textStyle }) => {
+  let complexityRating;
+  if (complexity <= 1.5) {
+    complexityRating = (
+      <>
+        <Easy size={SIZES.icon} height={SIZES.icon} color={COLORS.black2} />
+        <Text style={textStyle}>Easy</Text>
+      </>
+    );
+  } else if (complexity > 1.5 && complexity <= 2.5) {
+    complexityRating = (
+      <>
+        <Middle size={SIZES.icon} height={SIZES.icon} color={COLORS.black2} />
+        <Text style={textStyle}>Middle</Text>
+      </>
+    );
+  } else if (complexity > 2.5) {
+    complexityRating = (
+      <>
+        <Hard size={SIZES.icon} color={COLORS.black2} />
+        <Text style={textStyle}>Hard</Text>
+      </>
+    );
+  }
+
   return (
     <View style={{ flexDirection: 'column', gap: SPACING.xs }}>
-      <Easy size={SIZES.icon} height={SIZES.icon} color={COLORS.black2} />
-      <Text style={textStyle}>Easy</Text>
+      <Text>{complexity}</Text>
     </View>
   );
 };

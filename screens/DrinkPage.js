@@ -1,7 +1,9 @@
 import {
   View,
   Text,
+  SafeAreaView,
   Image,
+  FlatList,
   StyleSheet,
   Pressable,
   ScrollView,
@@ -14,6 +16,7 @@ import {
   AverageRating,
   Complexity,
   Description,
+  SavedRecipe,
   Title,
 } from '../components/SubInfo';
 import RateDrink from '../components/RateDrink';
@@ -109,11 +112,11 @@ export const DrinkPage = ({ route, navigation }) => {
           textStyle={styles.smallText}
           color={COLORS.black2}
         />
-        {/*    <Complexity
+        <Complexity
           complexity={data.complexity}
           textStyle={styles.smallText}
           size={SIZES.icon}
-        /> */}
+        />
       </View>
 
       <View style={styles.drinkContent}>

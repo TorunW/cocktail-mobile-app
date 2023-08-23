@@ -100,8 +100,10 @@ const DrinkCard = ({ data }) => {
             totalVoters={data.totalVoters}
             textStyle={styles.smallText}
           />
-          {/*           <Complexity textStyle={styles.smallText} />
-           */}
+          <Complexity
+            complexity={data.complexity}
+            textStyle={styles.smallText}
+          />
         </View>
       </View>
     </Pressable>
