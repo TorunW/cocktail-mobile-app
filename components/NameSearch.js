@@ -25,6 +25,8 @@ const NameSearch = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  console.log(input);
+  console.log(searchResult.map((item) => item.title));
   const onChangeText = async (text) => {
     setInput(text);
     const res = drinks
@@ -46,11 +48,13 @@ const NameSearch = () => {
 
   const addToSearch = (item) => {
     setInput(item.title);
+    setFilteredDrinks([item]);
+    setSearchResult([]);
+    setInput('');
   };
 
   let searchButton;
-  let clearButton;
-  if (filteredDrinks.length === 0 || searchResult.length >= 1) {
+  if (filteredDrinks.length === 0 || input.length >= 1) {
     searchButton = (
       <TouchableOpacity
         onPress={() => onSearch()}
@@ -63,24 +67,17 @@ const NameSearch = () => {
         <SearchIcon size={SIZES.icon} />
       </TouchableOpacity>
     );
-  } else if (filteredDrinks.length >= 1 || searchResult.length === 0) {
-    clearButton = (
+  } else {
+    searchButton = (
       <TouchableOpacity
-        onPress={() => onClear()}
+        onPress={() => onSearch()}
         style={{
-          justifyContent: 'center',
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: SPACING.s,
-          backgroundColor: COLORS.lightTransparent,
-          padding: SPACING.xs,
-          borderRadius: 50,
+          position: 'absolute',
+          right: 15,
+          top: 11,
         }}
       >
-        <Text style={{ fontFamily: FONTS.bold, fontSize: SIZES.font }}>
-          Clear filters
-        </Text>
-        <CloseIcon size={SIZES.large} />
+        <SearchIcon color={COLORS.grey} size={SIZES.icon} />
       </TouchableOpacity>
     );
   }
@@ -132,6 +129,7 @@ const NameSearch = () => {
           borderBottomRightRadius: 18,
           borderBottomLeftRadius: 18,
           width: '100%',
+          maxHeight: 235,
         }}
         renderItem={({ item, index }) => (
           <TouchableOpacity

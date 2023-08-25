@@ -6,7 +6,7 @@ import {
   ImageBackground,
   Dimensions,
 } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS, SPACING } from '../constants';
 import {
   DrinkCard,
   HomeHeader,
@@ -59,12 +59,16 @@ export const Home = () => {
               height: Dimensions.get('window').height,
             }}
           >
-            <FlatList
-              data={drinksData}
-              renderItem={({ item }) => <DrinkCard data={item} />}
-              keyExtractor={(item) => item.id}
-              ListHeaderComponent={<HomeHeader />}
-            />
+            <HomeHeader />
+            <View
+              style={{ marginTop: 200, marginBottom: SPACING.xl + SPACING.xl }}
+            >
+              <FlatList
+                data={drinksData}
+                renderItem={({ item }) => <DrinkCard data={item} />}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
           </ImageBackground>
         </View>
         <View

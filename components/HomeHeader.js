@@ -14,7 +14,7 @@ const HomeHeader = () => {
       style={{
         flex: 1,
         marginBottom: SPACING.l,
-        height: 320,
+        zIndex: 11,
       }}
     >
       <View
@@ -26,49 +26,10 @@ const HomeHeader = () => {
           borderBottomLeftRadius: 30,
           borderBottomRightRadius: 30,
           elevation: 2,
-          height: 320,
+          height: 200,
           backgroundColor: COLORS.deepPinkTransparent,
         }}
       >
-        <View style={{ marginVertical: 0 }}>
-          <Text
-            style={{
-              fontSize: SIZES.large,
-              fontFamily: FONTS.bold,
-              color: COLORS.white,
-              textTransform: 'uppercase',
-              ...SHADOWS.text,
-              width: '100%',
-            }}
-          >
-            Hello
-          </Text>
-          <Text
-            style={{
-              fontSize: SIZES.large,
-              fontFamily: FONTS.bold,
-              color: COLORS.white,
-              textTransform: 'uppercase',
-              ...SHADOWS.text,
-              width: '100%',
-              color: COLORS.white,
-            }}
-          >
-            {currentUserEmail}
-          </Text>
-          <Text
-            style={{
-              fontSize: SIZES.extraLarge,
-              fontFamily: FONTS.extraBold,
-              color: COLORS.secondary,
-              textTransform: 'uppercase',
-              ...SHADOWS.text,
-              marginTop: SIZES.base / 2,
-            }}
-          >
-            Let's make cocktails
-          </Text>
-        </View>
         <View>
           <Sort />
           <NameSearch />
