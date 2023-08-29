@@ -35,6 +35,6 @@ yarn-error.*
 *.tsbuildinfo
 
 # ESA Build
-ios/*
-android/*
-.idea/*
+ios/
+android/
+.idea/
