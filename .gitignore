@@ -41,3 +41,4 @@ android/
 
 # firebase config
 firebaseConfig.js
+firebaseConfig.dev.js
