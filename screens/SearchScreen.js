@@ -3,9 +3,9 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
-  Pressable,
+  TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import IngredientSearch from '../components/IngredientSearch';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useNavigation } from '@react-navigation/native';
@@ -23,6 +23,7 @@ const SearchScreen = () => {
   const setFilteredIngredients = action.search.setFilteredIngredients;
   const setFilteredDrinks = action.search.setFilteredDrinks;
   const drinks = useStoreState((state) => state.drinks.drinkList);
+  const [isPressed, setIsPressed] = useState(false);
 
   const onSearch = async () => {
     let drinksWithSearchedIngredientArr = [];
@@ -53,21 +54,32 @@ const SearchScreen = () => {
   };
   return (
     <ImageBackground source={bg} style={styles.page}>
-      <StaticHeader />
-      <View style={styles.pageContainer}>
-        <Text style={styles.text}>
-          Explore recipes based on the ingredients you have at home or your
-          current cravings. The search results will display recipes that feature
-          one or more matches.
-        </Text>
-        <IngredientSearch />
-        <View style={styles.buttonContainer}>
-          <Pressable style={styles.button} onPress={() => onSearch()}>
-            <Text style={styles.buttonText}>Search</Text>
-          </Pressable>
-          <Pressable style={styles.button} onPress={() => onClear()}>
-            <Text style={styles.buttonText}>Clear filters</Text>
-          </Pressable>
+      <View style={styles.pageOverlay}>
+        <StaticHeader />
+        <View style={styles.pageContainer}>
+          <Text style={styles.text}>
+            Explore recipes based on the ingredients you have at home or your
+            current cravings. The search results will display recipes that
+            feature one or more matches.
+          </Text>
+          <IngredientSearch />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => onSearch()}>
+              <Text
+                style={isPressed ? styles.buttonTextOnPress : styles.buttonText}
+              >
+                Search
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => onClear()}
+              onPressIn={() => setIsPressed(true)}
+              onPressOut={() => setIsPressed(false)}
+            >
+              <Text style={styles.buttonText}>Clear filters</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </ImageBackground>
@@ -79,6 +91,12 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  pageOverlay: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: COLORS.darkTransparent,
+  },
+
   pageContainer: {
     height: '60%',
     marginHorizontal: SPACING.m,
@@ -89,19 +107,22 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.medium,
     fontSize: SIZES.large,
     marginBottom: SPACING.l,
+    color: COLORS.white,
   },
   button: {
-    backgroundColor: COLORS.pinkTransparent,
     borderRadius: 30,
     paddingVertical: SPACING.xs,
     marginBottom: SPACING.s,
     justifyContent: 'center',
     padding: SPACING.m,
+    borderColor: COLORS.pinkTransparent,
+    borderWidth: 1,
   },
   buttonText: {
     fontFamily: FONTS.bold,
     fontSize: SIZES.medium,
     textTransform: 'capitalize',
+    color: COLORS.white,
   },
   buttonContainer: {
     flexDirection: 'row',

@@ -7,8 +7,8 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { action, useStoreActions, useStoreState } from 'easy-peasy';
+import React, { useState } from 'react';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { COLORS, FONTS, SIZES, SPACING } from '../constants';
 import { Close } from '../assets/icons/Icon';
 
@@ -77,7 +77,6 @@ const IngredientSearch = () => {
           const isAdded = filteredIngredients.some(
             (obj) => obj.name === item.name
           );
-
           return (
             <Pressable
               onPress={() => addToFilteredingredients(item)}
@@ -101,9 +100,8 @@ const IngredientSearch = () => {
               style={styles.resultBox}
               onPress={() => removeFromFilteredingredients(item)}
             >
-              <Text style={styles.resultText}>
-                {item.name} <Close size={SIZES.medium} />
-              </Text>
+              <Text style={styles.resultText}>{item.name}</Text>
+              <Close size={SIZES.medium} color={COLORS.white} />
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
@@ -159,15 +157,20 @@ const styles = StyleSheet.create({
   resultBox: {
     marginRight: SPACING.xs,
     marginBottom: SPACING.xs,
+    borderRadius: 50,
+    backgroundColor: COLORS.darkTransparent,
+    padding: SPACING.s,
+    flexDirection: 'row',
+    display: 'flex',
+    alignItems: 'center',
   },
   resultText: {
-    padding: SPACING.xs,
-    backgroundColor: COLORS.darkTransparent,
-    borderRadius: 50,
-    color: COLORS.white,
     fontFamily: FONTS.bold,
     fontSize: SIZES.small,
     textTransform: 'capitalize',
+    color: COLORS.white,
+    margin: 0,
+    padding: 0,
   },
 });
 

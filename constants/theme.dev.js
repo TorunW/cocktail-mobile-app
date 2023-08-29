@@ -1,4 +1,10 @@
-export const COLORS = {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SHADOWS = exports.FONTS = exports.SPACING = exports.SIZES = exports.COLORS = void 0;
+var COLORS = {
   noprimary: '#F7D1D7',
   primary: 'rgba(245, 196, 204, 1)',
   secondary: 'rgba(140, 225, 246, 1)',
@@ -10,92 +16,94 @@ export const COLORS = {
   deepPink: '#F1B3BC',
   deepPinkTransparent: 'rgba(241, 179, 188, 0.8)',
   red: '#DA3E55',
-
   white: '#F9F4F0',
   grey: '#4C4C4C',
   black: '#2e2e2e',
   black2: '#112A46',
   black2transparent: '#112A4690',
-  shadow: '#1F2687',
+  shadow: '#1F2687'
 };
-
-export const SIZES = {
+exports.COLORS = COLORS;
+var SIZES = {
   base: 8,
   small: 12,
   font: 14,
   medium: 16,
   large: 18,
   extraLarge: 24,
-
   icon: 24,
-  iconL: 36,
+  iconL: 36
 };
-
 /* 12–24 pixels for a large button
 24–36 pixels for a medium button
 36–48 pixels for a small button */
-export const SPACING = {
+
+exports.SIZES = SIZES;
+var SPACING = {
   xs: 8,
   s: 16,
   m: 24,
   l: 32,
-  xl: 40,
+  xl: 40
 };
-
-export const FONTS = {
+exports.SPACING = SPACING;
+var FONTS = {
   extraBold: 'InterBlack',
   bold: 'InterBold',
   semiBold: 'InterSemiBold',
   medium: 'InterMedium',
   regular: 'InterRegular',
-  light: 'InterLight',
+  light: 'InterLight'
 };
-
-export const SHADOWS = {
+exports.FONTS = FONTS;
+var SHADOWS = {
   light: {
     shadowColor: COLORS.gray,
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 1
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-
-    elevation: 3,
+    elevation: 3
   },
   medium: {
     shadowColor: COLORS.gray,
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 3
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-
-    elevation: 7,
+    elevation: 7
   },
   dark: {
     shadowColor: COLORS.gray,
     shadowOffset: {
       width: 0,
-      height: 7,
+      height: 7
     },
     shadowOpacity: 0.41,
     shadowRadius: 9.11,
-
-    elevation: 14,
+    elevation: 14
   },
   text: {
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
-    textShadowOffset: { width: 0, height: 4 },
-    textShadowRadius: 4,
+    textShadowOffset: {
+      width: 0,
+      height: 4
+    },
+    textShadowRadius: 4
   },
-
   box: {
     shadowColor: COLORS.black,
-    textShadowOffset: { width: 0, height: 8 },
+    textShadowOffset: {
+      width: 0,
+      height: 8
+    },
     shadowOpacity: 0.37,
     textShadowRadius: 32,
-    elevation: 32,
-  },
+    elevation: 32
+  }
 };
+exports.SHADOWS = SHADOWS;
