@@ -10,21 +10,24 @@ import {
 import React, { useEffect, useState } from 'react';
 import { COLORS, SIZES, SHADOWS, SPACING, FONTS } from '../constants';
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db, auth } from '../firebaseConfig';
 import { useForm, Controller } from 'react-hook-form';
-import { useStoreState } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Close } from '../assets/icons/Icon';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 const AlertModal = ({
   message,
   title,
   visible,
-  closeModal,
   textInput,
   confirm,
+  emailInput,
 }) => {
   const state = useStoreState((state) => state);
+  const action = useStoreActions((actions) => actions);
   const [buttonText, setButtonText] = useState('Submit');
+  const [confirmText, setConfirmText] = useState('');
 
   const {
     control,
@@ -35,6 +38,7 @@ const AlertModal = ({
   } = useForm({
     defaultValues: {
       input: '',
+      emailInput: '',
     },
   });
 
@@ -47,6 +51,20 @@ const AlertModal = ({
     console.log('Document written with ID: ', docRef.id);
   };
 
+  const handleReset = (data) => {
+    sendPasswordResetEmail(auth, data.email)
+      .then(() => {
+        setConfirmText(
+          `Success! We've sent a reset link to your email, don't forget to check the spam folder.`
+        );
+        setTimeout(() => {
+          reset({ input: '' });
+          setConfirmText('');
+          action.alert.setIsModalVisible(false);
+        }, 3000);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
       setButtonText('Message sent');
@@ -59,18 +77,22 @@ const AlertModal = ({
 
   useEffect(() => {
     reset({ input: '' });
-  }, [closeModal]);
+  }, [state.alert.isAlertVisible]);
+
+  const handleClose = () => {
+    action.alert.setIsAlertVisible(false);
+  };
 
   return (
     <Modal
       animationType='fade'
       transparent={true}
       visible={visible}
-      onRequestClose={closeModal}
+      onRequestClose={handleClose}
     >
       <View style={styles.container}>
         <View style={styles.modal}>
-          <TouchableOpacity style={styles.closeBtn} onPress={closeModal}>
+          <TouchableOpacity style={styles.closeBtn} onPress={handleClose}>
             <Close
               style={styles.closeBtn}
               color={COLORS.black2}
@@ -106,6 +128,35 @@ const AlertModal = ({
                   <Text style={styles.bigText}>{buttonText} </Text>
                 </Pressable>
               </>
+            ) : (
+              ''
+            )}
+            {emailInput === true && confirmText.length < 1 ? (
+              <>
+                <Controller
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      placeholder='Write your email here'
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      style={styles.input}
+                    />
+                  )}
+                  name='email'
+                />
+
+                <Pressable
+                  style={styles.button}
+                  onPress={handleSubmit(handleReset)}
+                >
+                  <Text style={styles.bigText}>Reset</Text>
+                </Pressable>
+              </>
+            ) : emailInput === true && confirmText.length > 1 ? (
+              <Text style={styles.smallText}>{confirmText}</Text>
             ) : (
               ''
             )}

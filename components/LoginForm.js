@@ -11,10 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { auth } from '../firebaseConfig';
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AlertModal from './AlertModal';
@@ -32,6 +29,7 @@ const LoginForm = () => {
   const [isTooManyRequestErrorVisible, setIsTooManyRequestErrorVisible] =
     useState(false);
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
 
   useEffect(() => {
     if (
@@ -123,12 +121,9 @@ const LoginForm = () => {
       });
   };
 
-  const handleResetPassword = () => {
-    sendPasswordResetEmail(auth, 'torun.wikstrom@gmail.com')
-      .then(() => {
-        alert('Password reset  email sent');
-      })
-      .catch((err) => console.log(err));
+  const handleResetPassword = (data) => {
+    setIsForgotPasswordOpen(true);
+    action.alert.setIsAlertVisible(true);
   };
 
   return (
@@ -138,6 +133,16 @@ const LoginForm = () => {
         height: '55%',
       }}
     >
+      {isForgotPasswordOpen === true ? (
+        <AlertModal
+          message={`We'll email you a link to reset your password.`}
+          title='Forgot Your Password?'
+          emailInput={true}
+          visible={state.alert.isAlertVisible}
+        />
+      ) : (
+        ''
+      )}
       {isTooManyRequestErrorVisible === true ? (
         <AlertModal
           message={

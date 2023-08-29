@@ -11,9 +11,8 @@ import React from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useState } from 'react';
 import AlertModal from './AlertModal';
-import { CloseIcon, FilterIcon, SearchIcon } from '../assets/icons/Icon';
+import { SearchIcon } from '../assets/icons/Icon';
 import { COLORS, FONTS, SIZES, SPACING } from '../constants';
-import Sort from './Sort';
 
 const NameSearch = () => {
   const drinks = useStoreState((state) => state.drinks.drinkList);
@@ -21,12 +20,11 @@ const NameSearch = () => {
   const setFilteredDrinks = useStoreActions(
     (actions) => actions.search.setFilteredDrinks
   );
+  const state = useStoreState((state) => state);
   const [input, setInput] = useState();
   const [searchResult, setSearchResult] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  console.log(input);
-  console.log(searchResult.map((item) => item.title));
   const onChangeText = async (text) => {
     setInput(text);
     const res = drinks
@@ -94,8 +92,7 @@ const NameSearch = () => {
         <AlertModal
           message={`No drink with this name`}
           title={''}
-          visible={isModalVisible}
-          closeModal={() => setIsModalVisible(false)}
+          visible={state.alert.isAlertVisible}
         />
       ) : (
         ''
