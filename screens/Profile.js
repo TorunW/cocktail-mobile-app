@@ -17,7 +17,7 @@ const Profile = () => {
   const drinks = state.drinks.drinkList;
   const currentUser = state.users.currentUser;
   const drinkData = drinks.filter((drink) =>
-    currentUser?.savedRecipe.some((savedDrink) => drink.id === savedDrink.id)
+    currentUser?.savedRecipe?.some((savedDrink) => drink.id === savedDrink.id)
   );
 
   return (
