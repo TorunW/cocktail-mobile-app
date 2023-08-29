@@ -24,9 +24,9 @@ import { COLORS, SIZES, SPACING, FONTS } from '../constants';
 const SettingsMenu = () => {
   const navigation = useNavigation();
   const action = useStoreActions((actions) => actions);
+  const state = useStoreState((state) => state);
   const user = useStoreState((state) => state.users.currentUser);
   const isOpen = useStoreState((state) => state.users.settingsIsOpen);
-  const [isAlertVisible, setAlertVisible] = useState(false);
   const [alertType, setAlertType] = useState('');
 
   const openModal = (type) => {
@@ -37,7 +37,7 @@ const SettingsMenu = () => {
     } else if (type === 'delete') {
       setAlertType('delete');
     }
-    setAlertVisible(true);
+    action.alert.setIsAlertVisible(true);
   };
 
   const handleLogout = () => {
@@ -119,8 +119,7 @@ const SettingsMenu = () => {
             ? `Missing a feature or recipe? Send us a message and let us know!`
             : `Are you sure you want to delete your account permanently? All saved recipies and data will be lost.`
         }
-        visible={isAlertVisible}
-        closeModal={() => setAlertVisible(false)}
+        visible={state.alert.isAlertVisible}
         textInput={alertType !== 'delete' ? true : false}
         confirm={alertType === 'delete' ? true : false}
       />
