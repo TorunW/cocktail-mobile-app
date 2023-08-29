@@ -38,3 +38,6 @@ yarn-error.*
 ios/
 android/
 .idea/
+
+# firebase config
+firebaseConfig.js
