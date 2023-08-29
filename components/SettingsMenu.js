@@ -57,7 +57,7 @@ const SettingsMenu = () => {
           savedRecipe: null,
           ratedDrinks: null,
         });
-        navigation.replace('Login');
+        navigation.navigate('Login');
       })
       .catch((err) => alert(err.message));
   };
