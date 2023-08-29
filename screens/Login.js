@@ -1,10 +1,4 @@
-import {
-  Image,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Text,
-  View,
-} from 'react-native';
+import { Image, ImageBackground, Text, View } from 'react-native';
 import React from 'react';
 import { useStoreState } from 'easy-peasy';
 import LoginForm from '../components/LoginForm';
