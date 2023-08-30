@@ -45,7 +45,7 @@ const theme = {
 const Root = () => {
   const currentUser = useStoreState((state) => state.users.currentUser.email);
   const [isAdmin, setIsAdmin] = useState(
-    currentUser === 'torun.wikstrom@gmail.coms' ? true : false
+    currentUser === 'torun.wikstrom@gmail.com' ? true : false
   );
 
   return (
