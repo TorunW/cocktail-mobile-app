@@ -17,6 +17,10 @@ export default drinks = {
   setIngredientsToDrink: action((state, payload) => {
     state.ingredientsToDrink = payload;
   }),
+  instructionsToDrink: [],
+  setInstructionsToDrink: action((state, payload) => {
+    state.instructionsToDrink = payload;
+  }),
   image: '',
   setImage: action((state, payload) => {
     state.image = payload;

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   SafeAreaView,
-  Text,
   Button,
   TextInput,
   ScrollView,
@@ -17,6 +16,7 @@ import ImageUploader from '../components/ImageUploader';
 import { useStoreState } from 'easy-peasy';
 import IngredientsForm from '../components/IngredientsForm';
 import { useNavigation } from '@react-navigation/native';
+import StepsForm from '../components/StepsForm';
 
 export const AddNewDrink = () => {
   const image = useStoreState((state) => state.drinks.image);
@@ -26,9 +26,13 @@ export const AddNewDrink = () => {
   const existingIngredients = useStoreState(
     (state) => state.drinks.ingredients
   );
+  const instructionsToDrink = useStoreState(
+    (state) => state.drinks.instructionsToDrink
+  );
   const [ingredientRefsWithMeasures, setIngredientRefsWithMeasures] = useState(
     []
   );
+  const [isInstructionsSubmitted, setIsInstructionsSubmitted] = useState(false);
   const [isIngredientsSubmitted, setIsIngredientsSubmitted] = useState(false);
   const [isImageSubmitted, setIsImageSubmitted] = useState(false);
   const [isDrinkSubmitted, setIsDrinkSubmitted] = useState(false);
@@ -71,29 +75,18 @@ export const AddNewDrink = () => {
   } = useForm({
     defaultValues: {
       title: '',
-      instructions: '',
       alcoholic: undefined,
       ingredients: [],
     },
   });
 
   const addDrink = async (data) => {
-    let complexity;
-    if (data.instructions.length <= 5) {
-      complexity = 1;
-    } else if (data.instructions.length > 5 && data.instructions.length < 10) {
-      complexity = 2;
-    } else if (data.instructions.length >= 10) {
-      complexity = 3;
-    }
-
     const alcoholic = data.alcoholic === 'true' ? true : false;
 
     const docRef = await addDoc(collection(db, 'cocktails'), {
       title: data.title,
-      instructions: data.instructions,
+      instructions: instructionsToDrink,
       alcoholic: alcoholic,
-      complexity: complexity,
       image: image,
       ingredients: ingredientRefsWithMeasures,
     });
@@ -106,9 +99,25 @@ export const AddNewDrink = () => {
     formDisplay = (
       <IngredientsForm setIsIngredientsSubmitted={setIsIngredientsSubmitted} />
     );
-  } else if (isIngredientsSubmitted === true && isImageSubmitted === false) {
+  } else if (
+    isIngredientsSubmitted === true &&
+    isImageSubmitted === false &&
+    isInstructionsSubmitted === false
+  ) {
     formDisplay = <ImageUploader setIsImageSubmitted={setIsImageSubmitted} />;
-  } else if (isIngredientsSubmitted === true && isImageSubmitted === true) {
+  } else if (
+    isIngredientsSubmitted === true &&
+    isImageSubmitted === true &&
+    isInstructionsSubmitted === false
+  ) {
+    formDisplay = (
+      <StepsForm setIsInstructionsSubmitted={setIsInstructionsSubmitted} />
+    );
+  } else if (
+    isIngredientsSubmitted === true &&
+    isImageSubmitted === true &&
+    isInstructionsSubmitted === true
+  ) {
     formDisplay = (
       <View
         style={{
@@ -150,19 +159,6 @@ export const AddNewDrink = () => {
             />
           )}
           name='title'
-        />
-        <Controller
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder='Instructions'
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name='instructions'
         />
         <Button title='Add drink' onPress={handleSubmit(addDrink)} />
       </View>
