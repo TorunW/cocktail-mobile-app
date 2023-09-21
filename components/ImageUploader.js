@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { storage } from '../firebaseConfig';
@@ -16,7 +16,7 @@ const ImageUploader = ({ setIsImageSubmitted }) => {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       base64: true,
       allowsEditing: true,
-      aspect: [1, 1],
+      aspect: [9, 16],
       quality: 1,
     });
 
