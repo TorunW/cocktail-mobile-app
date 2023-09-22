@@ -32,6 +32,18 @@ var _default = drinks = {
   setImage: (0, _easyPeasy.action)(function (state, payload) {
     state.image = payload;
   }),
+  title: '',
+  setTitle: (0, _easyPeasy.action)(function (state, payload) {
+    state.title = payload;
+  }),
+  description: '',
+  setDescription: (0, _easyPeasy.action)(function (state, payload) {
+    state.description = payload;
+  }),
+  alcoholic: true,
+  setAlcoholic: (0, _easyPeasy.action)(function (state, payload) {
+    state.alcoholic = payload;
+  }),
   rating: null,
   setRating: (0, _easyPeasy.action)(function (state, payload) {
     state.rating = payload;

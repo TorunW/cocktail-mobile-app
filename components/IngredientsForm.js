@@ -126,9 +126,11 @@ const IngredientsForm = ({ setIsIngredientsSubmitted }) => {
           <Text style={styles.font}>Reset</Text>
         </Pressable>
         <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>
-          <Text style={styles.font}>
-            {isLoading === true ? 'Is submitting' : 'Submit'}
-          </Text>
+          {isLoading === false ? (
+            <Text style={styles.font}>Submit</Text>
+          ) : (
+            <ActivityIndicator size='small' color={COLORS.black} />
+          )}
         </Pressable>
       </View>
     </View>

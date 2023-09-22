@@ -25,6 +25,18 @@ export default drinks = {
   setImage: action((state, payload) => {
     state.image = payload;
   }),
+  title: '',
+  setTitle: action((state, payload) => {
+    state.title = payload;
+  }),
+  description: '',
+  setDescription: action((state, payload) => {
+    state.description = payload;
+  }),
+  alcoholic: true,
+  setAlcoholic: action((state, payload) => {
+    state.alcoholic = payload;
+  }),
   rating: null,
   setRating: action((state, payload) => {
     state.rating = payload;
