@@ -5,6 +5,7 @@ import {
   TextInput,
   Text,
   Pressable,
+  KeyboardAvoidingView,
 } from 'react-native';
 import Dropdown from 'react-native-input-select';
 import React from 'react';
@@ -51,7 +52,7 @@ const DrinkForm = ({ setIsDrinkFormSubmitted }) => {
         be required to add a list of ingredients and measurments, instructions
         and a image.
       </Text>
-      <View style={styles.formContainer}>
+      <KeyboardAvoidingView style={styles.formContainer}>
         <Controller
           control={control}
           rules={{ required: true }}
@@ -77,12 +78,13 @@ const DrinkForm = ({ setIsDrinkFormSubmitted }) => {
               onChangeText={onChange}
               value={value}
               multiline={true}
-              numberOfLines={5}
+              numberOfLines={4}
               cursorColor={'black'}
             />
           )}
           name='description'
         />
+
         <Controller
           control={control}
           rules={{ required: true }}
@@ -103,7 +105,7 @@ const DrinkForm = ({ setIsDrinkFormSubmitted }) => {
           )}
           name='alcoholic'
         />
-      </View>
+      </KeyboardAvoidingView>
       <Pressable style={styles.button} onPress={handleSubmit(submitForm)}>
         <Text style={styles.font}>Next</Text>
       </Pressable>
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: FONTS.bold,
     fontSize: SIZES.large,
-    marginBottom: SPACING.s,
+    marginBottom: SPACING.xs,
     textAlign: 'center',
   },
   infoText: {
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     alignItems: 'center',
-    marginTop: SPACING.s,
+    marginTop: SPACING.xs,
     gap: SPACING.xs,
   },
   textInput: {

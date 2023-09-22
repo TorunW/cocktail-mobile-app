@@ -5,6 +5,7 @@ import {
   Button,
   StyleSheet,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
@@ -43,10 +44,14 @@ const IngredientsForm = ({ setIsIngredientsSubmitted }) => {
 
     if (toBeAddedInFirebase.length > 0) {
       toBeAddedInFirebase.forEach(async (element) => {
-        const docRef = await addDoc(collection(db, 'ingredients'), {
-          name: element.ingredient.toLowerCase().trimEnd(),
-        });
-        console.log('Document written with ID: ', docRef.id);
+        try {
+          const docRef = await addDoc(collection(db, 'ingredients'), {
+            name: element.ingredient.toLowerCase().trimEnd(),
+          });
+          console.log('Document written with ID: ', docRef.id);
+        } catch (error) {
+          throw `ERROR : ${error}`;
+        }
       });
     }
     action.drinks.setIngredientsToDrink(data.ingredients);
@@ -127,7 +132,7 @@ const IngredientsForm = ({ setIsIngredientsSubmitted }) => {
         </Pressable>
         <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>
           {isLoading === false ? (
-            <Text style={styles.font}>Submit</Text>
+            <Text style={styles.font}>Next</Text>
           ) : (
             <ActivityIndicator size='small' color={COLORS.black} />
           )}

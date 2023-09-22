@@ -31,7 +31,7 @@ const StepsForm = ({ setIsInstructionsSubmitted }) => {
         [key]: value,
       };
 
-      newArr.push(newStepObj);
+      newInstructionsArr.push(newStepObj);
     });
 
     setInstructionsToDrink(newInstructionsArr);

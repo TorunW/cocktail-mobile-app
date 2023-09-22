@@ -37,6 +37,7 @@ export default drinks = {
   setAlcoholic: action((state, payload) => {
     state.alcoholic = payload;
   }),
+
   rating: null,
   setRating: action((state, payload) => {
     state.rating = payload;

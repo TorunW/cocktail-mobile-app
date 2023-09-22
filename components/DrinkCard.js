@@ -20,8 +20,6 @@ const DrinkCard = ({ data }) => {
   const action = useStoreActions((actions) => actions);
   const [isSaved, setIsSaved] = useState(false);
 
-  console.log(data.complexity, 'hello');
-
   useEffect(() => {
     if (currentUser && currentUser.savedRecipe !== null) {
       getSavedRecipe();
