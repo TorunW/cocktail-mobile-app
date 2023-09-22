@@ -6,7 +6,7 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS, SPACING } from '../constants';
 import { FocusedStatusBar } from '../components';
 import { useForm, Controller } from 'react-hook-form';
 import Dropdown from 'react-native-input-select';
@@ -33,7 +33,7 @@ export const AddNewDrink = () => {
     []
   );
   const [isInstructionsSubmitted, setIsInstructionsSubmitted] = useState(false);
-  const [isIngredientsSubmitted, setIsIngredientsSubmitted] = useState(false);
+  const [isIngredientsSubmitted, setIsIngredientsSubmitted] = useState(true);
   const [isImageSubmitted, setIsImageSubmitted] = useState(false);
   const [isDrinkSubmitted, setIsDrinkSubmitted] = useState(false);
   const navigation = useNavigation();
@@ -166,9 +166,13 @@ export const AddNewDrink = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
       <FocusedStatusBar background={COLORS.primary} />
-      <ScrollView>{formDisplay}</ScrollView>
+      {formDisplay}
     </SafeAreaView>
   );
 };

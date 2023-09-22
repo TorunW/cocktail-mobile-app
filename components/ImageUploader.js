@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { storage } from '../firebaseConfig';
-import { COLORS } from '../constants';
+import { COLORS, FONTS, SIZES, SPACING } from '../constants';
 import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import { useStoreActions } from 'easy-peasy';
+import { ImageIcon } from '../assets/icons/Icon';
 
 const ImageUploader = ({ setIsImageSubmitted }) => {
   const action = useStoreActions((actions) => actions);
@@ -71,49 +80,100 @@ const ImageUploader = ({ setIsImageSubmitted }) => {
   return (
     <View
       style={{
-        backgroundColor: COLORS.grad3,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 10,
+        backgroundColor: COLORS.midPink,
+        gap: SPACING.xs,
+        height: Dimensions.get('window').height,
+        paddingHorizontal: SPACING.m,
+        paddingVertical: SPACING.l,
       }}
     >
-      <TouchableOpacity
-        style={{
-          padding: 10,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: COLORS.grad2,
-          borderRadius: 5,
-          elevation: 1,
-        }}
-        onPress={pickImage}
-      >
-        <Text>Pick an Image {isUploading && 'im uploading'}</Text>
-      </TouchableOpacity>
-      <View style={{ width: '100%', padding: 10 }}>
-        {image && (
+      <Text style={styles.title}>Image Upload</Text>
+      <View style={styles.imageContainer}>
+        {image !== null ? (
           <Image
             source={{ uri: image.uri }}
-            style={{ height: 500, width: '100%' }}
+            style={{ height: '100%', width: '100%' }}
           />
+        ) : (
+          <ImageIcon size={SIZES.iconL} />
         )}
       </View>
+      {isUploading === false ? (
+        <TouchableOpacity style={styles.button} onPress={pickImage}>
+          <Text style={styles.font}>
+            {image !== null ? '  Change Image' : 'Pick an Image'}
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.inactiveButton}>
+          <Text style={styles.inactive}>Pick an Image</Text>
+        </TouchableOpacity>
+      )}
 
-      <TouchableOpacity
-        style={{
-          padding: 10,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: COLORS.grad2,
-          borderRadius: 5,
-          elevation: 1,
-        }}
-        onPress={uploadImage}
-      >
-        <Text>Upload Image</Text>
-      </TouchableOpacity>
+      {image !== null ? (
+        <TouchableOpacity style={styles.button} onPress={uploadImage}>
+          <Text style={styles.font}>Upload Image</Text>
+        </TouchableOpacity>
+      ) : isUploading === true ? (
+        <TouchableOpacity style={styles.button}>
+          <ActivityIndicator size='small' color={COLORS.black} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.inactiveButton}>
+          <Text style={(styles.font, styles.inactive)}>Upload Image</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontFamily: FONTS.bold,
+    fontSize: SIZES.large,
+    marginBottom: SPACING.s,
+    textAlign: 'center',
+  },
+  button: {
+    minWidth: '50%',
+    borderRadius: 5,
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.xs,
+    backgroundColor: COLORS.deepPink,
+    borderWidth: 0.9,
+    borderColor: COLORS.deepPinkTransparent,
+    marginVertical: SPACING.xs,
+  },
+  inactiveButton: {
+    minWidth: '50%',
+    borderRadius: 5,
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.xs,
+    backgroundColor: COLORS.deepPink,
+    borderWidth: 0.9,
+    borderColor: COLORS.deepPinkTransparent,
+    marginVertical: SPACING.xs,
+    opacity: 0.5,
+  },
+  inactive: {
+    color: COLORS.grey,
+    fontFamily: FONTS.medium,
+    textAlign: 'center',
+  },
+  font: {
+    textAlign: 'center',
+    fontFamily: FONTS.medium,
+  },
+  imageContainer: {
+    height: 500,
+    backgroundColor: COLORS.pinkTransparent,
+    width: '100%',
+    borderWidth: 0.9,
+    borderColor: COLORS.deepPinkTransparent,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default ImageUploader;

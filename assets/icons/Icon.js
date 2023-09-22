@@ -134,3 +134,6 @@ export const Filter = ({ style, size, color }) => {
 export const RemoveIcon = ({ size, color }) => {
   return <Ionicons name='remove-circle' size={size} color={color} />;
 };
+export const ImageIcon = ({ size, color }) => {
+  return <Ionicons name='images' size={size} color={color} />;
+};
