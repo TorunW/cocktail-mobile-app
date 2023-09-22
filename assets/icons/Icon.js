@@ -1,5 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Materialicons from '@expo/vector-icons/MaterialIcons';
+import { COLORS, SHADOWS } from '../../constants';
 
 export const SearchIcon = ({ size, color }) => {
   return <Ionicons name='search' size={size} color={color} />;
@@ -128,4 +129,8 @@ export const Filter = ({ style, size, color }) => {
   return (
     <Ionicons name='options-outline' style={style} size={size} color={color} />
   );
+};
+
+export const RemoveIcon = ({ size, color }) => {
+  return <Ionicons name='remove-circle' size={size} color={color} />;
 };
