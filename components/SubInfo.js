@@ -55,7 +55,6 @@ export const Creator = ({ creator, style }) => {
 
 export const Complexity = ({ complexity, textStyle }) => {
   let complexityRating;
-  console.log(complexity, 'hello');
   if (complexity <= 6) {
     complexityRating = (
       <>

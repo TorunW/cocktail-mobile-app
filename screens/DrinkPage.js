@@ -135,6 +135,7 @@ export const DrinkPage = ({ route, navigation }) => {
           <Text style={styles.smallText}>error</Text>
         )}
         <Text style={styles.subTitle}>Instructions</Text>
+
         <FlatList
           data={data.instructions}
           renderItem={({ item, index }) => (

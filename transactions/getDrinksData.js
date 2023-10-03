@@ -52,6 +52,9 @@ export default getDrinksData = async () => {
   const drinks = await Promise.all(
     querySnapshot.docs.map(async (doc) => {
       const creator = (await getDoc(await doc.data().creator)).data().username;
+      const creatorId = (await getDoc(await doc.data().creator))._key.path
+        .segments[6];
+
       return {
         id: doc.id,
         title: doc.data().title,
@@ -61,12 +64,13 @@ export default getDrinksData = async () => {
           doc.data().ingredients
         ),
         image: doc.data().image,
-        instructions: doc.data().instructions.length,
+        instructions: doc.data().instructions,
         alcoholic: doc.data().alcoholic,
         savedRecipeCount: doc.data().savedRecipeCount,
         totalPoints: await getRatings(doc.id),
         averageRating: await getAverageRating(doc.id),
         creator,
+        creatorId,
         ingredients: await Promise.all(
           doc.data().ingredients.map(async (item) => {
             return {
