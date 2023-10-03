@@ -1,5 +1,6 @@
 import { db } from '../firebaseConfig';
 import { collection, getDocs, getDoc } from 'firebase/firestore';
+import { getComplexity } from '../helpers/getComplexity';
 
 export default getDrinksData = async () => {
   const querySnapshot = await getDocs(collection(db, 'cocktails'));
@@ -55,8 +56,12 @@ export default getDrinksData = async () => {
         id: doc.id,
         title: doc.data().title,
         description: doc.data().description,
+        complexity: await getComplexity(
+          doc.data().instructions,
+          doc.data().ingredients
+        ),
         image: doc.data().image,
-        instructions: doc.data().instructions,
+        instructions: doc.data().instructions.length,
         alcoholic: doc.data().alcoholic,
         savedRecipeCount: doc.data().savedRecipeCount,
         totalPoints: await getRatings(doc.id),

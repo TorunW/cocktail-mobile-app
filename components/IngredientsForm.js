@@ -42,7 +42,7 @@ const IngredientsForm = ({ setIsIngredientsSubmitted }) => {
             obj.ingredient.toLowerCase().trimEnd() === obj2.name.toLowerCase()
         )
     );
-    console.log(toBeAddedInFirebase, 'should be added');
+
     if (toBeAddedInFirebase.length > 0) {
       toBeAddedInFirebase.forEach(async (element) => {
         try {

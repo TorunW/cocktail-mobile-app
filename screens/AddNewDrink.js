@@ -46,7 +46,6 @@ export const AddNewDrink = () => {
   const [isImageSubmitted, setIsImageSubmitted] = useState(false);
   const [isDrinkSubmitted, setIsDrinkSubmitted] = useState(false);
 
-  console.log(ingredientRefsWithMeasures, 'sdfdsfd');
   useEffect(() => {
     getIngredientId();
   }, [isIngredientsSubmitted]);

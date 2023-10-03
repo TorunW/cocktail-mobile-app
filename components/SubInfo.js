@@ -55,21 +55,22 @@ export const Creator = ({ creator, style }) => {
 
 export const Complexity = ({ complexity, textStyle }) => {
   let complexityRating;
-  if (complexity <= 1.5) {
+  console.log(complexity, 'hello');
+  if (complexity <= 6) {
     complexityRating = (
       <>
         <Easy size={SIZES.icon} height={SIZES.icon} color={COLORS.black2} />
         <Text style={textStyle}>Easy</Text>
       </>
     );
-  } else if (complexity > 1.5 && complexity <= 2.5) {
+  } else if (complexity > 6 && complexity <= 9) {
     complexityRating = (
       <>
         <Middle size={SIZES.icon} height={SIZES.icon} color={COLORS.black2} />
         <Text style={textStyle}>Middle</Text>
       </>
     );
-  } else if (complexity > 2.5) {
+  } else if (complexity >= 9) {
     complexityRating = (
       <>
         <Hard size={SIZES.icon} color={COLORS.black2} />
