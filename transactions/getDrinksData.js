@@ -47,27 +47,32 @@ export default getDrinksData = async () => {
     calcAverage !== undefined ? calcAverage : (calcAverage = 0);
     return calcAverage;
   };
+
   const drinks = await Promise.all(
-    querySnapshot.docs.map(async (doc) => ({
-      id: doc.id,
-      title: doc.data().title,
-      description: doc.data().description,
-      image: doc.data().image,
-      instructions: doc.data().instructions.map((item) => item),
-      alcoholic: doc.data().alcoholic,
-      savedRecipeCount: doc.data().savedRecipeCount,
-      totalPoints: await getRatings(doc.id),
-      averageRating: await getAverageRating(doc.id),
-      ingredients: await Promise.all(
-        doc.data().ingredients.map(async (item) => {
-          return {
-            id: item.ingredient._key.path.segments[6],
-            ingredient: (await getDoc(item.ingredient)).data().name,
-            measure: item.measure,
-          };
-        })
-      ),
-    }))
+    querySnapshot.docs.map(async (doc) => {
+      const creator = (await getDoc(await doc.data().creator)).data().username;
+      return {
+        id: doc.id,
+        title: doc.data().title,
+        description: doc.data().description,
+        image: doc.data().image,
+        instructions: doc.data().instructions,
+        alcoholic: doc.data().alcoholic,
+        savedRecipeCount: doc.data().savedRecipeCount,
+        totalPoints: await getRatings(doc.id),
+        averageRating: await getAverageRating(doc.id),
+        creator,
+        ingredients: await Promise.all(
+          doc.data().ingredients.map(async (item) => {
+            return {
+              id: item.ingredient._key.path.segments[6],
+              ingredient: (await getDoc(item.ingredient)).data().name,
+              measure: item.measure,
+            };
+          })
+        ),
+      };
+    })
   );
   return drinks;
 };

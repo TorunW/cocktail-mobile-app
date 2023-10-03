@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  SafeAreaView,
   Image,
   FlatList,
   StyleSheet,
@@ -15,6 +14,7 @@ import {
   Alcoholic,
   AverageRating,
   Complexity,
+  Creator,
   Description,
   SavedRecipe,
   Title,
@@ -121,6 +121,7 @@ export const DrinkPage = ({ route, navigation }) => {
 
       <View style={styles.drinkContent}>
         <Title title={data.title} style={styles.title} />
+        <Creator creator={data.creator} style={styles.creator} />
         <Description description={data.description} style={styles.midText} />
         <Text style={styles.subTitle}>Ingredients</Text>
         {data.ingredients !== undefined ? (
@@ -134,7 +135,17 @@ export const DrinkPage = ({ route, navigation }) => {
           <Text style={styles.smallText}>error</Text>
         )}
         <Text style={styles.subTitle}>Instructions</Text>
-        <Text style={styles.midText}>{data.instructions}</Text>
+        <FlatList
+          data={data.instructions}
+          renderItem={({ item, index }) => (
+            <View>
+              <Text style={styles.step}>{`Step ${index + 1}`}:</Text>
+              <Text style={styles.instructions}>
+                {item[`step${index + 1}`]}
+              </Text>
+            </View>
+          )}
+        />
         <RateDrink data={data} />
       </View>
     </ScrollView>
@@ -173,14 +184,12 @@ const styles = StyleSheet.create({
     color: COLORS.black2,
   },
   infoContainer: {
-    backgroundColor: COLORS.midPink,
     borderRadius: 30,
     paddingVertical: SPACING.s,
     paddingHorizontal: SPACING.s,
     marginBottom: SPACING.l,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    elevation: 1,
     marginHorizontal: SPACING.xs,
   },
   drinkContent: {
@@ -191,6 +200,11 @@ const styles = StyleSheet.create({
     fontSize: SIZES.extraLarge,
     letterSpacing: 1.9,
     textTransform: 'uppercase',
+    marginBottom: SPACING.xs,
+  },
+  creator: {
+    fontFamily: FONTS.bold,
+    fontSize: SIZES.base,
     marginBottom: SPACING.xs,
   },
   subTitle: {
@@ -209,6 +223,8 @@ const styles = StyleSheet.create({
     paddingRight: SPACING.xl + SPACING.xl,
     marginBottom: SPACING.xs,
   },
+  step: { fontFamily: FONTS.medium, marginBottom: SPACING.xs },
+  instructions: { fontFamily: FONTS.regular, marginBottom: SPACING.s },
 });
 
 export default DrinkPage;

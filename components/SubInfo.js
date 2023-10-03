@@ -44,6 +44,15 @@ export const Alcoholic = ({ alcoholic, size, textStyle, color }) => {
   return <>{alcDisplay}</>;
 };
 
+export const Creator = ({ creator, style }) => {
+  return (
+    <View style={{ flexDirection: 'row', gap: SPACING.xs }}>
+      <Text style={style}>Recipe by:</Text>
+      <Text style={style}>{creator}</Text>
+    </View>
+  );
+};
+
 export const Complexity = ({ complexity, textStyle }) => {
   let complexityRating;
   if (complexity <= 1.5) {

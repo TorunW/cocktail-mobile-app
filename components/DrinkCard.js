@@ -8,6 +8,7 @@ import {
   AverageRating,
   Description,
   Alcoholic,
+  Creator,
 } from './SubInfo';
 import { handlePressSavedRecipe } from '../helpers/handlePressSavedRecipe';
 import { useStoreActions, useStoreState } from 'easy-peasy';
@@ -79,6 +80,7 @@ const DrinkCard = ({ data }) => {
       </Pressable>
       <View style={styles.infoContainer}>
         <Title title={data.title} style={styles.title} />
+        <Creator creator={data.creator} style={styles.creator} />
         <Description
           description={
             data.description !== undefined
@@ -137,6 +139,7 @@ const styles = StyleSheet.create({
     color: COLORS.black2,
     textTransform: 'capitalize',
   },
+  creator: { fontFamily: FONTS.bold, fontSize: SIZES.base },
   description: {
     fontFamily: FONTS.medium,
     fontSize: SIZES.font,
