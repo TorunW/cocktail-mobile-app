@@ -5,6 +5,7 @@ import { COLORS, FONTS, SIZES, SPACING } from '../constants';
 import { useStoreActions } from 'easy-peasy';
 import { RemoveIcon } from '../assets/icons/Icon';
 import { ActivityIndicator } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const StepsForm = ({ setIsInstructionsSubmitted }) => {
   const setInstructionsToDrink = useStoreActions(
@@ -39,7 +40,7 @@ const StepsForm = ({ setIsInstructionsSubmitted }) => {
   };
 
   return (
-    <View style={styles.pageContainer}>
+    <KeyboardAwareScrollView style={styles.pageContainer}>
       <Text style={styles.title}>Add instructions</Text>
       <View>
         {fields.map((item, index) => {
@@ -95,7 +96,7 @@ const StepsForm = ({ setIsInstructionsSubmitted }) => {
           )}
         </Pressable>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

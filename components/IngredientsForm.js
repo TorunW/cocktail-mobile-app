@@ -2,7 +2,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   Pressable,
   ActivityIndicator,
@@ -15,6 +14,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import getIngredientsData from '../transactions/getIngredientsData';
 import { RemoveIcon } from '../assets/icons/Icon';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const IngredientsForm = ({ setIsIngredientsSubmitted }) => {
   const existingIngredients = useStoreState(
@@ -38,10 +38,11 @@ const IngredientsForm = ({ setIsIngredientsSubmitted }) => {
     const toBeAddedInFirebase = data.ingredients.filter(
       (obj) =>
         !existingIngredients.some(
-          (obj2) => obj.ingredient.toLowerCase() === obj2.name.toLowerCase()
+          (obj2) =>
+            obj.ingredient.toLowerCase().trimEnd() === obj2.name.toLowerCase()
         )
     );
-
+    console.log(toBeAddedInFirebase, 'should be added');
     if (toBeAddedInFirebase.length > 0) {
       toBeAddedInFirebase.forEach(async (element) => {
         try {
@@ -65,7 +66,7 @@ const IngredientsForm = ({ setIsIngredientsSubmitted }) => {
   };
 
   return (
-    <View style={styles.pageContainer}>
+    <KeyboardAwareScrollView style={styles.pageContainer}>
       <Text style={styles.title}>Add Ingredients</Text>
       <View>
         {fields.map((item, index) => {
@@ -138,7 +139,7 @@ const IngredientsForm = ({ setIsIngredientsSubmitted }) => {
           )}
         </Pressable>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -46,6 +46,7 @@ export const AddNewDrink = () => {
   const [isImageSubmitted, setIsImageSubmitted] = useState(false);
   const [isDrinkSubmitted, setIsDrinkSubmitted] = useState(false);
 
+  console.log(ingredientRefsWithMeasures, 'sdfdsfd');
   useEffect(() => {
     getIngredientId();
   }, [isIngredientsSubmitted]);
@@ -70,7 +71,7 @@ export const AddNewDrink = () => {
             (submittedFormIngredient) =>
               submittedFormIngredient.ingredient &&
               existingIngredient.name.toLowerCase() ===
-                submittedFormIngredient.ingredient.toLowerCase()
+                submittedFormIngredient.ingredient.toLowerCase().trimEnd()
           )
       );
 
@@ -87,9 +88,11 @@ export const AddNewDrink = () => {
   };
 
   const addDrink = async () => {
+    const userRef = doc(db, 'users', state.users.currentUser.id);
     const docRef = await addDoc(collection(db, 'cocktails'), {
       title,
       description,
+      creator: userRef,
       instructions: instructionsToDrink,
       alcoholic,
       image,

@@ -45,6 +45,9 @@ export const Home = () => {
     });
   }
 
+  /*   console.log(state.drinks.ingredients.map((item) => console.log(item)));
+   */
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
