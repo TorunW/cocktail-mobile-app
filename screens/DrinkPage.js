@@ -170,13 +170,13 @@ const styles = StyleSheet.create({
   icon: { margin: SPACING.l },
   image: {
     width: '100%',
-    height: 360,
+    height: 450,
     position: 'relative',
   },
   gradient: {
     position: 'absolute',
     width: '100%',
-    height: 360,
+    height: 450,
   },
   smallText: {
     fontSize: SIZES.base,

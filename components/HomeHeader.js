@@ -13,7 +13,7 @@ const HomeHeader = () => {
     <View
       style={{
         flex: 1,
-        marginBottom: SPACING.l,
+        marginBottom: SPACING.xs,
         zIndex: 11,
       }}
     >

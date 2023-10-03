@@ -45,9 +45,6 @@ export const Home = () => {
     });
   }
 
-  /*   console.log(state.drinks.ingredients.map((item) => console.log(item)));
-   */
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
@@ -63,9 +60,7 @@ export const Home = () => {
             }}
           >
             <HomeHeader />
-            <View
-              style={{ marginTop: 200, marginBottom: SPACING.xl + SPACING.xl }}
-            >
+            <View style={{ marginTop: 200, marginBottom: SPACING.xl }}>
               <FlatList
                 data={drinksData}
                 renderItem={({ item }) => <DrinkCard data={item} />}
