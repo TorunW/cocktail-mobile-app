@@ -11,6 +11,7 @@ export default users = {
   }),
   currentUser: {
     token: null,
+    username: null,
     email: null,
     id: null,
     savedRecipe: null,

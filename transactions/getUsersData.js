@@ -17,6 +17,7 @@ export const getUsersData = async () => {
   const users = await Promise.all(
     querySnapshot.docs.map(async (doc, index) => ({
       id: doc.id,
+      username: doc.data().username,
       email: doc.data().email,
       ratedDrinks: await Promise.all(
         doc.data().ratedDrinks

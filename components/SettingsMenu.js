@@ -45,6 +45,7 @@ const SettingsMenu = () => {
       .signOut()
       .then(async () => {
         await AsyncStorage.removeItem('@token_key');
+        await AsyncStorage.removeItem('@username_key');
         await AsyncStorage.removeItem('@email_key');
         await AsyncStorage.removeItem('@id_key');
         await AsyncStorage.removeItem('@savedRecipe_key');
@@ -52,6 +53,7 @@ const SettingsMenu = () => {
 
         action.users.setCurrentUser({
           token: null,
+          username: null,
           email: null,
           id: null,
           savedRecipe: null,
@@ -86,6 +88,7 @@ const SettingsMenu = () => {
         width: 290,
       }}
     >
+      <Text style={styles.usernametext}>{user.username}</Text>
       <Text style={styles.emailtext}>{user.email} </Text>
 
       <TouchableOpacity
@@ -146,6 +149,7 @@ const SettingsMenu = () => {
 };
 const styles = StyleSheet.create({
   menuRow: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs },
+  usernametext: { fontFamily: FONTS.extraBold, fontSize: SIZES.medium },
   emailtext: {
     fontFamily: FONTS.bold,
     color: COLORS.black2,

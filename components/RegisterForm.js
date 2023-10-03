@@ -25,8 +25,8 @@ const RegisterForm = () => {
   const navigation = useNavigation();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isEmailErrorVisible, setIsEmailErrorVisible] = useState(false);
   const [isPasswordErrorVisible, setIsPasswordErrorVisible] = useState(false);
+  const [isUsernameErrorVisible, setIsUsernameErrorVisible] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(false);
 
   useEffect(() => {
@@ -48,7 +48,9 @@ const RegisterForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    mode: 'onChange',
     defaultValues: {
+      username: '',
       email: '',
       password: '',
     },
@@ -56,13 +58,23 @@ const RegisterForm = () => {
 
   const isDirty = control._formState.dirtyFields;
   useEffect(() => {
-    console.log(isDirty);
     isDirty.email === true && isDirty.password === true
       ? setIsButtonActive(true)
       : setIsButtonActive(false);
   }, [control._formState]);
 
+  const validateUsername = (username) => {
+    const isUsernameExisting = users.some((item) => item.username === username);
+
+    if (isUsernameExisting === true) {
+      isUsernameErrorVisible(true);
+    } else {
+      isUsernameErrorVisible(false);
+    }
+  };
+
   const registerUser = async (data) => {
+    const username = data.username.toLowerCase();
     const email = data.email.replace(/^\s+|\s+$/gm, '').toLowerCase();
     const password = data.password;
     const exsitingUserEmail = users.some((item) => item.email === email);
@@ -71,17 +83,20 @@ const RegisterForm = () => {
       action.users.setToggleForm('login');
     } else {
       const docRef = await addDoc(collection(db, 'users'), {
-        email: email,
+        username,
+        email,
       });
-      createUserWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(auth, username, email, password)
         .then(async (userCredentials) => {
           const user = userCredentials.user;
+          await AsyncStorage.setItem('@username_key', user.username);
           await AsyncStorage.setItem('@email_key', user.email);
           await AsyncStorage.setItem('@token_key', user.accessToken);
           await AsyncStorage.setItem('@id_key', docRef.id);
 
           action.users.setCurrentUser({
             token: user.accessToken,
+            username: user.username,
             email: user.email,
             id: docRef.id,
             savedRecipe: null,
@@ -108,6 +123,31 @@ const RegisterForm = () => {
         <Controller
           control={control}
           rules={{
+            required: true,
+            validate: {
+              checkUsername: (username) => validateUsername(username),
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              autoCapitalize='none'
+              style={styles.textInput}
+              placeholder='Username'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='username'
+        />
+        {isUsernameErrorVisible === true ? (
+          <Text style={styles.errorMessage}>Username is already taken</Text>
+        ) : (
+          ''
+        )}
+        <Controller
+          control={control}
+          rules={{
             required: 'Cannot be empty',
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -118,6 +158,8 @@ const RegisterForm = () => {
           render={({ field: { onChange, onBlur, value } }) => (
             <>
               <TextInput
+                autoCapitalize='none'
+                keyboardType='email-address'
                 placeholder='Email'
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -214,7 +256,7 @@ const RegisterForm = () => {
 
       <View
         style={{
-          position: 'absolute',
+          position: 'relative',
           paddingBottom:
             isPasswordErrorVisible === true ||
             errors.password?.message.length >= 1

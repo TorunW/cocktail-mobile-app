@@ -45,6 +45,8 @@ export const Home = () => {
     });
   }
 
+  console.log(state.users.currentUser);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />

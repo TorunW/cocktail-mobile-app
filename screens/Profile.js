@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ImageBackground,
   Dimensions,
+  Pressable,
 } from 'react-native';
 import bg from '../assets/images/bg_15.jpg';
 import ProfileHeader from '../components/ProfileHeader';

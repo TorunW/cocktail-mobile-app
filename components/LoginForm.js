@@ -56,6 +56,7 @@ const LoginForm = () => {
       password: '',
     },
   });
+
   const isDirty = control._formState.dirtyFields;
   useEffect(() => {
     isDirty.email === true && isDirty.password === true
@@ -78,6 +79,12 @@ const LoginForm = () => {
           (item) => item.email === email
         );
 
+        const currentUserIndex = state.users.userList.findIndex(
+          (item) => item.email === email
+        );
+
+        const currentUsername = state.users.userList[currentUserIndex].username;
+        await AsyncStorage.setItem('@username_key', currentUsername);
         await AsyncStorage.setItem('@id_key', currentUser.id);
         await AsyncStorage.setItem(
           '@savedRecipe_key',
@@ -98,6 +105,7 @@ const LoginForm = () => {
 
         action.users.setCurrentUser({
           token: user.accessToken,
+          username: currentUsername,
           email: user.email,
           id: storageId,
           savedRecipe: JSON.parse(storageSavedRecipe),
@@ -173,6 +181,8 @@ const LoginForm = () => {
           render={({ field: { onChange, onBlur, value } }) => (
             <>
               <TextInput
+                autoCapitalize='none'
+                keyboardType='email-address'
                 placeholder='Email'
                 onBlur={onBlur}
                 onChangeText={onChange}
