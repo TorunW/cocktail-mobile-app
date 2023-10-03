@@ -53,7 +53,7 @@ export default getDrinksData = async () => {
       title: doc.data().title,
       description: doc.data().description,
       image: doc.data().image,
-      instructions: doc.data().instructions,
+      instructions: doc.data().instructions.map((item) => item),
       alcoholic: doc.data().alcoholic,
       savedRecipeCount: doc.data().savedRecipeCount,
       totalPoints: await getRatings(doc.id),

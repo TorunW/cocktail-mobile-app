@@ -23,8 +23,6 @@ const IngredientSearch = () => {
   const [input, setInput] = useState();
   const [searchResult, setSearchResult] = useState([]);
 
-  console.log(ingredients);
-
   const onChangeText = async (text) => {
     setInput(text);
     const res = ingredients

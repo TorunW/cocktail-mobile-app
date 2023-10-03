@@ -46,8 +46,6 @@ export const AddNewDrink = () => {
   const [isImageSubmitted, setIsImageSubmitted] = useState(false);
   const [isDrinkSubmitted, setIsDrinkSubmitted] = useState(false);
 
-  console.log(state.users.currentUser);
-
   useEffect(() => {
     getIngredientId();
   }, [isIngredientsSubmitted]);
@@ -89,7 +87,6 @@ export const AddNewDrink = () => {
   };
 
   const addDrink = async () => {
-    console.log(ingredientRefsWithMeasures);
     const docRef = await addDoc(collection(db, 'cocktails'), {
       title,
       description,

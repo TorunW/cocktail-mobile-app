@@ -46,12 +46,11 @@ const SearchScreen = () => {
     }
   };
 
-  console.log(filteredIngredients, 'shb');
-
   const onClear = () => {
     setFilteredDrinks([]);
     setFilteredIngredients([]);
   };
+
   return (
     <ImageBackground source={bg} style={styles.page}>
       <View style={styles.pageOverlay}>
