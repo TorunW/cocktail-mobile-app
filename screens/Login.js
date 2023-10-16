@@ -10,6 +10,8 @@ import { COLORS, FONTS, SIZES, SHADOWS, SPACING } from '../constants';
 const Login = () => {
   const state = useStoreState((state) => state);
 
+  console.log(state.users.userList);
+
   return (
     <ImageBackground
       source={background}

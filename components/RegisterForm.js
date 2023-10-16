@@ -65,11 +65,10 @@ const RegisterForm = () => {
 
   const validateUsername = (username) => {
     const isUsernameExisting = users.some((item) => item.username === username);
-
     if (isUsernameExisting === true) {
-      isUsernameErrorVisible(true);
+      setIsUsernameErrorVisible(true);
     } else {
-      isUsernameErrorVisible(false);
+      setIsUsernameErrorVisible(false);
     }
   };
 
@@ -86,17 +85,17 @@ const RegisterForm = () => {
         username,
         email,
       });
-      createUserWithEmailAndPassword(auth, username, email, password)
+      createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredentials) => {
           const user = userCredentials.user;
-          await AsyncStorage.setItem('@username_key', user.username);
+          await AsyncStorage.setItem('@username_key', username);
           await AsyncStorage.setItem('@email_key', user.email);
           await AsyncStorage.setItem('@token_key', user.accessToken);
           await AsyncStorage.setItem('@id_key', docRef.id);
 
           action.users.setCurrentUser({
             token: user.accessToken,
-            username: user.username,
+            username,
             email: user.email,
             id: docRef.id,
             savedRecipe: null,

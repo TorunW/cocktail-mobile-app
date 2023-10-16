@@ -44,9 +44,6 @@ const theme = {
 
 const Root = () => {
   const currentUser = useStoreState((state) => state.users.currentUser.email);
-  const [isAdmin, setIsAdmin] = useState(
-    currentUser === 'torun.wikstrom@gmail.com' ? true : false
-  );
 
   return (
     <Tab.Navigator
@@ -93,9 +90,7 @@ const Root = () => {
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='Profile' component={Profile} />
       <Tab.Screen name='Advanced Search' component={SearchScreen} />
-      {isAdmin === true ? (
-        <Tab.Screen name='AddDrink' component={AddNewDrink} />
-      ) : undefined}
+      <Tab.Screen name='AddDrink' component={AddNewDrink} />
     </Tab.Navigator>
   );
 };
