@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Pressable,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
@@ -188,6 +189,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     gap: SPACING.s,
     marginTop: SPACING.xs,
+    marginBottom: SPACING.xl,
   },
   button: {
     minWidth: '50%',

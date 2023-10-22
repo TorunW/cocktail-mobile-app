@@ -1,7 +1,6 @@
 import {
   View,
   StyleSheet,
-  Button,
   TextInput,
   Text,
   Pressable,

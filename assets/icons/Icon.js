@@ -137,3 +137,7 @@ export const RemoveIcon = ({ size, color }) => {
 export const ImageIcon = ({ size, color }) => {
   return <Ionicons name='images' size={size} color={color} />;
 };
+
+export const BrokenImage = ({ size, color }) => {
+  return <Materialicons name='broken-image' size={size} color={color} />;
+};

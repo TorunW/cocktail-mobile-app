@@ -1,14 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import React from 'react';
-import { COLORS, FONTS, SHADOWS, SIZES, SPACING, assets } from '../constants';
+import { COLORS, SPACING } from '../constants';
 import { useStoreState } from 'easy-peasy';
 import NameSearch from './NameSearch';
 import Sort from './Sort';
 
 const HomeHeader = () => {
-  const currentUserEmail = useStoreState(
-    (state) => state.users.currentUser.email
-  );
   return (
     <View
       style={{

@@ -2,7 +2,7 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import { Alcohol, NoAlcohol } from '../assets/icons/Icon';
 import StarRating from 'react-native-star-rating-widget';
-import { COLORS, FONTS, SIZES, SPACING } from '../constants';
+import { COLORS, SIZES, SPACING } from '../constants';
 import Easy from '../assets/icons/Easy.svg';
 import Middle from '../assets/icons/Middle.svg';
 import Hard from '../assets/icons/Hard.svg';

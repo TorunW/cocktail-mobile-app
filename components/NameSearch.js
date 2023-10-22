@@ -3,9 +3,7 @@ import {
   Text,
   TextInput,
   FlatList,
-  Pressable,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import React from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
