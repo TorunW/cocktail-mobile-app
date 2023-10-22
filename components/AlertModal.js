@@ -80,19 +80,18 @@ const AlertModal = ({
   }, [state.alert.isAlertVisible]);
 
   const handleClose = () => {
+    console.log('first');
     action.alert.setIsAlertVisible(false);
   };
 
   return (
-    <Modal
-      animationType='fade'
-      transparent={true}
-      visible={visible}
-      onRequestClose={handleClose}
-    >
+    <Modal animationType='fade' transparent={true} visible={visible}>
       <View style={styles.container}>
         <View style={styles.modal}>
-          <TouchableOpacity style={styles.closeBtn} onPress={handleClose}>
+          <TouchableOpacity
+            style={styles.closeBtn}
+            onPress={() => handleClose()}
+          >
             <Close
               style={styles.closeBtn}
               color={COLORS.black2}

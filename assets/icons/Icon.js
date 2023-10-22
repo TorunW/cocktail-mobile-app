@@ -101,13 +101,7 @@ export const Alert = ({ style, size, color }) => {
 };
 export const ChangePassword = ({ style, size, color }) => {
   return (
-    <Ionicons
-      name='key-outline'
-      //name='lock-open-outline'
-      style={style}
-      size={size}
-      color={color}
-    />
+    <Ionicons name='key-outline' style={style} size={size} color={color} />
   );
 };
 export const SuggestDrink = ({ style, size, color }) => {

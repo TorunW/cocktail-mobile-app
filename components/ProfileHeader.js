@@ -16,11 +16,15 @@ const ProfileHeader = () => {
       <StaticHeader />
       <TouchableOpacity
         onPress={() => setIsOpen(isOpen === false ? true : false)}
-        style={styles.settingsBtn}
+        style={
+          isOpen === true
+            ? styles.settingsCloseButton
+            : styles.settingsOpenButton
+        }
       >
         <Settings
           size={SIZES.icon}
-          style={styles.settingsBtn}
+          style={styles.settingsOpenButton}
           color={COLORS.white}
         />
       </TouchableOpacity>
@@ -32,6 +36,18 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'flex-end',
   },
-  settingsBtn: { ...SHADOWS.text, padding: SPACING.xs, zIndex: 20 },
+  settingsOpenButton: {
+    ...SHADOWS.text,
+    padding: SPACING.xs,
+    zIndex: 20,
+  },
+  settingsCloseButton: {
+    ...SHADOWS.text,
+    padding: SPACING.xs,
+    zIndex: 20,
+    width: 100,
+    height: '100%',
+    alignItems: 'flex-end',
+  },
 });
 export default ProfileHeader;

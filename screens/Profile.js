@@ -14,8 +14,6 @@ import { useStoreState } from 'easy-peasy';
 import { COLORS, FONTS, SIZES, SPACING } from '../constants';
 import SettingsMenu from '../components/SettingsMenu';
 import { useState } from 'react';
-import { S } from 'ts-toolbelt';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const Profile = () => {
   const state = useStoreState((state) => state);
