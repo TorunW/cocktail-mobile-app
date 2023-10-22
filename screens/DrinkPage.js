@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Pressable,
   ScrollView,
+  Alert,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { COLORS, FONTS, SIZES, SHADOWS, SPACING } from '../constants';
@@ -21,9 +22,16 @@ import {
 } from '../components/SubInfo';
 import RateDrink from '../components/RateDrink';
 import { LinearGradient } from 'expo-linear-gradient';
-import { GoBackIcon, HeartIcon, HeartOutlineIcon } from '../assets/icons/Icon';
+import {
+  GoBackIcon,
+  HeartIcon,
+  HeartOutlineIcon,
+  AlertIcon,
+} from '../assets/icons/Icon';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { handlePressSavedRecipe } from '../helpers/handlePressSavedRecipe';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
 export const DrinkPage = ({ route, navigation }) => {
   const { data } = route.params;
@@ -31,6 +39,7 @@ export const DrinkPage = ({ route, navigation }) => {
   const action = useStoreActions((actions) => actions);
   const currentUser = state.users.currentUser;
   const [isSaved, setIsSaved] = useState(false);
+  const [isReportSent, setIsReportSent] = useState(false);
 
   useEffect(() => {
     if (currentUser && currentUser.savedRecipe !== null) {
@@ -53,6 +62,19 @@ export const DrinkPage = ({ route, navigation }) => {
     filteredDrinkId && filteredDrinkId.id === data.id
       ? setIsSaved(true)
       : setIsSaved(false);
+  };
+
+  const sendReport = async () => {
+    const docRef = await addDoc(collection(db, 'mail'), {
+      title: 'Report',
+      drinkReported: data.id,
+      uid: state.users.currentUser.email,
+    });
+
+    Alert.alert(
+      'You have succesfully reported this drink',
+      'We will review the content and remove the recipe if we deem it to be non suitable for the app.'
+    );
   };
 
   return (
@@ -148,6 +170,10 @@ export const DrinkPage = ({ route, navigation }) => {
           )}
         />
         <RateDrink data={data} />
+        <Pressable style={styles.reportContainer} onPress={sendReport}>
+          <AlertIcon size={SIZES.icon} />
+          <Text style={styles.textStyle}>Report drink</Text>
+        </Pressable>
       </View>
     </ScrollView>
   );
@@ -226,6 +252,13 @@ const styles = StyleSheet.create({
   },
   step: { fontFamily: FONTS.medium, marginBottom: SPACING.xs },
   instructions: { fontFamily: FONTS.regular, marginBottom: SPACING.s },
+  reportContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.xs,
+    marginVertical: SPACING.xs,
+  },
+  textStyle: { fontFamily: FONTS.medium },
 });
 
 export default DrinkPage;

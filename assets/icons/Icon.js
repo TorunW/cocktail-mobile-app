@@ -89,7 +89,7 @@ export const Logout = ({ style, size, color }) => {
     <Ionicons name='log-out-outline' style={style} size={size} color={color} />
   );
 };
-export const Alert = ({ style, size, color }) => {
+export const AlertIcon = ({ style, size, color }) => {
   return (
     <Ionicons
       name='alert-circle-outline'

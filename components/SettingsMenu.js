@@ -13,7 +13,7 @@ import AlertModal from '../components/AlertModal';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  Alert,
+  AlertIcon,
   ChangePassword,
   DeleteAccount,
   Logout,
@@ -95,7 +95,7 @@ const SettingsMenu = () => {
         style={styles.menuRow}
         onPress={() => openModal('issue')}
       >
-        <Alert style={styles.icon} size={SIZES.icon} />
+        <AlertIcon style={styles.icon} size={SIZES.icon} />
         <Text style={styles.text}>Report issue</Text>
       </TouchableOpacity>
 
